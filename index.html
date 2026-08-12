@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kenhion Allen | Tienda de Ropa Elegante en Maracay, Venezuela</title>
+  <meta name="description" content="Kenhion Allen - Tienda de ropa especializada en prendas elegantes para hombres y mujeres en Maracay, Venezuela. Proyecta la grandeza que llevas dentro.">
+  
+  <!-- Favicon using official Logo emblem SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' fill='none' stroke='%23111827' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'><path d='M 50 5 Q 50 35 85 60 Q 50 85 50 115 Q 50 85 15 60 Q 50 35 50 5 Z'/><path d='M 24 25 Q 38 60 24 95'/><path d='M 76 25 Q 62 60 76 95'/></svg>">
+  
+  <!-- Fonts: Merriweather, Montserrat, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Announcement Bar -->
+    <div class="top-bar">
+      <div class="top-bar-content">
+        <span>MARACAY, VENEZUELA • DESCUENTO AL MAYOR: 15% OFF COMPRANDO 1 DOCENA (12 UDS) • WHATSAPP: +58 412-530-5464</span>
+      </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="header-sticky" id="header">
+      <div class="header-container">
+        
+        <!-- Official Logo Emblem SVG + Brand Name -->
+        <a href="#" class="brand-identity">
+          <svg class="brand-emblem-svg" viewBox="0 0 100 120" fill="none" stroke="#111827" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M 50 5 Q 50 35 85 60 Q 50 85 50 115 Q 50 85 15 60 Q 50 35 50 5 Z"/>
+            <path d="M 24 25 Q 38 60 24 95"/>
+            <path d="M 76 25 Q 62 60 76 95"/>
+          </svg>
+          <div class="brand-text-wrapper">
+            <span class="brand-logo-text">KENHION ALLEN</span>
+            <span class="brand-subtle-text">Elegante & Trascendente</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+          <ul class="nav-menu">
+            <li><a href="#hero" class="nav-link active">Inicio</a></li>
+            <li><a href="#servicios" class="nav-link">Servicios</a></li>
+            <li class="nav-dropdown">
+              <a href="#catalogo" class="nav-link">Tienda Online <span class="nav-arrow-icon">▼</span></a>
+              <div class="dropdown-menu">
+                <a href="#catalogo" class="dropdown-item" data-category="KA ELITE">
+                  <span class="dot black"></span> KA ELITE (Compresión)
+                </a>
+                <a href="#catalogo" class="dropdown-item" data-category="Resiliencia">
+                  <span class="dot red"></span> Resiliencia (Algodón 100%)
+                </a>
+                <a href="#catalogo" class="dropdown-item" data-category="P.O.D.">
+                  <span class="dot black"></span> P.O.D. (Print On Demand)
+                </a>
+              </div>
+            </li>
+            <li><a href="#galeria" class="nav-link">Fotogalería</a></li>
+            <li><a href="#nosotros" class="nav-link">Sobre Nosotros</a></li>
+            <li><a href="#faq" class="nav-link">Preguntas Frecuentes</a></li>
+            <li><a href="#contacto" class="nav-link">Contacto</a></li>
+          </ul>
+        </nav>
+
+        <!-- Header Right Actions -->
+        <div class="header-actions">
+          
+          <!-- Search Toggle Button -->
+          <button class="action-icon-btn" id="search-trigger-btn" title="Buscar en tienda">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+
+          <!-- Shopping Bag Button -->
+          <button class="action-icon-btn cart-btn-style" id="cart-btn" title="Cesta de Compras">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span class="cart-badge" id="cart-counter">0</span>
+          </button>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir Menú">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <div class="mobile-nav-header">
+        <div class="mobile-logo-group">
+          <svg class="brand-emblem-svg" viewBox="0 0 100 120" fill="none" stroke="#111827" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M 50 5 Q 50 35 85 60 Q 50 85 50 115 Q 50 85 15 60 Q 50 35 50 5 Z"/>
+            <path d="M 24 25 Q 38 60 24 95"/>
+            <path d="M 76 25 Q 62 60 76 95"/>
+          </svg>
+          <span class="brand-logo-text">KENHION ALLEN</span>
+        </div>
+        <button class="close-btn" id="mobile-nav-close">&times;</button>
+      </div>
+      <ul class="mobile-menu-list">
+        <li><a href="#hero" class="mobile-nav-link">Inicio</a></li>
+        <li><a href="#servicios" class="mobile-nav-link">Servicios</a></li>
+        <li><a href="#catalogo" class="mobile-nav-link">Tienda Online</a></li>
+        <li><a href="#galeria" class="mobile-nav-link">Fotogalería</a></li>
+        <li><a href="#nosotros" class="mobile-nav-link">Sobre Nosotros</a></li>
+        <li><a href="#faq" class="mobile-nav-link">Preguntas Frecuentes</a></li>
+        <li><a href="#contacto" class="mobile-nav-link">Contacto & Ubicación</a></li>
+      </ul>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+      <div class="hero-main-container">
+        <div class="hero-brand-card">
+          
+          <div class="red-flourish-badge">
+            <span class="red-line"></span>
+            <span class="red-badge-text">KENHION ALLEN</span>
+            <span class="red-line"></span>
+          </div>
+
+          <!-- Slogan Highlight -->
+          <h1 class="hero-statement-title">
+            "Proyecta la grandeza que llevas dentro"
+          </h1>
+
+          <!-- Official Description from Webnode site -->
+          <p class="hero-statement-sub">
+            Buenas, un cordial saludo de parte de nuestra marca <strong>Kenhion Allen</strong>. Ahora tenemos un nuevo método de compra a través de nuestra página web, dale un vistazo, conoce más sobre nosotros y mantente atento a todas nuestras nuevas colecciones.
+          </p>
+
+        </div>
+
+        <!-- Featured Brand Visual from Webnode -->
+        <div class="hero-image-frame">
+          <img src="https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000054-9349b9349d/IMG_0965.JPG%20%281%29.jpeg?ph=af606c0c04" 
+               alt="Kenhion Allen Moda Elegante" class="hero-featured-img">
+          <div class="hero-visual-badge">
+            <span class="location-label">Maracay, Venezuela</span>
+            <span class="style-label">Moda Elegante & Conservadora</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. SERVICIOS ESPECIALIZADOS -->
+    <section class="services-section" id="servicios">
+      <div class="section-header center">
+        <div class="red-brand-divider">
+          <span class="divider-line"></span>
+          <span class="divider-text">Kenhion Allen</span>
+          <span class="divider-line"></span>
+        </div>
+        <h2 class="section-title">Nuestros Servicios</h2>
+      </div>
+
+      <div class="services-grid">
+        
+        <div class="service-card">
+          <div class="service-num">01</div>
+          <h3 class="service-title">Asesoría de moda</h3>
+          <p class="service-desc">
+            Servicio personalizado de orientación y asesoramiento en el ámbito del estilo. Recomendamos prendas y combinaciones ideales según tu personalidad, tipo de cuerpo y ocasión.
+          </p>
+          <a href="https://wa.me/584125305464?text=Hola!%20Quisiera%20solicitar%20una%20Asesor%C3%ADa%20de%20Moda%20en%20Kenhion%20Allen" 
+             target="_blank" class="service-link">Solicitar Asesoría por WhatsApp →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-num">02</div>
+          <h3 class="service-title">P.O.D. (Print On Demand)</h3>
+          <p class="service-desc">
+            Modelo de negocio que nos permite producir productos bajo demanda cuando el cliente realiza el pedido, garantizando piezas exclusivas de edición limitada.
+          </p>
+          <a href="#catalogo" class="service-link">Ver Productos P.O.D. →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-num">03</div>
+          <h3 class="service-title">Prendas personalizadas</h3>
+          <p class="service-desc">
+            Servicio creativo de vestuario a medida adaptado a tus ideas. Recomendado para artistas, celebridades y personas que buscan prendas verdaderamente únicas.
+          </p>
+          <a href="https://wa.me/584125305464?text=Hola!%20Me%20interesa%20el%20servicio%20de%20Prendas%20Personalizadas" 
+             target="_blank" class="service-link">Consultar Personalización →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. TIENDA ONLINE / CATÁLOGO DE PRODUCTOS -->
+    <section class="catalog-section" id="catalogo">
+      <div class="section-header space-between">
+        <div>
+          <div class="red-brand-divider left-align">
+            <span class="divider-line"></span>
+            <span class="divider-text">Colecciones Oficiales</span>
+          </div>
+          <h2 class="section-title">Tienda Online Kenhion Allen</h2>
+        </div>
+
+        <div class="search-input-wrapper">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="catalog-search-input" placeholder="Buscar prenda (ej. Crop Top, Hoodie, Shorts)...">
+          <button id="search-clear-btn" class="search-clear-btn" style="display:none;">&times;</button>
+        </div>
+      </div>
+
+      <div class="catalog-controls">
+        <!-- Collection Filter Tabs -->
+        <div class="filter-tabs-container">
+          <div class="filter-tabs" id="filter-tabs">
+            <button class="filter-btn active" data-category="all">
+              <span>Todos los productos</span>
+              <span class="count-pill" id="count-all">0</span>
+            </button>
+            <button class="filter-btn" data-category="KA ELITE">
+              <span>KA ELITE</span>
+              <span class="count-pill" id="count-elite">0</span>
+            </button>
+            <button class="filter-btn" data-category="Resiliencia">
+              <span>Resiliencia</span>
+              <span class="count-pill" id="count-resiliencia">0</span>
+            </button>
+            <button class="filter-btn" data-category="P.O.D.">
+              <span>P.O.D.</span>
+              <span class="count-pill" id="count-pod">0</span>
+            </button>
+          </div>
+
+          <!-- Secondary Gender Filter Pills -->
+          <div class="gender-filter-pills" id="gender-filter-pills">
+            <span class="gender-filter-label">Filtrar Por:</span>
+            <button class="gender-pill active" data-gender="all">Todos</button>
+            <button class="gender-pill" data-gender="Mujer">Mujer</button>
+            <button class="gender-pill" data-gender="Hombre">Hombre</button>
+            <button class="gender-pill" data-gender="Unisex">Unisex</button>
+            
+            <button class="size-guide-trigger-btn" id="open-size-guide-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M6 8v8M10 9v6M14 8v8M18 9v6"></path></svg>
+              <span>Guía de Tallas (cm)</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sort-wrapper">
+          <label for="sort-select" class="sort-label">Ordenar por:</label>
+          <select id="sort-select" class="sort-select">
+            <option value="featured">Recomendados Kenhion Allen</option>
+            <option value="price-low">Precio: Menor a Mayor</option>
+            <option value="price-high">Precio: Mayor a Menor</option>
+            <option value="name">Nombre: A - Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="products-grid"></div>
+
+      <!-- Empty State -->
+      <div class="empty-catalog-state" id="empty-catalog-state" style="display:none;">
+        <div class="empty-icon-box">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+        <h3>No encontramos coincidencias para esa búsqueda</h3>
+        <p>Intenta buscando con otra palabra o selecciona "Todos los productos".</p>
+        <button class="btn-secondary" id="reset-filters-btn">Restablecer Filtros</button>
+      </div>
+    </section>
+
+    <!-- 3. FOTOGALERÍA SECCIÓN -->
+    <section class="gallery-section" id="galeria">
+      <div class="section-header center">
+        <div class="red-brand-divider">
+          <span class="divider-line"></span>
+          <span class="divider-text">Elegante y Trascendente</span>
+          <span class="divider-line"></span>
+        </div>
+        <h2 class="section-title">Fotogalería Oficial</h2>
+        <p class="section-subtext">Haz clic en cualquier imagen para verla en vista detallada.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox('https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000110-2b9d22b9d4/IMG_0964.JPG-5.jpeg?ph=af606c0c04', 'Colección Kenhion Allen 1')">
+          <img src="https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000110-2b9d22b9d4/IMG_0964.JPG-5.jpeg?ph=af606c0c04" 
+               alt="Colección Kenhion Allen 1" class="gallery-img">
+          <div class="gallery-hover-icon">Ampliar Vista</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000085-22e1522e17/IMG_0977.JPG.jpeg?ph=af606c0c04', 'Colección Kenhion Allen 2')">
+          <img src="https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000085-22e1522e17/IMG_0977.JPG.jpeg?ph=af606c0c04" 
+               alt="Colección Kenhion Allen 2" class="gallery-img">
+          <div class="gallery-hover-icon">Ampliar Vista</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000094-0c01b0c01c/IMG_0976.JPG.jpeg?ph=af606c0c04', 'Colección Kenhion Allen 3')">
+          <img src="https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000094-0c01b0c01c/IMG_0976.JPG.jpeg?ph=af606c0c04" 
+               alt="Colección Kenhion Allen 3" class="gallery-img">
+          <div class="gallery-hover-icon">Ampliar Vista</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000088-913299132b/IMG_0979.JPG.jpeg?ph=af606c0c04', 'Colección Kenhion Allen 4')">
+          <img src="https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000088-913299132b/IMG_0979.JPG.jpeg?ph=af606c0c04" 
+               alt="Colección Kenhion Allen 4" class="gallery-img">
+          <div class="gallery-hover-icon">Ampliar Vista</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SOBRE NOSOTROS -->
+    <section class="about-section" id="nosotros">
+      <div class="about-container">
+        
+        <!-- Official White Emblem Vector on Black Rounded Card -->
+        <div class="about-image-box emblem-black-card">
+          <svg class="about-emblem-large" viewBox="0 0 100 120" fill="none" stroke="#ffffff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M 50 5 Q 50 35 85 60 Q 50 85 50 115 Q 50 85 15 60 Q 50 35 50 5 Z"/>
+            <path d="M 24 25 Q 38 60 24 95"/>
+            <path d="M 76 25 Q 62 60 76 95"/>
+          </svg>
+        </div>
+
+        <div class="about-text-content">
+          <div class="red-brand-divider left-align">
+            <span class="divider-line"></span>
+            <span class="divider-text">Sobre Nosotros</span>
+          </div>
+          <h2 class="section-title">Moda Elegante en Maracay</h2>
+          
+          <p class="about-lead">
+            Somos una tienda de ropa especializada en prendas elegantes para hombres y mujeres. Nos destacamos por la calidad de nuestros productos, ofrecemos ropa de diseñador con un estilo elegante y conservador. Estamos ubicados en Maracay, Venezuela.
+          </p>
+
+          <blockquote class="about-quote">
+            "Tu forma de vestir es una representación de tu interior, por eso nosotros nos encargamos de que puedas proyectar la grandeza que llevas dentro."
+          </blockquote>
+
+          <div class="about-features-grid">
+            
+            <!-- Sleek Vector Illustration 1: Diamond Star Vector -->
+            <div class="feature-box">
+              <div class="feature-icon-svg">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2l2.4 5.6L20 10l-4.4 4.4L16.8 20 12 17l-4.8 3 1.2-5.6L4 10l5.6-2.4L12 2z"></path>
+                </svg>
+              </div>
+              <h4>Diseño Elegante</h4>
+              <p>Cortes pulidos y acabados limpios que resaltan en cualquier ocasión.</p>
+            </div>
+
+            <!-- Sleek Vector Illustration 2: Quality Certificate Seal Vector -->
+            <div class="feature-box">
+              <div class="feature-icon-svg">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="6"></circle>
+                  <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path>
+                </svg>
+              </div>
+              <h4>Calidad Garantizada</h4>
+              <p>Materiales duraderos, 100% algodón de alto gramaje y fibras sintéticas técnicas.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PREGUNTAS FRECUENTES (FAQ ACORDEÓN) - PLACED BETWEEN ABOUT & CONTACT -->
+    <section class="faq-section" id="faq">
+      <div class="section-header center">
+        <div class="red-brand-divider">
+          <span class="divider-line"></span>
+          <span class="divider-text">Resolvemos tus Dudas</span>
+          <span class="divider-line"></span>
+        </div>
+        <h2 class="section-title">Preguntas Frecuentes</h2>
+        <p class="section-subtext">Información sobre envíos en Venezuela, compras al mayor por docenas y atención personalizada.</p>
+      </div>
+
+      <div class="faq-accordion-wrapper">
+        <div class="faq-item">
+          <button class="faq-question-btn">
+            <span>¿Realizan envíos a toda Venezuela desde Maracay?</span>
+            <span class="faq-toggle-icon">+</span>
+          </button>
+          <div class="faq-answer-content">
+            <p>Sí, realizamos envíos nacionales seguros a través de las agencias de encomienda <strong>MRW, Zoom y Tealca</strong> hacia cualquier estado de Venezuela. En la ciudad de Maracay contamos con entregas personales y servicio de delivery.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question-btn">
+            <span>¿Cómo funciona el Descuento Al Mayor por docena (15% OFF)?</span>
+            <span class="faq-toggle-icon">+</span>
+          </button>
+          <div class="faq-answer-content">
+            <p>Al acumular <strong>12 o más prendas en tu cesta de compras</strong> (pueden ser de la misma referencia o combinadas entre colecciones), el sistema calcula automáticamente un <strong>15% de descuento al mayor</strong> en el subtotal de tu pedido.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question-btn">
+            <span>¿Cuáles son los métodos de pago aceptados?</span>
+            <span class="faq-toggle-icon">+</span>
+          </button>
+          <div class="faq-answer-content">
+            <p>Aceptamos pagos electrónicos mediante <strong>Pago Móvil</strong>, transferencias bancarias en Bolívares (Banesco / Mercantil), transferencias internacionales vía <strong>Zelle</strong> y efectivo en USD / divisas para entregas en Maracay.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question-btn">
+            <span>¿Cómo solicito una prenda personalizada o asesoría de moda?</span>
+            <span class="faq-toggle-icon">+</span>
+          </button>
+          <div class="faq-answer-content">
+            <p>Puedes agendar tu servicio directamente a través de nuestro botón oficial de WhatsApp <strong>+58 412-530-5464</strong>. Nuestro equipo de diseño te orientará con ideas, tallaje y combinaciones exclusivas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. CONTACTO & UBICACIÓN -->
+    <section class="contact-section" id="contacto">
+      <div class="contact-card-box">
+        <div class="contact-info-col">
+          <div class="red-brand-divider left-align">
+            <span class="divider-line"></span>
+            <span class="divider-text">Ubicación y Contacto</span>
+          </div>
+          <h2 class="contact-title">Ponte en Contacto con Nosotros</h2>
+          
+          <div class="contact-details-list">
+            
+            <!-- Location SVG -->
+            <div class="contact-detail-item">
+              <div class="icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <div>
+                <h4>Ubicación Oficial</h4>
+                <p>Maracay, Estado Aragua, Venezuela</p>
+              </div>
+            </div>
+
+            <!-- Phone SVG -->
+            <div class="contact-detail-item">
+              <div class="icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </div>
+              <div>
+                <h4>Teléfono / WhatsApp Directo</h4>
+                <p><a href="https://wa.me/584125305464" target="_blank">+58 412-530-5464</a></p>
+              </div>
+            </div>
+
+            <!-- Email SVG -->
+            <div class="contact-detail-item">
+              <div class="icon-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div>
+                <h4>Correo Electrónico Oficial</h4>
+                <p>88kenhionallen@gmail.com</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="contact-action-col">
+          <div class="direct-chat-card">
+            <h3>Atención Inmediata por WhatsApp</h3>
+            <p>¿Tienes dudas sobre tallas, disponibilidad o pedidos al mayor por docena en Venezuela? Escríbenos directamente:</p>
+            
+            <a href="https://wa.me/584125305464?text=Hola%20Kenhion%20Allen,%20un%20gusto%20saludarlos!%20Quisiera%20realizar%20una%20consulta" 
+               target="_blank" rel="noopener" class="btn-whatsapp-full">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              <span>Escribir al WhatsApp +58 412-530-5464</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-site">
+      <div class="footer-content">
+        
+        <div class="footer-brand-col">
+          <div class="footer-logo">
+            <svg class="brand-emblem-svg footer-size" viewBox="0 0 100 120" fill="none" stroke="#111827" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M 50 5 Q 50 35 85 60 Q 50 85 50 115 Q 50 85 15 60 Q 50 35 50 5 Z"/>
+              <path d="M 24 25 Q 38 60 24 95"/>
+              <path d="M 76 25 Q 62 60 76 95"/>
+            </svg>
+            <span class="footer-brand-name">KENHION ALLEN</span>
+          </div>
+          <p class="footer-brand-desc">
+            Tienda de ropa especializada en prendas elegantes para hombres y mujeres. Ofrecemos ropa de diseñador con un estilo elegante y conservador.
+          </p>
+          <p class="footer-location-tag">Maracay, Aragua, Venezuela</p>
+
+          <!-- Venezuela Trust Badges in Footer -->
+          <div class="footer-trust-badges">
+            <div class="trust-pill">🚚 MRW • Zoom • Tealca</div>
+            <div class="trust-pill">💳 Zelle • Pago Móvil • USD</div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Colecciones</h4>
+          <ul class="footer-links">
+            <li><a href="#catalogo" class="footer-link" data-filter="KA ELITE">KA ELITE (Compresión)</a></li>
+            <li><a href="#catalogo" class="footer-link" data-filter="Resiliencia">Resiliencia (Algodón 100%)</a></li>
+            <li><a href="#catalogo" class="footer-link" data-filter="P.O.D.">P.O.D. (Print On Demand)</a></li>
+            <li><a href="#catalogo" class="footer-link" data-filter="all">Ver Todos los Productos</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Servicios & Ayuda</h4>
+          <ul class="footer-links">
+            <li><a href="#servicios" class="footer-link">Asesoría de moda</a></li>
+            <li><a href="#servicios" class="footer-link">Print On Demand (P.O.D.)</a></li>
+            <li><a href="#servicios" class="footer-link">Prendas personalizadas</a></li>
+            <li><a href="#faq" class="footer-link">Preguntas Frecuentes</a></li>
+            <li><a href="#" class="footer-link" id="footer-size-guide-link">Guía de Tallas (cm)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Contacto</h4>
+          <p class="footer-info-p">Maracay, Estado Aragua, Venezuela</p>
+          <p class="footer-info-p">+58 412-530-5464</p>
+          <p class="footer-info-p">88kenhionallen@gmail.com</p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Kenhion Allen. Todos los derechos reservados. Rediseño Oficial Personalizado.</span>
+        <span>Elegante y Trascendente</span>
+      </div>
+    </footer>
+
+    <!-- Lightbox Modal for Gallery Images -->
+    <div class="lightbox-modal" id="lightbox-modal">
+      <button class="lightbox-close" id="lightbox-close">&times;</button>
+      <img src="" alt="" class="lightbox-img" id="lightbox-img">
+      <span class="lightbox-caption" id="lightbox-caption"></span>
+    </div>
+
+    <!-- Size Guide Modal (Guía de Medidas en cm) -->
+    <div class="modal-overlay" id="size-guide-modal">
+      <div class="modal-card size-guide-card">
+        <button class="modal-close" id="size-guide-close-btn">&times;</button>
+        <div class="size-guide-header">
+          <div class="red-brand-divider left-align">
+            <span class="divider-line"></span>
+            <span class="divider-text">Kenhion Allen</span>
+          </div>
+          <h2 class="modal-title">Guía Oficial de Tallas y Medidas</h2>
+          <p class="modal-desc">Utiliza esta tabla para seleccionar la talla perfecta para prendas de compresión KA ELITE o 100% Algodón Resiliencia.</p>
+        </div>
+
+        <div class="size-guide-table-wrapper">
+          <table class="size-guide-table">
+            <thead>
+              <tr>
+                <th>TALLA</th>
+                <th>PECHO / BUSTO (cm)</th>
+                <th>CINTURA (cm)</th>
+                <th>CADERA (cm)</th>
+                <th>LARGO TOTAL (cm)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>S (Small)</strong></td>
+                <td>86 - 92 cm</td>
+                <td>70 - 76 cm</td>
+                <td>90 - 96 cm</td>
+                <td>68 cm</td>
+              </tr>
+              <tr>
+                <td><strong>M (Medium)</strong></td>
+                <td>93 - 100 cm</td>
+                <td>77 - 84 cm</td>
+                <td>97 - 104 cm</td>
+                <td>71 cm</td>
+              </tr>
+              <tr>
+                <td><strong>L (Large)</strong></td>
+                <td>101 - 108 cm</td>
+                <td>85 - 92 cm</td>
+                <td>105 - 112 cm</td>
+                <td>74 cm</td>
+              </tr>
+              <tr>
+                <td><strong>XL (Extra Large)</strong></td>
+                <td>109 - 116 cm</td>
+                <td>93 - 100 cm</td>
+                <td>113 - 120 cm</td>
+                <td>77 cm</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="size-guide-footer-tips">
+          <div class="tip-box">
+            <strong>KA ELITE (Compresión):</strong> Tienen ajuste ceñido. Si prefieres un ajuste más relajado, elige una talla superior.
+          </div>
+          <div class="tip-box">
+            <strong>Resiliencia (Algodón 100%):</strong> Presentan un patrón Oversize holgado con caída estructurada de diseñador.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shopping Cart Drawer Modal (With Wholesale Discount Breakdown & Venezuela Trust Badges) -->
+    <div class="cart-drawer-overlay" id="cart-drawer-overlay">
+      <div class="cart-drawer">
+        
+        <div class="cart-header">
+          <div class="cart-title-group">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <h3 class="cart-title">Cesta de Compras</h3>
+          </div>
+          <button class="close-btn" id="cart-close-btn">&times;</button>
+        </div>
+
+        <!-- Cart Items Container -->
+        <div class="cart-items-container" id="cart-items-container"></div>
+
+        <!-- Cart Wholesale Offer & Summary Footer -->
+        <div class="cart-footer">
+          
+          <!-- Wholesale Progress / Discount Banner -->
+          <div class="wholesale-banner" id="wholesale-banner"></div>
+
+          <!-- Trust Badges inside Cart -->
+          <div class="cart-trust-badges">
+            <span class="trust-tag">🚚 Envíos MRW, Zoom y Tealca</span>
+            <span class="trust-tag">💳 Zelle / Pago Móvil / USD</span>
+          </div>
+
+          <div class="cart-summary-breakdown">
+            <div class="cart-summary-row">
+              <span class="summary-label">Subtotal:</span>
+              <span class="summary-val" id="cart-subtotal">$0.00 USD</span>
+            </div>
+            
+            <div class="cart-summary-row discount-row" id="wholesale-discount-row" style="display:none;">
+              <span class="summary-label text-green">Descuento Al Mayor (15% Docena):</span>
+              <span class="summary-val text-green" id="wholesale-discount-val">-$0.00 USD</span>
+            </div>
+
+            <div class="cart-summary-row total-row">
+              <span class="summary-label-total">Total a Pagar:</span>
+              <span class="summary-val-total" id="cart-total-final">$0.00 USD</span>
+            </div>
+          </div>
+
+          <button class="btn-whatsapp-full checkout-btn" id="checkout-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span>Completar Pedido por WhatsApp</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Product Quick View Modal (With Wholesale Button & Size Guide Link) -->
+    <div class="modal-overlay" id="product-modal-overlay">
+      <div class="modal-card">
+        <button class="modal-close" id="modal-close-btn">&times;</button>
+        
+        <div class="modal-grid">
+          <div class="modal-img-box">
+            <img src="" alt="" class="modal-img" id="modal-product-img">
+            <span class="modal-tag-badge" id="modal-product-badge"></span>
+          </div>
+
+          <div class="modal-body">
+            <span class="modal-category" id="modal-product-category"></span>
+            <h2 class="modal-title" id="modal-product-title"></h2>
+            
+            <div class="modal-price-row">
+              <span class="modal-price" id="modal-product-price"></span>
+              <span class="modal-old-price" id="modal-product-old-price" style="display:none;"></span>
+            </div>
+
+            <p class="modal-desc" id="modal-product-desc"></p>
+
+            <div class="modal-option-group">
+              <div class="size-label-row">
+                <label class="option-label">Seleccionar Talla:</label>
+                <button class="modal-size-guide-btn" id="modal-open-size-guide">Ver Guía de Tallas (cm)</button>
+              </div>
+              
+              <div class="size-options" id="modal-size-options">
+                <button class="size-btn">S</button>
+                <button class="size-btn active">M</button>
+                <button class="size-btn">L</button>
+                <button class="size-btn">XL</button>
+              </div>
+            </div>
+
+            <div class="modal-option-group">
+              <label class="option-label">Cantidad:</label>
+              <div class="quantity-picker">
+                <button class="qty-btn" id="modal-qty-minus">-</button>
+                <span class="qty-val" id="modal-qty-val">1</span>
+                <button class="qty-btn" id="modal-qty-plus">+</button>
+              </div>
+            </div>
+
+            <div class="modal-actions-wrapper">
+              <button class="btn-primary-black add-to-cart-action" id="modal-add-to-cart-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span>Añadir a la Cesta</span>
+              </button>
+              
+              <button class="btn-wholesale-dozen" id="modal-add-dozen-btn">
+                <span>Comprar Docena (12 Uds - 15% Descuento Al Mayor)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Quick Search Overlay Modal -->
+    <div class="search-overlay" id="search-overlay">
+      <div class="search-modal">
+        <div class="search-modal-header">
+          <input type="text" id="quick-search-modal-input" placeholder="Buscar por nombre de prenda..." autofocus>
+          <button class="close-btn" id="search-modal-close">&times;</button>
+        </div>
+        <div class="search-results-list" id="search-results-list">
+          <p class="search-hint">Empieza a escribir para ver prendas...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
