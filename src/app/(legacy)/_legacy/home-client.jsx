@@ -1163,7 +1163,7 @@ export default function HomeClient({ products: PRODUCTS }) {
         >
           &times;
         </button>
-        <img src={lightbox.src} alt="" className="lightbox-img" />
+        <img src={lightbox.src || undefined} alt="" className="lightbox-img" />
         <span className="lightbox-caption">{lightbox.caption}</span>
       </div>
 
