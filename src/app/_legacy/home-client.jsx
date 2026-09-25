@@ -1,171 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+// Componente heredado de la v2 (una sola página). Se reemplaza por páginas y features en la Fase 3.
 
-// --- REAL KENHION ALLEN PRODUCTS DATASET ---
-const PRODUCTS = [
-  {
-    id: 1,
-    name: 'Crop Top de Compresión',
-    category: 'KA ELITE',
-    gender: 'Mujer',
-    price: 15.0,
-    oldPrice: null,
-    badge: 'KA Elite',
-    badgeType: 'elite',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000308-1f1501f152/IMG_1507.JPG.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=800&q=80',
-    description:
-      'Diseñado para brindar compresión ergonómica, soporte y estética deportiva de alto nivel en tus entrenamientos.',
-  },
-  {
-    id: 2,
-    name: 'Biker de Compresión',
-    category: 'KA ELITE',
-    gender: 'Mujer',
-    price: 15.0,
-    oldPrice: null,
-    badge: 'KA Elite',
-    badgeType: 'elite',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000318-03ccb03cce/IMG_1508.JPG.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1506152983158-b4a74a01c721?auto=format&fit=crop&w=800&q=80',
-    description:
-      'Short estilo biker de compresión anatómica. Moldea la silueta con pretina alta antideslizante para máximo confort.',
-  },
-  {
-    id: 3,
-    name: 'Shorts KA Elite',
-    category: 'KA ELITE',
-    gender: 'Unisex',
-    price: 25.0,
-    oldPrice: null,
-    badge: 'KA Elite',
-    badgeType: 'elite',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000335-e8567e8569/IMG_1509.JPG.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=800&q=80',
-    description:
-      'Shorts deportivos livianos de máxima movilidad. Tacto ultra suave para entrenamiento o diario casual.',
-  },
-  {
-    id: 4,
-    name: 'Franela de Compresión',
-    category: 'KA ELITE',
-    gender: 'Hombre',
-    price: 25.0,
-    oldPrice: null,
-    badge: 'KA Elite',
-    badgeType: 'elite',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000322-bb18ebb190/IMG_1510.JPG.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
-    description:
-      'Franela técnica de ajuste firme al torso. Destaca la figura mientras mantiene alta respirabilidad.',
-  },
-  {
-    id: 5,
-    name: 'Sudadera KA Elite',
-    category: 'KA ELITE',
-    gender: 'Unisex',
-    price: 25.0,
-    oldPrice: null,
-    badge: 'KA Elite',
-    badgeType: 'elite',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000330-b257eb2580/IMG_1511.JPG.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80',
-    description:
-      'Sudadera ligera de ajuste moderno. Corte contemporáneo con bordado frontal distintivo.',
-  },
-  {
-    id: 6,
-    name: 'Basic T Shirt Oversize',
-    category: 'P.O.D.',
-    gender: 'Unisex',
-    price: 25.0,
-    oldPrice: 28.0,
-    badge: 'Oferta P.O.D.',
-    badgeType: 'pod',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000268-43acd43ace/IMG_1018.JPG.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80',
-    description:
-      'Camiseta con patrón Oversize holgado y caída estructurada. Modelo exclusivo Print On Demand en algodón grueso.',
-  },
-  {
-    id: 7,
-    name: 'Girl Shorts Resiliencia',
-    category: 'Resiliencia',
-    gender: 'Mujer',
-    price: 26.0,
-    oldPrice: null,
-    badge: 'Algodón 100%',
-    badgeType: 'resiliencia',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000238-a233fa2344/IMG_0996.JPG.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=800&q=80',
-    description:
-      'La colección Resiliencia destaca por la alta calidad de sus materiales, fabricadas en su totalidad de algodón, en estas prendas resalta la elegancia por su bordado minimalista.',
-  },
-  {
-    id: 8,
-    name: 'Shorts Resiliencia',
-    category: 'Resiliencia',
-    gender: 'Hombre',
-    price: 28.0,
-    oldPrice: null,
-    badge: 'Algodón 100%',
-    badgeType: 'resiliencia',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000220-c7cfdc7cff/IMG_1006.JPG-2.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80',
-    description:
-      'Shorts en algodón de alta densidad con estilo elegante y conservador. Perfectos para salir a cenar o ir de paseo a un mall.',
-  },
-  {
-    id: 9,
-    name: 'T Shirt Oversize Resiliencia',
-    category: 'Resiliencia',
-    gender: 'Unisex',
-    price: 30.0,
-    oldPrice: null,
-    badge: 'Algodón 100%',
-    badgeType: 'resiliencia',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000253-a830da830f/IMG_0983.JPG.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
-    description:
-      'Franela oversize en 100% algodón. Comodidad y bordado discreto que proyecta la grandeza que llevas dentro.',
-  },
-  {
-    id: 10,
-    name: 'Hoodie Resiliencia',
-    category: 'Resiliencia',
-    gender: 'Unisex',
-    price: 35.0,
-    oldPrice: null,
-    badge: 'Algodón 100%',
-    badgeType: 'resiliencia',
-    image:
-      'https://af606c0c04.cbaul-cdnwnd.com/a50e9269c7b3dca260132ece6590c58c/200000202-801c5801c6/IMG_1015.JPG.jpeg?ph=af606c0c04',
-    fallbackImage:
-      'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80',
-    description:
-      'Hoodie con capucha en algodón pesado de máxima suavidad y abrigo. Icono de la colección Resiliencia.',
-  },
-];
+import { useState, useEffect } from 'react';
+import { siteConfig } from '@/config/site';
 
 // Vector Emblem SVG Component
 function EmblemSVG({ className = 'brand-emblem-svg', stroke = '#111827' }) {
@@ -186,7 +24,7 @@ function EmblemSVG({ className = 'brand-emblem-svg', stroke = '#111827' }) {
   );
 }
 
-export default function Home() {
+export default function HomeClient({ products: PRODUCTS }) {
   // --- STATE ---
   const [currentCategory, setCurrentCategory] = useState('all');
   const [currentGender, setCurrentGender] = useState('all');
@@ -392,7 +230,7 @@ export default function Home() {
             <EmblemSVG className="brand-emblem-svg" />
             <div className="brand-text-wrapper">
               <span className="brand-logo-text">KENHION ALLEN</span>
-              <span className="brand-subtle-text">Elegante & Trascendente</span>
+              <span className="brand-subtle-text">{siteConfig.slogan}</span>
             </div>
           </a>
 
@@ -581,9 +419,7 @@ export default function Home() {
               <span className="red-line"></span>
             </div>
 
-            <h1 className="hero-statement-title">
-              &ldquo;Proyecta la grandeza que llevas dentro&rdquo;
-            </h1>
+            <h1 className="hero-statement-title">{siteConfig.slogan}</h1>
 
             <p className="hero-statement-sub">
               Buenas, un cordial saludo de parte de nuestra marca <strong>Kenhion Allen</strong>.
@@ -945,7 +781,7 @@ export default function Home() {
         <div className="section-header center">
           <div className="red-brand-divider">
             <span className="divider-line"></span>
-            <span className="divider-text">Elegante y Trascendente</span>
+            <span className="divider-text">Kenhion Allen</span>
             <span className="divider-line"></span>
           </div>
           <h2 className="section-title">Fotogalería Oficial</h2>
@@ -1004,11 +840,6 @@ export default function Home() {
               Nos destacamos por la calidad de nuestros productos, ofrecemos ropa de diseñador con
               un estilo elegante y conservador. Estamos ubicados en Maracay, Venezuela.
             </p>
-
-            <blockquote className="about-quote">
-              &ldquo;Tu forma de vestir es una representación de tu interior, por eso nosotros nos
-              encargamos de que puedas proyectar la grandeza que llevas dentro.&rdquo;
-            </blockquote>
 
             <div className="about-features-grid">
               <div className="feature-box">
@@ -1318,7 +1149,7 @@ export default function Home() {
           <span>
             © 2026 Kenhion Allen. Todos los derechos reservados. Rediseño Oficial en Next.js.
           </span>
-          <span>Elegante y Trascendente</span>
+          <span>{siteConfig.slogan}</span>
         </div>
       </footer>
 
