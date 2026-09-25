@@ -13,35 +13,35 @@
   --bg-card-hover: #f3f4f6;
   --bg-glass: rgba(255, 255, 255, 0.94);
   --bg-modal: #ffffff;
-  
+
   --text-primary: #111827;
   --text-secondary: #4b5563;
   --text-muted: #9ca3af;
-  
+
   --brand-black: #111827;
   --brand-charcoal: #222529;
   --brand-grey: #6b7280;
-  
+
   /* SUBTLE RED ACCENT FROM OFFICIAL SITE (—— Kenhion Allen ——) */
   --brand-accent-red: #e63946;
   --brand-accent-red-hover: #d62828;
-  
+
   --border-subtle: #e5e7eb;
   --border-dark: #111827;
-  
+
   --whatsapp-green: #25d366;
   --whatsapp-dark: #1da851;
   --discount-green: #16a34a;
-  
+
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.07);
   --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1);
-  
+
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
   --radius-full: 9999px;
-  
+
   --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --font-heading: 'Montserrat', sans-serif;
   --font-serif: 'Merriweather', serif;
@@ -49,7 +49,9 @@
 }
 
 /* Base Resets */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -77,7 +79,9 @@ a {
   transition: var(--transition);
 }
 
-button, input, select {
+button,
+input,
+select {
   font-family: inherit;
   border: none;
   outline: none;
@@ -196,7 +200,8 @@ img {
   vertical-align: middle;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover,
+.nav-link.active {
   color: var(--brand-black);
 }
 
@@ -211,7 +216,8 @@ img {
   transition: var(--transition);
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -263,9 +269,15 @@ img {
   height: 8px;
   border-radius: 50%;
 }
-.dot.black { background: var(--brand-black); }
-.dot.grey { background: var(--brand-grey); }
-.dot.red { background: var(--brand-accent-red); }
+.dot.black {
+  background: var(--brand-black);
+}
+.dot.grey {
+  background: var(--brand-grey);
+}
+.dot.red {
+  background: var(--brand-accent-red);
+}
 
 /* Header Actions */
 .header-actions {
@@ -586,7 +598,7 @@ section {
   align-items: center;
   justify-content: center;
   padding: 2.5rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .about-emblem-large {
@@ -997,12 +1009,22 @@ section {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   z-index: 2;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.product-badge-pill.elite { background: var(--brand-black); color: #fff; }
-.product-badge-pill.resiliencia { background: #ffffff; color: var(--brand-black); border: 1px solid var(--border-subtle); }
-.product-badge-pill.pod { background: var(--brand-accent-red); color: #fff; }
+.product-badge-pill.elite {
+  background: var(--brand-black);
+  color: #fff;
+}
+.product-badge-pill.resiliencia {
+  background: #ffffff;
+  color: var(--brand-black);
+  border: 1px solid var(--border-subtle);
+}
+.product-badge-pill.pod {
+  background: var(--brand-accent-red);
+  color: #fff;
+}
 
 .quick-view-overlay-btn {
   position: absolute;
@@ -1252,7 +1274,9 @@ section {
 .faq-answer-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+  transition:
+    max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    padding 0.3s ease;
   padding: 0 1.4rem;
   background: var(--bg-secondary);
 }
@@ -2288,7 +2312,8 @@ section {
   .hero-brand-card {
     align-items: center;
   }
-  .about-container, .contact-card-box {
+  .about-container,
+  .contact-card-box {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
