@@ -27,7 +27,10 @@ export function Logo({
       />
       <span className="flex flex-col leading-none">
         <span
-          className={cn('text-gold-gradient font-script', size === 'md' ? 'text-3xl' : 'text-5xl')}
+          className={cn(
+            'text-gold-gradient font-script whitespace-nowrap',
+            size === 'md' ? 'text-3xl' : 'text-5xl',
+          )}
         >
           {siteConfig.name}
         </span>
