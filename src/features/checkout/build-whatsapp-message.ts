@@ -77,9 +77,4 @@ export function buildWhatsAppMessage({
   return out.join('\n');
 }
 
-export function buildWhatsAppUrl(
-  message: string,
-  phone: string = siteConfig.contact.whatsappNumber,
-): string {
-  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-}
+export { buildWhatsAppUrl } from '@/lib/whatsapp';

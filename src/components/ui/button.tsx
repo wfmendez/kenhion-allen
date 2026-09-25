@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ComponentProps } from 'react';
 import { cn } from '@/lib/cn';
 
-export type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'danger' | 'whatsapp';
+export type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'danger' | 'whatsapp' | 'dark';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
 
 const base =
@@ -14,6 +14,8 @@ const variants: Record<ButtonVariant, string> = {
   ghost: 'text-fg-muted hover:bg-surface-raised hover:text-fg',
   danger: 'bg-red text-on-accent hover:bg-red-deep',
   whatsapp: 'bg-whatsapp text-on-accent hover:bg-whatsapp-deep',
+  /** Para fondos rojos o claros: botón negro con texto dorado. */
+  dark: 'bg-ink text-gold hover:bg-surface',
 };
 
 const sizes: Record<ButtonSize, string> = {
