@@ -5,3 +5,5 @@ export const productPath = (slug: string) => `/producto/${slug}`;
 export const collectionPath = (slug: CollectionSlug) => `/tienda/${slug}`;
 export const shopPath = '/tienda';
 export const cartPath = '/carrito';
+export const checkoutPath = '/checkout';
+export const confirmationPath = '/checkout/confirmacion';

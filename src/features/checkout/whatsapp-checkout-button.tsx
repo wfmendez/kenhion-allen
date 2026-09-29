@@ -6,25 +6,25 @@ import { useCart } from '@/features/cart/cart-context';
 import { buildWhatsAppMessage, buildWhatsAppUrl } from './build-whatsapp-message';
 
 /**
- * Pedido directo por WhatsApp (flujo de la v2).
- * En la Fase 4 se complementa con el checkout que genera el comprobante PDF.
+ * Pedido directo por WhatsApp, sin formulario ni comprobante (flujo de la v2).
+ * `quick` lo muestra como alternativa discreta al checkout completo.
  */
-export function WhatsAppCheckoutButton({ fullWidth = true }: { fullWidth?: boolean }) {
+export function WhatsAppCheckoutButton({ variant = 'full' }: { variant?: 'full' | 'quick' }) {
   const { lines, totals, collections } = useCart();
-  const disabled = lines.length === 0;
 
   return (
     <Button
-      variant="whatsapp"
-      size="lg"
-      fullWidth={fullWidth}
-      disabled={disabled}
+      variant={variant === 'quick' ? 'ghost' : 'whatsapp'}
+      size={variant === 'quick' ? 'sm' : 'lg'}
+      fullWidth
+      disabled={lines.length === 0}
       onClick={() => {
         const message = buildWhatsAppMessage({ lines, totals, collections });
         window.open(buildWhatsAppUrl(message), '_blank', 'noopener,noreferrer');
       }}
     >
-      <Icon name="whatsapp" size={18} /> Pedir por WhatsApp
+      <Icon name="whatsapp" size={variant === 'quick' ? 16 : 18} />
+      {variant === 'quick' ? 'Pedido rápido por WhatsApp (sin comprobante)' : 'Pedir por WhatsApp'}
     </Button>
   );
 }
