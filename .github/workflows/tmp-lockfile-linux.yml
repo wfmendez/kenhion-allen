@@ -1,0 +1,25 @@
+# TEMPORAL: regenera package-lock.json en Linux (npm en Windows omite dependencias opcionales de otras plataformas). Se elimina en el siguiente commit.
+name: tmp-lockfile-linux
+
+on:
+  push:
+    branches: [chore/fase-5-calidad]
+
+permissions:
+  contents: read
+
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm --version
+      - run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - run: npm ci --dry-run --ignore-scripts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package-lock-linux
+          path: package-lock.json
