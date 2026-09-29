@@ -27,7 +27,8 @@ export function QuickAdd({ product }: { product: Product }) {
         fullWidth
         size="sm"
         onClick={() => addItem(product, size)}
-        aria-label={`Añadir ${product.name} talla ${size} a la cesta`}
+        // El nombre accesible empieza con el texto visible (WCAG 2.5.3) y suma el contexto.
+        aria-label={`Añadir a la cesta: ${product.name}, talla ${size}`}
       >
         <Icon name="bag" size={15} />
         <span className="sm:hidden">Añadir</span>
