@@ -4,7 +4,7 @@ import { ButtonLink } from '@/components/ui/button';
 import { Drawer } from '@/components/ui/dialog';
 import { Icon } from '@/components/ui/icon';
 import { WhatsAppCheckoutButton } from '@/features/checkout/whatsapp-checkout-button';
-import { cartPath, shopPath } from '@/lib/routes';
+import { cartPath, checkoutPath, shopPath } from '@/lib/routes';
 import { useCart } from './cart-context';
 import { CartLineItem } from './cart-line-item';
 import { CartTotalsList, WholesaleProgress } from './cart-summary';
@@ -33,10 +33,13 @@ export function CartDrawer() {
           </ul>
           <CartTotalsList totals={totals} />
           <div className="flex flex-col gap-3">
-            <WhatsAppCheckoutButton />
+            <ButtonLink href={checkoutPath} size="lg" fullWidth onClick={closeDrawer}>
+              Finalizar compra
+            </ButtonLink>
             <ButtonLink href={cartPath} variant="outline" fullWidth onClick={closeDrawer}>
               Ver cesta completa
             </ButtonLink>
+            <WhatsAppCheckoutButton variant="quick" />
           </div>
         </div>
       )}

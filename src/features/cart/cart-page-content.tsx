@@ -3,7 +3,7 @@
 import { Button, ButtonLink } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { WhatsAppCheckoutButton } from '@/features/checkout/whatsapp-checkout-button';
-import { shopPath } from '@/lib/routes';
+import { checkoutPath, shopPath } from '@/lib/routes';
 import { useCart } from './cart-context';
 import { CartLineItem } from './cart-line-item';
 import { CartTotalsList, WholesaleProgress } from './cart-summary';
@@ -46,7 +46,10 @@ export function CartPageContent() {
           Resumen del pedido
         </h2>
         <CartTotalsList totals={totals} />
-        <WhatsAppCheckoutButton />
+        <ButtonLink href={checkoutPath} size="lg" fullWidth>
+          Finalizar compra
+        </ButtonLink>
+        <WhatsAppCheckoutButton variant="quick" />
         <p className="flex items-start gap-2 text-xs text-fg-subtle">
           <Icon name="truck" size={16} className="shrink-0 text-gold" />
           Envíos a toda Venezuela por MRW, Zoom y Tealca. Entrega personal en Maracay.

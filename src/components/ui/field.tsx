@@ -60,6 +60,29 @@ export function Input({
   );
 }
 
+export function Textarea({
+  label,
+  hint,
+  error,
+  className,
+  ...props
+}: ComponentProps<'textarea'> & { label: string; hint?: string; error?: string }) {
+  return (
+    <Field label={label} hint={hint} error={error} className={className}>
+      {({ id, describedBy }) => (
+        <textarea
+          id={id}
+          aria-describedby={describedBy}
+          aria-invalid={error ? true : undefined}
+          rows={3}
+          className={cn(control, 'resize-y')}
+          {...props}
+        />
+      )}
+    </Field>
+  );
+}
+
 export function Select({
   label,
   hint,
