@@ -140,6 +140,7 @@ export function CatalogView({
         ) : null}
       </p>
 
+      <h2 className="sr-only">Prendas</h2>
       {results.length > 0 ? (
         <ProductGrid products={results} collections={collections} priorityCount={4} />
       ) : (
