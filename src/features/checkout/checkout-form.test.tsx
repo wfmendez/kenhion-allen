@@ -30,7 +30,10 @@ describe('CheckoutForm', () => {
     push.mockReset();
     localStorage.setItem(
       CART_STORAGE_KEY,
-      JSON.stringify({ version: 2, lines: [{ productId: 10, size: 'L', qty: 12 }] }),
+      JSON.stringify({
+        version: 3,
+        lines: [{ productId: 12, color: 'negro', size: 'L', qty: 6 }],
+      }),
     );
   });
 
@@ -64,9 +67,14 @@ describe('CheckoutForm', () => {
     const order = loadLastOrder();
     expect(order?.customer).toMatchObject({ idNumber: 'V-12345678', phone: '0412-1234567' });
     expect(order?.items).toEqual([
-      expect.objectContaining({ name: 'Hoodie Resiliencia', size: 'L', qty: 12 }),
+      expect.objectContaining({
+        name: 'Franela de compresión de caballero',
+        colorName: 'Negro',
+        size: 'L',
+        qty: 6,
+      }),
     ]);
-    expect(order?.totals.totalCents).toBe(35700);
+    expect(order?.totals.totalCents).toBe(16891);
     // Los datos personales no van a localStorage.
     expect(JSON.stringify({ ...localStorage })).not.toContain('Ana Pérez');
   });

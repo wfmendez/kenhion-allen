@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -8,9 +9,9 @@ import { Icon } from '@/components/ui/icon';
 import { useCart } from '@/features/cart/cart-context';
 import { buildCatalogQuery } from '@/features/catalog/catalog-params';
 import { filterProducts } from '@/features/catalog/filter-products';
-import { ProductImage } from '@/features/product/product-image';
 import { formatUSD } from '@/lib/money';
 import { productPath, shopPath } from '@/lib/routes';
+import { getPrimaryImage } from '@/lib/schemas/product';
 
 const MAX_RESULTS = 6;
 
@@ -77,9 +78,8 @@ export function SearchButton() {
                     className="flex items-center gap-4 py-3 hover:text-gold"
                   >
                     <span className="relative size-14 shrink-0 overflow-hidden rounded-lg bg-surface">
-                      <ProductImage
-                        src={p.image}
-                        fallbackSrc={p.fallbackImage}
+                      <Image
+                        src={getPrimaryImage(p).src}
                         alt=""
                         fill
                         sizes="56px"

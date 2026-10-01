@@ -24,8 +24,8 @@ export function Hero() {
             {siteConfig.slogan}
           </h1>
           <p className="max-w-lg text-lg text-fg-muted">
-            Prendas elegantes para hombres y mujeres, con materiales de alta calidad y un estilo que
-            no pasa desapercibido.
+            Colección KA ELITE: prendas deportivas de compresión para caballero y dama, hechas para
+            entrenar y verse bien.
           </p>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href={shopPath} size="lg">
@@ -37,29 +37,29 @@ export function Hero() {
           </div>
           <p className="text-sm text-fg-subtle">
             <span className="text-gold">{pct}% de descuento al mayor</span> comprando{' '}
-            {WHOLESALE.minQty} prendas o más.
+            {WHOLESALE.minQty} piezas o más.
           </p>
         </div>
 
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
           <div className="absolute -inset-3 rounded-[1.25rem] border border-gold/30" aria-hidden />
-          <div className="relative aspect-[4/5] overflow-hidden rounded-card">
+          <div className="relative aspect-[3/4] overflow-hidden rounded-card">
             <Image
               src={heroImage.src}
               alt={heroImage.alt}
               fill
               priority
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
+              className="object-cover object-top"
             />
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/90 to-transparent" />
           </div>
           <div className="absolute -bottom-6 -left-4 flex items-center gap-3 rounded-card border border-gold/40 bg-ink/90 px-5 py-4 backdrop-blur sm:-left-8">
             <BrandEmblem className="h-10 w-8 text-gold" />
             <span className="font-display text-[0.65rem] font-bold tracking-[0.2em] text-fg uppercase">
-              Moda elegante
+              Colección
               <br />
-              <span className="text-gold">y conservadora</span>
+              <span className="text-gold">KA ELITE</span>
             </span>
           </div>
         </div>

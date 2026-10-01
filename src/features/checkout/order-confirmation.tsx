@@ -153,13 +153,13 @@ function ConfirmedOrder({ order }: { order: Order }) {
         <ul className="flex flex-col divide-y divide-line">
           {order.items.map((item) => (
             <li
-              key={`${item.productId}-${item.size}`}
+              key={`${item.productId}-${item.colorName}-${item.size}`}
               className="flex justify-between gap-3 py-2.5"
             >
               <span>
                 {item.name}
                 <span className="block text-xs text-fg-subtle">
-                  Talla {item.size} · {item.qty} uds
+                  {item.colorName} · Talla {item.size} · {item.qty} uds
                 </span>
               </span>
               <span className="shrink-0">{formatUSD(item.lineTotalCents)}</span>

@@ -8,6 +8,7 @@ import type { Collection } from '@/lib/schemas/product';
 interface MessageItem {
   name: string;
   collectionName: string;
+  colorName: string;
   size: string;
   qty: number;
   lineTotalCents: number;
@@ -28,6 +29,7 @@ function formatItemsAndTotals(items: MessageItem[], totals: MessageTotals): stri
   items.forEach((item, i) => {
     out.push(`*${i + 1}. ${item.name}*`);
     out.push(`   • Colección: ${item.collectionName}`);
+    out.push(`   • Color: ${item.colorName}`);
     out.push(`   • Talla: ${item.size}`);
     out.push(`   • Cantidad: ${item.qty} unidad(es)`);
     out.push(`   • Precio: ${formatUSD(item.lineTotalCents)}`);
@@ -58,6 +60,7 @@ export function buildWhatsAppMessage({
   const items = lines.map((line) => ({
     name: line.product.name,
     collectionName: collectionName.get(line.product.collection) ?? line.product.collection,
+    colorName: line.colorOption.name,
     size: line.size,
     qty: line.qty,
     lineTotalCents: line.lineTotalCents,

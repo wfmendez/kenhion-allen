@@ -10,3 +10,4 @@ Cada archivo registra una decisión: el contexto, la decisión tomada y sus cons
 | [0004](0004-checkout-whatsapp-y-comprobante-no-fiscal.md) | Checkout por WhatsApp con comprobante PDF no fiscal                      | Aceptada |
 | [0005](0005-tailwind-y-tokens-de-marca.md)                | Tailwind v4 con tokens de marca y contraste verificado                   | Aceptada |
 | [0006](0006-fuente-script-provisional.md)                 | Fuente script provisional hasta tener la licencia de Sloop Script Pro    | Aceptada |
+| [0007](0007-imagenes-locales-y-variantes-de-color.md)     | Imágenes locales y productos con variantes de color                      | Aceptada |

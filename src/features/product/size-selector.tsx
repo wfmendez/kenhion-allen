@@ -21,7 +21,7 @@ export function SizeSelector({
   const name = useId();
   return (
     <fieldset
-      className={cn(compact ? 'grid grid-cols-4 gap-1.5' : 'flex flex-wrap items-center gap-2')}
+      className={cn(compact ? 'grid grid-cols-3 gap-1.5' : 'flex flex-wrap items-center gap-2')}
     >
       <legend className={cn('mb-2 text-xs font-medium text-fg-muted', compact && 'sr-only')}>
         {label}

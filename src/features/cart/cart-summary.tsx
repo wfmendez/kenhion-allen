@@ -6,7 +6,7 @@ import type { CartTotals } from './pricing';
 /** Barra de progreso hacia el descuento al mayor. */
 export function WholesaleProgress({ totals }: { totals: CartTotals }) {
   const pct = Math.round(WHOLESALE.rate * 100);
-  const progress = Math.min(1, totals.itemCount / WHOLESALE.minQty);
+  const progress = Math.min(1, totals.wholesalePieces / WHOLESALE.minQty);
   return (
     <div
       className={cn(
@@ -17,12 +17,12 @@ export function WholesaleProgress({ totals }: { totals: CartTotals }) {
       <p className={totals.isWholesale ? 'text-success' : 'text-fg-muted'}>
         {totals.isWholesale ? (
           <>
-            <strong>¡Docena completada!</strong> Tienes {pct}% de descuento al mayor.
+            <strong>¡Precio al mayor activado!</strong> Tienes {pct}% de descuento.
           </>
         ) : (
           <>
             Añade <strong className="text-gold">{totals.itemsToWholesale}</strong>{' '}
-            {totals.itemsToWholesale === 1 ? 'prenda' : 'prendas'} más y obtén{' '}
+            {totals.itemsToWholesale === 1 ? 'pieza' : 'piezas'} más y obtén{' '}
             <strong className="text-gold">{pct}% al mayor</strong>.
           </>
         )}
@@ -32,7 +32,7 @@ export function WholesaleProgress({ totals }: { totals: CartTotals }) {
         aria-label="Progreso hacia el descuento al mayor"
         aria-valuemin={0}
         aria-valuemax={WHOLESALE.minQty}
-        aria-valuenow={Math.min(totals.itemCount, WHOLESALE.minQty)}
+        aria-valuenow={Math.min(totals.wholesalePieces, WHOLESALE.minQty)}
         className="mt-3 h-1.5 overflow-hidden rounded-full bg-line"
       >
         <div

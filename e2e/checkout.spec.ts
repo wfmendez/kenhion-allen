@@ -12,8 +12,8 @@ test.describe('checkout con comprobante PDF', () => {
   test.beforeEach(async ({ page }) => {
     await captureWindowOpen(page);
     await seedCart(page, [
-      { productId: 10, size: 'XL', qty: 8 },
-      { productId: 2, size: 'S', qty: 4 },
+      { productId: 13, color: 'verde', size: 'M', qty: 4 },
+      { productId: 11, color: 'negro', size: 'S', qty: 2 },
     ]);
   });
 
@@ -43,7 +43,8 @@ test.describe('checkout con comprobante PDF', () => {
     const orderNumber = page.getByText(/^KA-\d{8}-[2-9A-Z]{4}$/);
     await expect(orderNumber).toBeVisible();
     const number = (await orderNumber.textContent())!;
-    await expect(page.getByRole('complementary')).toContainText('$289.00');
+    // 4 × $44.67 + 2 × $24.37 = $227.42; −15% ($34.11) = $193.31
+    await expect(page.getByRole('complementary')).toContainText('$193.31');
 
     // La confirmación sobrevive a una recarga (sessionStorage).
     await page.reload();
@@ -64,7 +65,8 @@ test.describe('checkout con comprobante PDF', () => {
     expect(message).toContain(`*Orden:* ${number}`);
     expect(message).toContain('Cédula/RIF: V-15123456');
     expect(message).toContain('Teléfono: 0424-1234567');
-    expect(message).toContain('*TOTAL A PAGAR: $289.00 USD*');
+    expect(message).toContain('Color: Verde');
+    expect(message).toContain('*TOTAL A PAGAR: $193.31 USD*');
     await expect(page.getByRole('status').filter({ hasText: 'Abrimos WhatsApp' })).toBeVisible();
 
     // La cesta se vacía y no quedan datos personales en localStorage.

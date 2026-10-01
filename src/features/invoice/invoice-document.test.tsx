@@ -34,8 +34,8 @@ function orderWith(lines: Parameters<typeof resolveCartLines>[0]) {
 describe('InvoiceDocument', () => {
   it('genera un PDF válido con descuento, notas y acentos', async () => {
     const order = orderWith([
-      { productId: 10, size: 'XL', qty: 8 },
-      { productId: 2, size: 'S', qty: 4 },
+      { productId: 13, color: 'verde', size: 'L', qty: 4 },
+      { productId: 11, color: 'blanco', size: 'S', qty: 2 },
     ]);
     const buffer = await renderToBuffer(<InvoiceDocument order={order} />);
     expect(buffer.subarray(0, 5).toString()).toBe('%PDF-');
@@ -44,18 +44,20 @@ describe('InvoiceDocument', () => {
 
   it('pagina pedidos largos sin romperse', async () => {
     const many = products.flatMap((p) =>
-      (['S', 'M', 'L', 'XL'] as const).map((size) => ({ productId: p.id, size, qty: 1 })),
+      p.colors.flatMap((c) =>
+        p.sizes.map((size) => ({ productId: p.id, color: c.slug, size, qty: 1 })),
+      ),
     );
     const buffer = await renderToBuffer(<InvoiceDocument order={orderWith(many)} />);
-    // 40 líneas no caben en una página A4: debe haber más de un objeto /Page.
+    // 24 líneas (3 productos × colores × tallas) no caben en una página A4: debe haber más de un objeto /Page.
     const pages = buffer.toString('latin1').match(/\/Type \/Page\b/g) ?? [];
     expect(pages.length).toBeGreaterThan(1);
   });
 
   it('nombra el archivo con el número de orden', () => {
-    expect(invoiceFileName(orderWith([{ productId: 1, size: 'M', qty: 1 }]))).toMatch(
-      /^Comprobante-KA-\d{8}-[2-9A-Z]{4}\.pdf$/,
-    );
+    expect(
+      invoiceFileName(orderWith([{ productId: 11, color: 'negro', size: 'M', qty: 1 }])),
+    ).toMatch(/^Comprobante-KA-\d{8}-[2-9A-Z]{4}\.pdf$/);
   });
 
   it('formatea la fecha en hora de Venezuela', () => {

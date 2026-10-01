@@ -87,8 +87,8 @@ describe('createOrder', () => {
   const customer = customerSchema.parse(valid);
   const lines = resolveCartLines(
     [
-      { productId: 10, size: 'L', qty: 6 },
-      { productId: 6, size: 'M', qty: 6 },
+      { productId: 13, color: 'verde', size: 'L', qty: 3 },
+      { productId: 12, color: 'negro', size: 'M', qty: 3 },
     ],
     products,
   );
@@ -104,16 +104,17 @@ describe('createOrder', () => {
     expect(orderSchema.safeParse(order).success).toBe(true);
     expect(order.number).toMatch(/^KA-\d{8}-[2-9A-Z]{4}$/);
     expect(order.items[0]).toMatchObject({
-      name: 'Hoodie Resiliencia',
-      collectionName: 'Resiliencia',
-      unitPriceCents: 3500,
-      lineTotalCents: 21000,
+      name: 'Conjunto biker + top',
+      colorName: 'Verde',
+      collectionName: 'KA ELITE',
+      unitPriceCents: 4467,
+      lineTotalCents: 13401,
     });
     expect(order.totals).toEqual({
-      itemCount: 12,
-      subtotalCents: 36000,
-      discountCents: 5400,
-      totalCents: 30600,
+      itemCount: 6,
+      subtotalCents: 23337,
+      discountCents: 3501,
+      totalCents: 19836,
       isWholesale: true,
       discountRate: 0.15,
     });
@@ -128,7 +129,10 @@ describe('order-storage', () => {
   beforeEach(() => sessionStorage.clear());
 
   it('guarda en sessionStorage (no en localStorage) y valida al leer', () => {
-    const oneLine = resolveCartLines([{ productId: 1, size: 'M', qty: 1 }], products);
+    const oneLine = resolveCartLines(
+      [{ productId: 11, color: 'blanco', size: 'M', qty: 1 }],
+      products,
+    );
     const order = createOrder({
       lines: oneLine,
       collections,

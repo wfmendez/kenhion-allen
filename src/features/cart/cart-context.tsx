@@ -11,7 +11,7 @@ import {
 } from 'react';
 import { useToast } from '@/components/ui/toast';
 import { WHOLESALE, type Size } from '@/config/business';
-import type { Collection, Product } from '@/lib/schemas/product';
+import { getProductColor, type Collection, type Product } from '@/lib/schemas/product';
 import { dispatchCart, getCartSnapshot, getServerCartSnapshot, subscribeCart } from './cart-store';
 import {
   calculateTotals,
@@ -26,7 +26,7 @@ interface CartContextValue {
   collections: Collection[];
   lines: ResolvedCartLine[];
   totals: CartTotals;
-  addItem: (product: Product, size: Size, qty?: number) => void;
+  addItem: (product: Product, color: string, size: Size, qty?: number) => void;
   setQty: (lineId: string, qty: number) => void;
   changeSize: (lineId: string, size: Size) => void;
   removeItem: (lineId: string) => void;
@@ -55,22 +55,22 @@ export function CartProvider({
   const totals = useMemo(() => calculateTotals(lines), [lines]);
 
   const addItem = useCallback(
-    (product: Product, size: Size, qty = 1) => {
+    (product: Product, color: string, size: Size, qty = 1) => {
       const wasWholesale = calculateTotals(
         resolveCartLines(getCartSnapshot().lines, products),
       ).isWholesale;
-      dispatchCart({ type: 'add', productId: product.id, size, qty });
+      dispatchCart({ type: 'add', productId: product.id, color, size, qty });
       const nowWholesale = calculateTotals(
         resolveCartLines(getCartSnapshot().lines, products),
       ).isWholesale;
       if (!wasWholesale && nowWholesale) {
         toast(
-          `¡Docena completada! ${Math.round(WHOLESALE.rate * 100)}% al mayor aplicado`,
+          `¡Precio al mayor activado! ${Math.round(WHOLESALE.rate * 100)}% de descuento aplicado`,
           'success',
         );
       } else {
         toast(
-          `Añadido: ${product.name} · Talla ${size}${qty > 1 ? ` · ${qty} uds` : ''}`,
+          `Añadido: ${product.name} · ${getProductColor(product, color).name} · Talla ${size}${qty > 1 ? ` · ${qty} uds` : ''}`,
           'success',
         );
       }

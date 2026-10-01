@@ -1,11 +1,16 @@
+'use client';
+
+import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Price } from '@/components/ui/price';
-import type { Collection, Product } from '@/lib/schemas/product';
+import { cn } from '@/lib/cn';
 import { productPath } from '@/lib/routes';
-import { ProductImage } from './product-image';
+import { getPrimaryImage, type Collection, type Product } from '@/lib/schemas/product';
 import { QuickAdd } from './quick-add';
 
+/** Tarjeta del catálogo. Es cliente porque la foto cambia con el color elegido. */
 export function ProductCard({
   product,
   collection,
@@ -15,18 +20,20 @@ export function ProductCard({
   collection?: Collection;
   priority?: boolean;
 }) {
+  const [color, setColor] = useState(product.colors[0]!.slug);
   const href = productPath(product.slug);
+  const image = getPrimaryImage(product, color);
+
   return (
     <article className="group flex w-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-shadow duration-300 hover:shadow-gold">
       <Link
         href={href}
-        className="relative block aspect-[4/5] overflow-hidden bg-surface-raised"
+        className="relative block aspect-[2/3] overflow-hidden bg-surface-raised"
         tabIndex={-1}
         aria-hidden
       >
-        <ProductImage
-          src={product.image}
-          fallbackSrc={product.fallbackImage}
+        <Image
+          src={image.src}
           alt=""
           fill
           priority={priority}
@@ -42,7 +49,10 @@ export function ProductCard({
       </Link>
       <div className="flex flex-1 flex-col gap-3 p-4 sm:p-5">
         <p className="flex items-center justify-between gap-2 font-display text-[0.62rem] font-bold tracking-[0.2em] text-fg-subtle uppercase">
-          <span className="truncate">{collection?.name ?? product.collection}</span>
+          {/* En móvil la colección ya se lee en la insignia de la foto. */}
+          <span className="hidden truncate sm:inline">
+            {collection?.name ?? product.collection}
+          </span>
           <span className="shrink-0">{product.gender}</span>
         </p>
         <h3 className="font-display text-base font-bold sm:text-lg">
@@ -52,7 +62,7 @@ export function ProductCard({
         </h3>
         <Price cents={product.priceCents} compareAtCents={product.compareAtPriceCents} />
         <div className="mt-auto pt-2">
-          <QuickAdd product={product} />
+          <QuickAdd product={product} color={color} onColorChange={setColor} />
         </div>
       </div>
     </article>
@@ -70,7 +80,13 @@ export function ProductGrid({
 }) {
   const bySlug = new Map(collections.map((c) => [c.slug, c]));
   return (
-    <ul className="grid grid-cols-2 gap-3 sm:gap-6 md:grid-cols-3 xl:grid-cols-4">
+    <ul
+      className={cn(
+        'grid w-full grid-cols-2 gap-3 sm:gap-6 md:grid-cols-3',
+        // Con pocos productos, 3 columnas llenan la fila; con más, se pasa a 4.
+        products.length > 3 && 'xl:grid-cols-4',
+      )}
+    >
       {products.map((product, i) => (
         <li key={product.id} className="flex">
           <ProductCard

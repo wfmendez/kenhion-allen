@@ -4,7 +4,7 @@ import type { CartLine } from '@/lib/schemas/cart';
 export type CartState = { lines: CartLine[] };
 
 export type CartAction =
-  | { type: 'add'; productId: number; size: Size; qty: number }
+  | { type: 'add'; productId: number; color: string; size: Size; qty: number }
   | { type: 'setQty'; lineId: string; qty: number }
   | { type: 'changeSize'; lineId: string; size: Size }
   | { type: 'remove'; lineId: string }
@@ -13,12 +13,12 @@ export type CartAction =
 
 export const initialCartState: CartState = { lines: [] };
 
-/** Una línea por combinación producto + talla. */
-export function getLineId(line: Pick<CartLine, 'productId' | 'size'>): string {
-  return `${line.productId}-${line.size}`;
+/** Una línea por combinación producto + color + talla. */
+export function getLineId(line: Pick<CartLine, 'productId' | 'color' | 'size'>): string {
+  return `${line.productId}-${line.color}-${line.size}`;
 }
 
-/** Une líneas repetidas (mismo producto y talla) sumando cantidades, sin alterar el orden. */
+/** Une líneas repetidas (mismo producto, color y talla) sumando cantidades, sin alterar el orden. */
 function mergeLines(lines: CartLine[]): CartLine[] {
   const merged = new Map<string, CartLine>();
   for (const line of lines) {
@@ -34,7 +34,12 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'add': {
       if (action.qty <= 0) return state;
-      const line: CartLine = { productId: action.productId, size: action.size, qty: action.qty };
+      const line: CartLine = {
+        productId: action.productId,
+        color: action.color,
+        size: action.size,
+        qty: action.qty,
+      };
       return { lines: mergeLines([...state.lines, line]) };
     }
     case 'setQty': {

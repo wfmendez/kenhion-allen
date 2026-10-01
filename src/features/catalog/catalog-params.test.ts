@@ -2,9 +2,9 @@ import { buildCatalogQuery, parseCatalogParams } from './catalog-params';
 
 describe('parseCatalogParams', () => {
   it('traduce los parámetros en español', () => {
-    expect(parseCatalogParams({ genero: 'Mujer', q: ' hoodie ', orden: 'precio-desc' })).toEqual({
-      gender: 'Mujer',
-      query: 'hoodie',
+    expect(parseCatalogParams({ genero: 'Dama', q: ' biker ', orden: 'precio-desc' })).toEqual({
+      gender: 'Dama',
+      query: 'biker',
       sort: 'price-desc',
     });
   });
@@ -19,7 +19,7 @@ describe('parseCatalogParams', () => {
   });
 
   it('toma el primer valor si el parámetro se repite y limita la búsqueda', () => {
-    expect(parseCatalogParams({ genero: ['hombre', 'mujer'] }).gender).toBe('Hombre');
+    expect(parseCatalogParams({ genero: ['caballero', 'dama'] }).gender).toBe('Caballero');
     expect(parseCatalogParams({ q: 'x'.repeat(200) }).query).toHaveLength(80);
   });
 });

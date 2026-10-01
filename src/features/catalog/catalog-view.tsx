@@ -8,7 +8,7 @@ import { collectionPath, shopPath } from '@/lib/routes';
 import type { Collection, CollectionSlug, Product } from '@/lib/schemas/product';
 import {
   buildCatalogQuery,
-  genderOptions,
+  genderOptionsFor,
   parseCatalogParams,
   sortLabels,
   sortToParam,
@@ -34,6 +34,9 @@ export function CatalogView({
   const counts = countByCollection(products);
   const basePath = activeCollection === 'all' ? shopPath : collectionPath(activeCollection);
   const hasFilters = filters.gender !== 'all' || filters.query !== '';
+  const genderOptions = genderOptionsFor(products);
+  // Con una sola colección las pestañas no aportan nada: se ocultan.
+  const showCollectionTabs = collections.length > 1;
 
   const tabs: { slug: CollectionSlug | 'all'; label: string; href: string }[] = [
     { slug: 'all', label: 'Todo', href: shopPath },
@@ -42,37 +45,39 @@ export function CatalogView({
 
   return (
     <div className="flex flex-col gap-8">
-      <nav aria-label="Colecciones" className="-mx-4 overflow-x-auto px-4">
-        <ul className="flex min-w-max gap-2">
-          {tabs.map((tab) => {
-            const active = tab.slug === activeCollection;
-            return (
-              <li key={tab.slug}>
-                <Link
-                  href={`${tab.href}${buildCatalogQuery(filters)}`}
-                  aria-current={active ? 'page' : undefined}
-                  className={cn(
-                    'inline-flex items-center gap-2 rounded-full border px-4 py-2 font-display text-[0.7rem] font-bold tracking-[0.16em] uppercase transition-colors',
-                    active
-                      ? 'border-gold bg-gold text-ink'
-                      : 'border-line text-fg-muted hover:border-gold/60 hover:text-fg',
-                  )}
-                >
-                  {tab.label}
-                  <span
+      {showCollectionTabs ? (
+        <nav aria-label="Colecciones" className="-mx-4 overflow-x-auto px-4">
+          <ul className="flex min-w-max gap-2">
+            {tabs.map((tab) => {
+              const active = tab.slug === activeCollection;
+              return (
+                <li key={tab.slug}>
+                  <Link
+                    href={`${tab.href}${buildCatalogQuery(filters)}`}
+                    aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'rounded-full px-1.5 text-[0.6rem]',
-                      active ? 'bg-ink/15' : 'bg-surface-raised',
+                      'inline-flex items-center gap-2 rounded-full border px-4 py-2 font-display text-[0.7rem] font-bold tracking-[0.16em] uppercase transition-colors',
+                      active
+                        ? 'border-gold bg-gold text-ink'
+                        : 'border-line text-fg-muted hover:border-gold/60 hover:text-fg',
                     )}
                   >
-                    {counts[tab.slug]}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+                    {tab.label}
+                    <span
+                      className={cn(
+                        'rounded-full px-1.5 text-[0.6rem]',
+                        active ? 'bg-ink/15' : 'bg-surface-raised',
+                      )}
+                    >
+                      {counts[tab.slug] ?? 0}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      ) : null}
 
       <div className="flex flex-col gap-4 rounded-card border border-line bg-surface p-4 lg:flex-row lg:items-center lg:justify-between">
         {/* Formulario GET: funciona sin JavaScript y deja la búsqueda en la URL. */}
@@ -94,7 +99,7 @@ export function CatalogView({
               type="search"
               name="q"
               defaultValue={filters.query}
-              placeholder="Buscar: hoodie, shorts, compresión…"
+              placeholder="Buscar: short, franela, conjunto…"
               className="w-full rounded-full border border-line bg-ink py-2.5 pr-4 pl-11 text-sm placeholder:text-fg-subtle focus:border-gold focus:outline-none"
             />
           </label>

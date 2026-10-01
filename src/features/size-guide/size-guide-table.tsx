@@ -41,16 +41,10 @@ export function SizeGuideTable() {
           </tbody>
         </table>
       </div>
-      <ul className="grid gap-3 text-sm text-fg-muted sm:grid-cols-2">
-        <li className="rounded-card border border-line p-4">
-          <strong className="text-gold">KA ELITE (compresión):</strong> ajuste ceñido. Si prefieres
-          algo más relajado, elige una talla más.
-        </li>
-        <li className="rounded-card border border-line p-4">
-          <strong className="text-gold">Resiliencia (algodón 100%):</strong> patrón oversize con
-          caída estructurada.
-        </li>
-      </ul>
+      <p className="rounded-card border border-line p-4 text-sm text-fg-muted">
+        <strong className="text-gold">KA ELITE (compresión):</strong> ajuste ceñido. Si prefieres
+        algo más relajado, elige una talla más.
+      </p>
     </div>
   );
 }

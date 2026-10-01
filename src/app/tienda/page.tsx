@@ -8,7 +8,7 @@ import { PageHeader } from '@/sections/page-header';
 export const metadata: Metadata = {
   title: 'Tienda online',
   description:
-    'Compra en línea las colecciones KA ELITE, Resiliencia y P.O.D. Envíos a toda Venezuela y descuento al mayor.',
+    'Compra en línea la colección KA ELITE: short, franela de compresión y conjunto biker + top. Envíos a toda Venezuela y descuento al mayor.',
   alternates: { canonical: shopPath },
 };
 
@@ -22,7 +22,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   return (
     <>
       <PageHeader
-        eyebrow="Colecciones oficiales"
+        eyebrow="Colección KA ELITE"
         title="Tienda online"
         crumbs={[{ name: 'Tienda', path: shopPath }]}
       />

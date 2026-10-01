@@ -7,9 +7,9 @@ Producción: https://kenhion-allen.vercel.app
 
 ## Qué hace
 
-- Catálogo multipágina: colecciones **KA ELITE**, **Resiliencia** y **P.O.D.**, con filtros en la URL.
-- Ficha por producto con tallas, cantidad y pedido por docena.
-- Cesta persistente con **15% de descuento al mayor** a partir de 12 prendas.
+- Catálogo multipágina de la colección **KA ELITE** (short, franela de compresión y conjunto biker + top), con filtros en la URL.
+- Ficha por producto con selector de **color** y talla, cantidad y pedido al mayor.
+- Cesta persistente con **15% de descuento al mayor** a partir de 6 piezas.
 - **Checkout** con datos del cliente y **comprobante de pedido en PDF** (no fiscal).
 - Pedido enviado por **WhatsApp**. No hay pasarela de pago: el pago se coordina por chat.
 
@@ -60,8 +60,9 @@ src/
   lib/          Utilidades sin UI: esquemas Zod, repositorio del catálogo, dinero, rutas, JSON-LD
   features/     Funcionalidades: cart, catalog, checkout, invoice, product, search, gallery, faq, size-guide
   components/   UI reutilizable (ui/) y layout (header, footer, logo)
-  sections/     Bloques de página (hero, colecciones, servicios…)
+  sections/     Bloques de página (hero, servicios, banner de mayoreo…)
   styles/       Tokens de color, fuentes y CSS global (Tailwind)
+public/images/  Fotos de producto y de la marca (ver ADR 0007)
 e2e/            Tests de Playwright
 docs/           Marca (brand.md) y decisiones de arquitectura (adr/)
 ```

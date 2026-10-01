@@ -58,13 +58,13 @@ export function filterProducts(products: Product[], filters: Partial<CatalogFilt
   }
 }
 
-export function countByCollection(products: Product[]): Record<CollectionSlug | 'all', number> {
-  const counts: Record<CollectionSlug | 'all', number> = {
+/** Cantidad de productos por colección (más el total en `all`). Las colecciones vacías dan 0. */
+export function countByCollection(
+  products: Product[],
+): Partial<Record<CollectionSlug, number>> & { all: number } {
+  const counts: Partial<Record<CollectionSlug, number>> & { all: number } = {
     all: products.length,
-    'ka-elite': 0,
-    resiliencia: 0,
-    pod: 0,
   };
-  for (const p of products) counts[p.collection] += 1;
+  for (const p of products) counts[p.collection] = (counts[p.collection] ?? 0) + 1;
   return counts;
 }

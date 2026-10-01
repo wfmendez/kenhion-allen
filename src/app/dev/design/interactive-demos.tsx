@@ -20,10 +20,16 @@ export function OverlayDemos() {
       <Button variant="outline" onClick={() => setDrawerOpen(true)}>
         Abrir drawer
       </Button>
-      <Button variant="ghost" onClick={() => toast('Añadido a la cesta: Hoodie Resiliencia (L)')}>
+      <Button
+        variant="ghost"
+        onClick={() => toast('Añadido: Short de caballero · Verde · Talla L')}
+      >
         Toast info
       </Button>
-      <Button variant="ghost" onClick={() => toast('¡Docena completada! 15% aplicado', 'success')}>
+      <Button
+        variant="ghost"
+        onClick={() => toast('¡Precio al mayor activado! 15% de descuento aplicado', 'success')}
+      >
         Toast éxito
       </Button>
       <Button variant="ghost" onClick={() => toast('No se pudo generar el PDF', 'error')}>

@@ -1,12 +1,12 @@
 /** Reglas de negocio configurables. Cambiarlas aquí actualiza carrito, UI, WhatsApp y comprobante. */
-export const SIZES = ['S', 'M', 'L', 'XL'] as const;
+export const SIZES = ['S', 'M', 'L'] as const;
 export type Size = (typeof SIZES)[number];
 
 export const DEFAULT_SIZE: Size = 'M';
 
 export const WHOLESALE = {
-  /** Unidades totales en el carrito a partir de las cuales aplica el descuento. */
-  minQty: 12,
+  /** Piezas totales en el carrito a partir de las cuales aplica el descuento. */
+  minQty: 6,
   /** Descuento como fracción (0.15 = 15%). */
   rate: 0.15,
 } as const;
