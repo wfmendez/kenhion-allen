@@ -10,6 +10,19 @@
 
 Los hooks de git (husky + lint-staged) formatean y revisan los archivos en cada commit.
 
+## Dependencias
+
+- **Antes de mergear un PR de Dependabot, revisa que su CI esté en verde.** Los saltos de versión mayor pueden romper el lint o los tipos aunque el sitio compile.
+- Para instalar o actualizar un paquete, usa la misma versión de npm que CI, para que el `package-lock.json` sirva en Linux:
+
+  ```bash
+  npx npm@11.19 install <paquete>
+  ```
+
+  Con un npm más viejo en Windows, el lockfile pierde dependencias opcionales de otras plataformas y `npm ci` falla en CI.
+
+- TypeScript se queda en la 6.x y ESLint en la 9.x hasta que `typescript-eslint` y `eslint-plugin-react` soporten las versiones nuevas (Dependabot las ignora, ver `.github/dependabot.yml`).
+
 ## Tareas frecuentes
 
 ### Agregar o editar un producto
