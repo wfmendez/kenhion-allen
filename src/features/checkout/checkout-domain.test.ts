@@ -112,6 +112,8 @@ describe('createOrder', () => {
     });
     expect(order.totals).toEqual({
       itemCount: 6,
+      // 3 conjuntos (2 piezas c/u) + 3 franelas
+      wholesalePieces: 9,
       subtotalCents: 23337,
       discountCents: 3501,
       totalCents: 19836,

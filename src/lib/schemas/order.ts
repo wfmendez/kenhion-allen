@@ -25,6 +25,8 @@ export const orderSchema = z.object({
   items: z.array(orderItemSchema).min(1),
   totals: z.object({
     itemCount: z.number().int().positive(),
+    /** Piezas que contaron para el descuento al mayor (un conjunto suma 2). */
+    wholesalePieces: z.number().int().positive(),
     subtotalCents: z.number().int().nonnegative(),
     discountCents: z.number().int().nonnegative(),
     totalCents: z.number().int().nonnegative(),

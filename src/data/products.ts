@@ -127,7 +127,7 @@ export const products: Product[] = [
       action('07', 'Atleta descansando con el conjunto negro'),
       action('09', 'Detalle del emblema en la espalda del top negro'),
     ],
-    // Pendiente del cliente: si el conjunto (2 prendas) cuenta como 1 o 2 piezas al mayor.
-    wholesaleUnits: 1,
+    // Confirmado por el cliente: el conjunto trae dos prendas y cuenta como 2 piezas al mayor.
+    wholesaleUnits: 2,
   },
 ];

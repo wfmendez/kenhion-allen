@@ -5,6 +5,7 @@ import {
   EMBLEM_VIEWBOX,
 } from '@/components/layout/emblem-paths';
 import { siteConfig } from '@/config/site';
+import { describeQuantity } from '@/features/cart/pricing';
 import { formatUSD } from '@/lib/money';
 import type { Order } from '@/lib/schemas/order';
 import { colors } from '@/styles/tokens';
@@ -245,9 +246,7 @@ export function InvoiceDocument({ order }: { order: Order }) {
 
         <View style={s.totals} wrap={false}>
           <View style={s.totalRow}>
-            <Text>
-              Subtotal ({totals.itemCount} {totals.itemCount === 1 ? 'prenda' : 'prendas'})
-            </Text>
+            <Text>Subtotal ({describeQuantity(totals)})</Text>
             <Text>{formatUSD(totals.subtotalCents)}</Text>
           </View>
           {totals.isWholesale ? (

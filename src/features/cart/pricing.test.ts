@@ -1,5 +1,5 @@
 import { products } from '@/data/products';
-import { calculateTotals, resolveCartLines } from './pricing';
+import { calculateTotals, describeQuantity, resolveCartLines } from './pricing';
 
 describe('resolveCartLines', () => {
   it('toma precio, color e imagen del catálogo', () => {
@@ -28,16 +28,36 @@ describe('resolveCartLines', () => {
     expect(lines.map((l) => l.lineId)).toEqual(['11-verde-M']);
   });
 
-  it('cuenta las piezas al mayor según wholesaleUnits del producto', () => {
-    const conjuntoDoble = products.map((p) => (p.id === 13 ? { ...p, wholesaleUnits: 2 } : p));
+  it('el conjunto cuenta como 2 piezas: 3 conjuntos activan el descuento al mayor', () => {
     const lines = resolveCartLines(
       [{ productId: 13, color: 'verde', size: 'M', qty: 3 }],
-      conjuntoDoble,
+      products,
     );
     const totals = calculateTotals(lines);
     expect(totals.itemCount).toBe(3);
     expect(totals.wholesalePieces).toBe(6);
     expect(totals.isWholesale).toBe(true);
+    // 3 × $44.67 = $134.01; 15% = $20.10
+    expect(totals.discountCents).toBe(2010);
+    expect(totals.totalCents).toBe(11391);
+  });
+
+  it('2 conjuntos + 1 short son 5 piezas: todavía sin descuento', () => {
+    const totals = calculateTotals(
+      resolveCartLines(
+        [
+          { productId: 13, color: 'negro', size: 'S', qty: 2 },
+          { productId: 11, color: 'verde', size: 'M', qty: 1 },
+        ],
+        products,
+      ),
+    );
+    expect(totals).toMatchObject({
+      itemCount: 3,
+      wholesalePieces: 5,
+      isWholesale: false,
+      itemsToWholesale: 1,
+    });
   });
 });
 
@@ -87,5 +107,13 @@ describe('calculateTotals', () => {
   it('acepta reglas personalizadas', () => {
     const totals = calculateTotals([line(3, 1000)], { minQty: 3, rate: 0.1 });
     expect(totals.discountCents).toBe(300);
+  });
+});
+
+describe('describeQuantity', () => {
+  it('muestra artículos y, si difieren, las piezas al mayor', () => {
+    expect(describeQuantity({ itemCount: 1, wholesalePieces: 1 })).toBe('1 artículo');
+    expect(describeQuantity({ itemCount: 4, wholesalePieces: 4 })).toBe('4 artículos');
+    expect(describeQuantity({ itemCount: 3, wholesalePieces: 6 })).toBe('3 artículos · 6 piezas');
   });
 });
