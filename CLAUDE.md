@@ -29,6 +29,8 @@ Tienda online de Kenhion Allen (Next.js 16 App Router, React 19, TypeScript estr
 
 En la máquina de desarrollo principal (Windows), una política de Application Control puede bloquear el binario nativo de Next (`@next/swc-win32-x64-msvc`), y entonces Turbopack no arranca. Usa `npm run build:webpack` + `npm start` para verificar. CI y Vercel no están afectados.
 
+Para cambiar dependencias usa `npx npm@11.19 install …`: el npm local (11.6) genera un lockfile que rompe `npm ci` en CI. TypeScript 7 y ESLint 10 todavía no son compatibles con el lint (ver CONTRIBUTING.md).
+
 ## Pendientes del cliente (no inventar estos datos)
 
 Logo en vector, licencia de Sloop Script Pro, RIF y dirección fiscal de la tienda, datos de pago, validación de la guía de tallas, colores disponibles por prenda y si el conjunto cuenta como 1 o 2 piezas al mayor (`wholesaleUnits`). Ver `docs/brand.md`.
