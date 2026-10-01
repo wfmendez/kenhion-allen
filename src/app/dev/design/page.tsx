@@ -41,17 +41,17 @@ export default async function DesignSystemPage() {
             <Logo size="lg" showSlogan />
           </Swatch>
           <Swatch className="bg-red">
-            <BrandEmblem className="h-20 w-16 text-gold-light" />
+            <BrandEmblem weight="official" className="h-20 w-16 text-gold-light" />
             <span className="font-script text-4xl text-gold-light">{siteConfig.name}</span>
           </Swatch>
           <Swatch className="bg-fg">
-            <BrandEmblem className="h-20 w-16 text-ink" />
+            <BrandEmblem weight="official" className="h-20 w-16 text-ink" />
             <span className="font-script text-4xl text-ink">{siteConfig.name}</span>
           </Swatch>
         </div>
         <p className="text-sm text-fg-subtle">
-          Emblema provisional (se reemplaza por el vector oficial). El nombre usa Great Vibes hasta
-          tener la licencia de Sloop Script Pro.
+          Emblema redibujado a partir del logo oficial (falta el vector original). El nombre usa
+          Great Vibes hasta tener la licencia de Sloop Script Pro.
         </p>
         <div className="rounded-card border border-line bg-surface p-10 text-center">
           <p className="text-gold-gradient font-script text-6xl sm:text-7xl">{siteConfig.slogan}</p>

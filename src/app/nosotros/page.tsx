@@ -44,7 +44,7 @@ export default function AboutPage() {
             aria-hidden
             className="absolute inset-0 bg-[radial-gradient(circle,rgb(212_175_55/0.15),transparent_65%)]"
           />
-          <BrandEmblem className="relative h-48 w-40 text-gold" />
+          <BrandEmblem weight="official" className="relative h-48 w-40 text-gold" />
         </div>
         <div className="flex flex-col gap-6">
           <p className="text-lg leading-relaxed text-fg-muted">

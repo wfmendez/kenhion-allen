@@ -9,6 +9,7 @@ export function WholesaleBanner() {
     <section className="mx-auto max-w-7xl px-4 sm:px-6">
       <div className="relative overflow-hidden rounded-card bg-red px-6 py-12 text-on-accent sm:px-12">
         <BrandEmblem
+          weight="official"
           aria-hidden
           className="absolute -top-8 -right-6 h-56 w-48 text-gold-light opacity-20"
         />
