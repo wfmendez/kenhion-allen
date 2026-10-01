@@ -1,17 +1,29 @@
 import type { SVGProps } from 'react';
+import {
+  EMBLEM_PATHS,
+  EMBLEM_STROKE_OFFICIAL,
+  EMBLEM_STROKE_SMALL,
+  EMBLEM_VIEWBOX,
+} from './emblem-paths';
 
 /**
  * Emblema de Kenhion Allen. Usa `currentColor`: el color se controla con clases
  * de texto (por ejemplo `text-gold`).
- * TODO: reemplazar los trazos por el vector oficial cuando el cliente lo envíe.
+ *
+ * `weight="official"` respeta el grosor del logo original y es para tamaños grandes;
+ * `weight="small"` (por defecto) engrosa el trazo para que se lea en iconos pequeños.
  */
-export function BrandEmblem({ title, ...props }: SVGProps<SVGSVGElement> & { title?: string }) {
+export function BrandEmblem({
+  title,
+  weight = 'small',
+  ...props
+}: SVGProps<SVGSVGElement> & { title?: string; weight?: 'official' | 'small' }) {
   return (
     <svg
-      viewBox="0 0 100 120"
+      viewBox={EMBLEM_VIEWBOX}
       fill="none"
       stroke="currentColor"
-      strokeWidth={6.5}
+      strokeWidth={weight === 'official' ? EMBLEM_STROKE_OFFICIAL : EMBLEM_STROKE_SMALL}
       strokeLinecap="round"
       strokeLinejoin="round"
       role={title ? 'img' : undefined}
@@ -19,9 +31,9 @@ export function BrandEmblem({ title, ...props }: SVGProps<SVGSVGElement> & { tit
       aria-hidden={title ? undefined : true}
       {...props}
     >
-      <path d="M 50 5 Q 50 35 85 60 Q 50 85 50 115 Q 50 85 15 60 Q 50 35 50 5 Z" />
-      <path d="M 24 25 Q 38 60 24 95" />
-      <path d="M 76 25 Q 62 60 76 95" />
+      {EMBLEM_PATHS.map((d) => (
+        <path key={d} d={d} />
+      ))}
     </svg>
   );
 }

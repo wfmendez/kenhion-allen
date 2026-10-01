@@ -5,7 +5,7 @@ import { shopPath } from '@/lib/routes';
 export default function NotFound() {
   return (
     <div className="mx-auto flex max-w-xl flex-col items-center gap-6 px-4 py-24 text-center">
-      <BrandEmblem className="h-24 w-20 text-gold" />
+      <BrandEmblem weight="official" className="h-24 w-20 text-gold" />
       <p className="font-display text-[0.7rem] font-bold tracking-[0.3em] text-gold uppercase">
         Error 404
       </p>

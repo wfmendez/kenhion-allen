@@ -1,4 +1,9 @@
 import { Document, G, Page, Path, StyleSheet, Svg, Text, View } from '@react-pdf/renderer';
+import {
+  EMBLEM_PATHS,
+  EMBLEM_STROKE_SMALL,
+  EMBLEM_VIEWBOX,
+} from '@/components/layout/emblem-paths';
 import { siteConfig } from '@/config/site';
 import { formatUSD } from '@/lib/money';
 import type { Order } from '@/lib/schemas/order';
@@ -118,17 +123,17 @@ const s = StyleSheet.create({
 
 function Emblem() {
   return (
-    <Svg width={26} height={31} viewBox="0 0 100 120">
+    <Svg width={26} height={31} viewBox={EMBLEM_VIEWBOX}>
       <G
         stroke={colors.gold}
-        strokeWidth={7}
+        strokeWidth={EMBLEM_STROKE_SMALL}
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       >
-        <Path d="M 50 5 Q 50 35 85 60 Q 50 85 50 115 Q 50 85 15 60 Q 50 35 50 5 Z" />
-        <Path d="M 24 25 Q 38 60 24 95" />
-        <Path d="M 76 25 Q 62 60 76 95" />
+        {EMBLEM_PATHS.map((d) => (
+          <Path key={d} d={d} />
+        ))}
       </G>
     </Svg>
   );

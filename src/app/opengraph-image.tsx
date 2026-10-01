@@ -1,4 +1,9 @@
 import { ImageResponse } from 'next/og';
+import {
+  EMBLEM_PATHS,
+  EMBLEM_STROKE_OFFICIAL,
+  EMBLEM_VIEWBOX,
+} from '@/components/layout/emblem-paths';
 import { siteConfig } from '@/config/site';
 
 export const alt = `${siteConfig.name}: ${siteConfig.slogan}`;
@@ -22,11 +27,16 @@ export default function OpenGraphImage() {
         gap: 28,
       }}
     >
-      <svg width="120" height="144" viewBox="0 0 100 120" fill="none">
-        <g stroke="#d4af37" strokeWidth="6.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M 50 5 Q 50 35 85 60 Q 50 85 50 115 Q 50 85 15 60 Q 50 35 50 5 Z" />
-          <path d="M 24 25 Q 38 60 24 95" />
-          <path d="M 76 25 Q 62 60 76 95" />
+      <svg width="120" height="144" viewBox={EMBLEM_VIEWBOX} fill="none">
+        <g
+          stroke="#d4af37"
+          strokeWidth={EMBLEM_STROKE_OFFICIAL}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          {EMBLEM_PATHS.map((d) => (
+            <path key={d} d={d} />
+          ))}
         </g>
       </svg>
       <div style={{ fontSize: 84, fontWeight: 700, letterSpacing: 6, color: '#d4af37' }}>
