@@ -4,6 +4,7 @@ import { BrandEmblem } from '@/components/layout/brand-emblem';
 import { WHOLESALE } from '@/config/business';
 import { siteConfig } from '@/config/site';
 import { heroImage } from '@/data/gallery';
+import { PHOTO_QUALITY } from '@/lib/images';
 import { shopPath } from '@/lib/routes';
 
 export function Hero() {
@@ -49,7 +50,8 @@ export function Hero() {
               alt={heroImage.alt}
               fill
               priority
-              sizes="(min-width: 1024px) 50vw, 100vw"
+              sizes="(min-width: 1280px) 600px, (min-width: 1024px) 50vw, 100vw"
+              quality={PHOTO_QUALITY}
               className="object-cover object-top"
             />
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/90 to-transparent" />

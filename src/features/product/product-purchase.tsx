@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState, type ReactNode } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/cn';
+import { PHOTO_QUALITY } from '@/lib/images';
 import { getProductColor, type Product } from '@/lib/schemas/product';
 import { AddToCartPanel } from './add-to-cart-panel';
 import { ColorSelector } from './color-selector';
@@ -45,7 +46,8 @@ export function ProductPurchase({
             alt={active.alt}
             fill
             priority
-            sizes="(min-width: 1024px) 50vw, 100vw"
+            sizes="(min-width: 1280px) 600px, (min-width: 1024px) 50vw, 100vw"
+            quality={PHOTO_QUALITY}
             className="animate-fade-in object-cover"
           />
           <Badge
