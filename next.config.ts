@@ -17,6 +17,12 @@ const RETIRED_COLLECTION_SLUGS = ['resiliencia', 'pod'];
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    // AVIF conserva más detalle que WebP con el mismo peso; WebP queda como respaldo.
+    formats: ['image/avif', 'image/webp'],
+    // 90 para fotos de producto y galería (PHOTO_QUALITY); 75 para miniaturas.
+    qualities: [75, 90],
+  },
   async redirects() {
     // Temporales (307): esas colecciones pueden volver más adelante.
     return [

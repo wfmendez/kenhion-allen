@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Price } from '@/components/ui/price';
 import { cn } from '@/lib/cn';
+import { PHOTO_QUALITY, productCardSizes } from '@/lib/images';
 import { productPath } from '@/lib/routes';
 import { getPrimaryImage, type Collection, type Product } from '@/lib/schemas/product';
 import { QuickAdd } from './quick-add';
@@ -15,10 +16,13 @@ export function ProductCard({
   product,
   collection,
   priority = false,
+  sizes = productCardSizes(4),
 }: {
   product: Product;
   collection?: Collection;
   priority?: boolean;
+  /** Atributo `sizes` de la foto; debe reflejar el ancho real de la tarjeta. */
+  sizes?: string;
 }) {
   const [color, setColor] = useState(product.colors[0]!.slug);
   const href = productPath(product.slug);
@@ -37,7 +41,8 @@ export function ProductCard({
           alt=""
           fill
           priority={priority}
-          sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
+          sizes={sizes}
+          quality={PHOTO_QUALITY}
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <Badge
@@ -79,12 +84,13 @@ export function ProductGrid({
   priorityCount?: number;
 }) {
   const bySlug = new Map(collections.map((c) => [c.slug, c]));
+  const manyProducts = products.length > 3;
   return (
     <ul
       className={cn(
         'grid w-full grid-cols-2 gap-3 sm:gap-6 md:grid-cols-3',
         // Con pocos productos, 3 columnas llenan la fila; con más, se pasa a 4.
-        products.length > 3 && 'xl:grid-cols-4',
+        manyProducts && 'xl:grid-cols-4',
       )}
     >
       {products.map((product, i) => (
@@ -93,6 +99,7 @@ export function ProductGrid({
             product={product}
             collection={bySlug.get(product.collection)}
             priority={i < priorityCount}
+            sizes={productCardSizes(manyProducts ? 4 : 3)}
           />
         </li>
       ))}

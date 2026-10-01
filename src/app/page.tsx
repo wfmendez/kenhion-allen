@@ -4,6 +4,7 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { homeGallery } from '@/data/gallery';
 import { services } from '@/data/services';
 import { ProductGrid } from '@/features/product/product-card';
+import { PHOTO_QUALITY } from '@/lib/images';
 import { getCollections, getProducts } from '@/lib/repositories/product-repository';
 import { shopPath } from '@/lib/routes';
 import { Hero } from '@/sections/hero';
@@ -49,7 +50,8 @@ export default async function HomePage() {
                   src={image.src}
                   alt={image.alt}
                   fill
-                  sizes="(min-width: 1024px) 25vw, 50vw"
+                  sizes="(min-width: 1280px) 300px, (min-width: 1024px) 25vw, 50vw"
+                  quality={PHOTO_QUALITY}
                   className="object-cover"
                 />
               </li>
