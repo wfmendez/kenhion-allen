@@ -10,6 +10,7 @@ export const orderItemSchema = z.object({
   productId: z.number().int().positive(),
   name: z.string(),
   collectionName: z.string(),
+  colorName: z.string(),
   size: sizeSchema,
   qty: z.number().int().positive(),
   unitPriceCents: z.number().int().nonnegative(),

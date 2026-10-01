@@ -16,17 +16,27 @@ Los hooks de git (husky + lint-staged) formatean y revisan los archivos en cada 
 
 1. Edita `src/data/products.ts`:
    - `id` único y `slug` único en kebab-case (será la URL `/producto/<slug>`).
-   - `collection`: `ka-elite`, `resiliencia` o `pod`.
+   - `collection`: hoy solo `ka-elite`.
    - `priceCents` en **centavos** (`2500` = $25.00). `compareAtPriceCents` (precio anterior) debe ser mayor, o `null`.
-   - `image` y `fallbackImage` con URLs completas. Si el dominio de la imagen es nuevo, agrégalo en `next.config.ts` → `images.remotePatterns`.
+   - `colors`: al menos un color, cada uno con `slug`, `name`, `hex` (muestra del selector) e `images`. El primer color es el que se muestra por defecto.
+   - `lifestyleImages`: fotos de la prenda en uso (opcional, puede ir vacío).
+   - `wholesaleUnits`: cuántas piezas suma cada unidad para el descuento al mayor (normalmente `1`).
 2. Corre `npm test`: el esquema Zod valida todo el catálogo y los tests fallan si algo está mal (slug repetido, precio inválido, etc.).
 3. La página del producto, el sitemap y los datos estructurados se generan solos.
+
+### Agregar un color o cambiar fotos
+
+1. Copia las fotos a `public/images/<coleccion>/<producto>/` con nombres en kebab-case y extensión `.jpg` (por ejemplo `negro-frente.jpg`). Ideal: formato vertical 2:3.
+2. Agrega o edita el color en `colors` del producto en `src/data/products.ts`, con un `alt` que describa la foto.
+3. Corre `npm test`: un test verifica que cada imagen del catálogo exista en `public/`.
+
+Las imágenes son siempre locales (ADR 0007). No se enlazan fotos de otros sitios.
 
 ### Agregar una colección
 
 1. Agrega el slug a `collectionSlugSchema` en `src/lib/schemas/product.ts`.
-2. Agrega la colección en `src/data/collections.ts` y el enlace en `src/config/navigation.ts` (`collectionNav`).
-3. Actualiza `countByCollection` en `src/features/catalog/filter-products.ts`.
+2. Agrega la colección en `src/data/collections.ts`. Las pestañas de colección de la tienda aparecen solas cuando hay más de una.
+3. Si quieres un acceso directo en el footer, agrégalo a `shopNav` en `src/config/navigation.ts`.
 
 ### Cambiar reglas de negocio
 

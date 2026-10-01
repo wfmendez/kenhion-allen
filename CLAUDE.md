@@ -10,9 +10,10 @@ Tienda online de Kenhion Allen (Next.js 16 App Router, React 19, TypeScript estr
 
 ## Dónde va cada cosa
 
-- Marca, contacto y eslogan → `src/config/site.ts`. Reglas (tallas, mayoreo 12 uds / 15%, envíos, pagos) → `src/config/business.ts`. Nunca hardcodear estos valores en componentes.
+- Marca, contacto y eslogan → `src/config/site.ts`. Reglas (tallas S/M/L, mayoreo desde 6 piezas / 15%, envíos, pagos) → `src/config/business.ts`. Nunca hardcodear estos valores en componentes.
 - Contenido → `src/data/`. La UI lo lee **solo** vía `src/lib/repositories/product-repository.ts`.
 - URLs → `src/lib/routes.ts`.
+- Imágenes → siempre locales en `public/images/` (ADR 0007). Cada producto tiene `colors` con sus fotos; la línea del carrito es producto + color + talla.
 - Lógica de negocio → funciones puras `.ts` en `src/features/<feature>/` con test al lado (`*.test.ts`).
 - Colores → `src/styles/tokens.ts` + `@theme` en `src/styles/globals.css`. Agrega el par a `contrastPairs` si es texto.
 
@@ -30,4 +31,4 @@ En la máquina de desarrollo principal (Windows), una política de Application C
 
 ## Pendientes del cliente (no inventar estos datos)
 
-Logo en vector, licencia de Sloop Script Pro, RIF y dirección fiscal de la tienda, datos de pago y validación de la guía de tallas. Ver `docs/brand.md`.
+Logo en vector, licencia de Sloop Script Pro, RIF y dirección fiscal de la tienda, datos de pago, validación de la guía de tallas, colores disponibles por prenda y si el conjunto cuenta como 1 o 2 piezas al mayor (`wholesaleUnits`). Ver `docs/brand.md`.

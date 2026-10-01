@@ -46,7 +46,8 @@ export function CheckoutContent() {
               <span className="min-w-0">
                 <span className="block truncate font-medium">{line.product.name}</span>
                 <span className="text-xs text-fg-subtle">
-                  Talla {line.size} · {line.qty} × {formatUSD(line.product.priceCents)}
+                  {line.colorOption.name} · Talla {line.size} · {line.qty} ×{' '}
+                  {formatUSD(line.product.priceCents)}
                 </span>
               </span>
               <span className="shrink-0">{formatUSD(line.lineTotalCents)}</span>

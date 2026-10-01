@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { PAYMENT_METHODS, SHIPPING_AGENCIES } from '@/config/business';
-import { collectionNav, mainNav } from '@/config/navigation';
+import { mainNav, shopNav } from '@/config/navigation';
 import { siteConfig } from '@/config/site';
 import { Icon } from '@/components/ui/icon';
 import { BrandEmblem } from './brand-emblem';
@@ -28,20 +28,15 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <h2 className={titleClass}>Colecciones</h2>
+          <h2 className={titleClass}>Tienda</h2>
           <ul className="flex flex-col gap-2">
-            {collectionNav.map((item) => (
+            {shopNav.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className={linkClass}>
                   {item.label}
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/tienda" className={linkClass}>
-                Ver toda la tienda
-              </Link>
-            </li>
           </ul>
         </div>
 

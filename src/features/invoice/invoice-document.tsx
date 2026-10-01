@@ -218,11 +218,17 @@ export function InvoiceDocument({ order }: { order: Order }) {
             <Text style={s.cTotal}>TOTAL</Text>
           </View>
           {order.items.map((item, i) => (
-            <View key={`${item.productId}-${item.size}`} style={s.tr} wrap={false}>
+            <View
+              key={`${item.productId}-${item.colorName}-${item.size}`}
+              style={s.tr}
+              wrap={false}
+            >
               <Text style={s.cNum}>{i + 1}</Text>
               <View style={s.cName}>
                 <Text style={s.itemName}>{item.name}</Text>
-                <Text style={s.itemMeta}>Colección {item.collectionName}</Text>
+                <Text style={s.itemMeta}>
+                  Colección {item.collectionName} · Color {item.colorName}
+                </Text>
               </View>
               <Text style={s.cSize}>{item.size}</Text>
               <Text style={s.cQty}>{item.qty}</Text>

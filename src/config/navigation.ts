@@ -14,10 +14,11 @@ export const mainNav: NavItem[] = [
   { label: 'Contacto', href: '/contacto' },
 ];
 
-export const collectionNav: NavItem[] = [
-  { label: 'KA ELITE', href: '/tienda/ka-elite' },
-  { label: 'Resiliencia', href: '/tienda/resiliencia' },
-  { label: 'P.O.D.', href: '/tienda/pod' },
+/** Accesos directos a la tienda para el footer. */
+export const shopNav: NavItem[] = [
+  { label: 'Colección KA ELITE', href: '/tienda' },
+  { label: 'Caballero', href: '/tienda?genero=caballero' },
+  { label: 'Dama', href: '/tienda?genero=dama' },
 ];
 
 /** Marca como activo el enlace exacto o cualquier subruta ("/tienda" en "/tienda/pod"). */

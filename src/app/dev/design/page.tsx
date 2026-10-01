@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { BrandEmblem } from '@/components/layout/brand-emblem';
@@ -10,7 +9,8 @@ import { Icon } from '@/components/ui/icon';
 import { Price } from '@/components/ui/price';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { siteConfig } from '@/config/site';
-import { getProductBySlug } from '@/lib/repositories/product-repository';
+import { ProductGrid } from '@/features/product/product-card';
+import { getCollections, getProducts } from '@/lib/repositories/product-repository';
 import { colorDescriptions, colors, contrastRatio, type ColorToken } from '@/styles/tokens';
 import { FormDemo, OverlayDemos } from './interactive-demos';
 
@@ -23,8 +23,7 @@ export const metadata: Metadata = {
 export default async function DesignSystemPage() {
   if (process.env.VERCEL_ENV === 'production') notFound();
 
-  const sample = await getProductBySlug('hoodie-resiliencia');
-  const offer = await getProductBySlug('basic-t-shirt-oversize');
+  const [products, collections] = await Promise.all([getProducts(), getCollections()]);
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-20 px-4 py-16 sm:px-6">
@@ -91,10 +90,10 @@ export default async function DesignSystemPage() {
           </Specimen>
           <Specimen label="Montserrat: títulos, botones y etiquetas">
             <p className="font-display text-4xl font-extrabold tracking-tight">
-              Colección Resiliencia
+              Colección KA ELITE
             </p>
             <p className="font-display text-xs font-bold tracking-[0.3em] text-gold uppercase">
-              Algodón 100%
+              Compresión
             </p>
           </Specimen>
           <Specimen label="Inter: textos y descripciones">
@@ -110,7 +109,7 @@ export default async function DesignSystemPage() {
       <Block title="Botones">
         <div className="flex flex-wrap items-center gap-3">
           <Button>Añadir a la cesta</Button>
-          <Button variant="outline">Pedir docena −15%</Button>
+          <Button variant="outline">Pedir al mayor −15%</Button>
           <Button variant="ghost">Ver detalle</Button>
           <Button variant="danger">Eliminar</Button>
           <Button variant="whatsapp">
@@ -134,7 +133,7 @@ export default async function DesignSystemPage() {
       <Block title="Badges y precios">
         <div className="flex flex-wrap items-center gap-3">
           <Badge>KA Elite</Badge>
-          <Badge tone="red">Oferta P.O.D.</Badge>
+          <Badge tone="red">Oferta</Badge>
           <Badge tone="neutral">Unisex</Badge>
           <Badge tone="success">15% al mayor aplicado</Badge>
         </div>
@@ -145,44 +144,9 @@ export default async function DesignSystemPage() {
         </div>
       </Block>
 
-      {sample && offer ? (
-        <Block title="Vista previa: tarjeta de producto">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[sample, offer].map((p) => (
-              <article
-                key={p.id}
-                className="group overflow-hidden rounded-card border border-line bg-surface transition-shadow hover:shadow-gold"
-              >
-                <div className="relative aspect-[4/5] overflow-hidden bg-surface-raised">
-                  <Image
-                    src={p.image}
-                    alt={p.name}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <Badge
-                    tone={p.compareAtPriceCents ? 'red' : 'gold'}
-                    className="absolute top-3 left-3"
-                  >
-                    {p.badge}
-                  </Badge>
-                </div>
-                <div className="flex flex-col gap-3 p-5">
-                  <p className="font-display text-[0.65rem] font-bold tracking-[0.2em] text-fg-subtle uppercase">
-                    {p.gender}
-                  </p>
-                  <h3 className="font-display text-lg font-bold">{p.name}</h3>
-                  <Price cents={p.priceCents} compareAtCents={p.compareAtPriceCents} />
-                  <Button fullWidth>
-                    <Icon name="bag" size={16} /> Añadir a la cesta
-                  </Button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </Block>
-      ) : null}
+      <Block title="Tarjeta de producto (componente real)">
+        <ProductGrid products={products} collections={collections} />
+      </Block>
 
       <Block title="Formularios">
         <FormDemo />

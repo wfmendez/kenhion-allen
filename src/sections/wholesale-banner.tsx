@@ -18,15 +18,15 @@ export function WholesaleBanner() {
               Compras al mayor
             </p>
             <p className="font-display text-3xl font-extrabold sm:text-4xl">
-              {pct}% OFF comprando {WHOLESALE.minQty} prendas
+              {pct}% OFF desde {WHOLESALE.minQty} piezas
             </p>
             <p className="max-w-xl text-on-accent">
-              Combina referencias y colecciones: el descuento se aplica solo en tu cesta al llegar a
-              la docena.
+              Combina prendas, colores y tallas: el descuento se aplica solo en tu cesta al llegar a{' '}
+              {WHOLESALE.minQty} piezas.
             </p>
           </div>
           <ButtonLink href={shopPath} size="lg" variant="dark">
-            Armar mi docena
+            Armar mi pedido al mayor
           </ButtonLink>
         </div>
       </div>

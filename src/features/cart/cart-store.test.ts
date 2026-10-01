@@ -16,7 +16,10 @@ describe('cart-store', () => {
   it('el snapshot del servidor siempre está vacío', () => {
     localStorage.setItem(
       CART_STORAGE_KEY,
-      JSON.stringify({ version: 2, lines: [{ productId: 1, size: 'M', qty: 1 }] }),
+      JSON.stringify({
+        version: 3,
+        lines: [{ productId: 11, color: 'verde', size: 'M', qty: 1 }],
+      }),
     );
     expect(getServerCartSnapshot().lines).toEqual([]);
     expect(getCartSnapshot().lines).toHaveLength(1);
@@ -25,10 +28,10 @@ describe('cart-store', () => {
   it('persiste y notifica a los suscriptores', () => {
     const listener = vi.fn();
     const unsubscribe = subscribeCart(listener);
-    dispatchCart({ type: 'add', productId: 2, size: 'L', qty: 3 });
+    dispatchCart({ type: 'add', productId: 12, color: 'negro', size: 'L', qty: 3 });
     expect(listener).toHaveBeenCalledTimes(1);
     expect(JSON.parse(localStorage.getItem(CART_STORAGE_KEY)!).lines).toEqual([
-      { productId: 2, size: 'L', qty: 3 },
+      { productId: 12, color: 'negro', size: 'L', qty: 3 },
     ]);
     unsubscribe();
   });
@@ -36,7 +39,7 @@ describe('cart-store', () => {
   it('no notifica si la acción no cambia nada', () => {
     const listener = vi.fn();
     subscribeCart(listener);
-    dispatchCart({ type: 'add', productId: 2, size: 'L', qty: 0 });
+    dispatchCart({ type: 'add', productId: 12, color: 'negro', size: 'L', qty: 0 });
     expect(listener).not.toHaveBeenCalled();
   });
 
@@ -50,10 +53,13 @@ describe('cart-store', () => {
     getCartSnapshot();
     localStorage.setItem(
       CART_STORAGE_KEY,
-      JSON.stringify({ version: 2, lines: [{ productId: 5, size: 'S', qty: 2 }] }),
+      JSON.stringify({
+        version: 3,
+        lines: [{ productId: 13, color: 'verde', size: 'S', qty: 2 }],
+      }),
     );
     window.dispatchEvent(new StorageEvent('storage', { key: CART_STORAGE_KEY }));
     expect(listener).toHaveBeenCalled();
-    expect(getCartSnapshot().lines).toEqual([{ productId: 5, size: 'S', qty: 2 }]);
+    expect(getCartSnapshot().lines).toEqual([{ productId: 13, color: 'verde', size: 'S', qty: 2 }]);
   });
 });

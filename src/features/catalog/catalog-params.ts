@@ -1,4 +1,4 @@
-import type { Gender } from '@/lib/schemas/product';
+import type { Gender, Product } from '@/lib/schemas/product';
 import type { CatalogFilters, SortOption } from './filter-products';
 
 /**
@@ -8,8 +8,8 @@ import type { CatalogFilters, SortOption } from './filter-products';
 export type SearchParams = Record<string, string | string[] | undefined>;
 
 const genderParam: Record<string, Gender> = {
-  mujer: 'Mujer',
-  hombre: 'Hombre',
+  caballero: 'Caballero',
+  dama: 'Dama',
   unisex: 'Unisex',
 };
 
@@ -27,12 +27,18 @@ export const sortLabels: Record<SortOption, string> = {
   name: 'Nombre: A–Z',
 };
 
-export const genderOptions: { value: Gender | 'all'; label: string }[] = [
-  { value: 'all', label: 'Todos' },
-  { value: 'Mujer', label: 'Mujer' },
-  { value: 'Hombre', label: 'Hombre' },
-  { value: 'Unisex', label: 'Unisex' },
-];
+const GENDER_ORDER: Gender[] = ['Caballero', 'Dama', 'Unisex'];
+
+/** Opciones del filtro de género: "Todos" más los géneros que realmente tienen productos. */
+export function genderOptionsFor(
+  products: Pick<Product, 'gender'>[],
+): { value: Gender | 'all'; label: string }[] {
+  const present = new Set(products.map((p) => p.gender));
+  return [
+    { value: 'all', label: 'Todos' },
+    ...GENDER_ORDER.filter((g) => present.has(g)).map((g) => ({ value: g, label: g })),
+  ];
+}
 
 const first = (value: string | string[] | undefined) =>
   (Array.isArray(value) ? value[0] : value)?.trim() ?? '';
@@ -49,7 +55,7 @@ export function sortToParam(sort: SortOption): string {
   return Object.entries(sortParam).find(([, v]) => v === sort)?.[0] ?? 'destacados';
 }
 
-/** Construye el query string omitiendo valores por defecto: "?genero=mujer&q=hoodie". */
+/** Construye el query string omitiendo valores por defecto: "?genero=dama&q=biker". */
 export function buildCatalogQuery(filters: Partial<Omit<CatalogFilters, 'collection'>>): string {
   const params = new URLSearchParams();
   if (filters.gender && filters.gender !== 'all')

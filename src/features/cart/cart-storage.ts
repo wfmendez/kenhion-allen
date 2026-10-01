@@ -1,27 +1,17 @@
-import {
-  CART_STORAGE_VERSION,
-  legacyCartSchema,
-  storedCartSchema,
-  type CartLine,
-} from '@/lib/schemas/cart';
+import { CART_STORAGE_VERSION, storedCartSchema, type CartLine } from '@/lib/schemas/cart';
 import { readStorage, removeStorage, writeStorage } from '@/lib/storage';
 
-export const CART_STORAGE_KEY = 'ka_cart_v2';
-export const LEGACY_CART_STORAGE_KEY = 'ka_cart';
+export const CART_STORAGE_KEY = 'ka_cart_v3';
 
-/** Carga el carrito guardado, migrando el formato del sitio anterior si existe. */
+/**
+ * Claves de versiones anteriores. Sus productos ya no existen en el catálogo,
+ * así que no se migran: se borran para no dejar basura en el navegador.
+ */
+export const OBSOLETE_CART_KEYS = ['ka_cart', 'ka_cart_v2'] as const;
+
 export function loadCart(): CartLine[] {
-  const stored = readStorage(CART_STORAGE_KEY, storedCartSchema);
-  if (stored) return stored.lines;
-
-  const legacy = readStorage(LEGACY_CART_STORAGE_KEY, legacyCartSchema);
-  if (legacy) {
-    const lines = legacy.map(({ id, size, qty }) => ({ productId: id, size, qty }));
-    saveCart(lines);
-    removeStorage(LEGACY_CART_STORAGE_KEY);
-    return lines;
-  }
-  return [];
+  OBSOLETE_CART_KEYS.forEach(removeStorage);
+  return readStorage(CART_STORAGE_KEY, storedCartSchema)?.lines ?? [];
 }
 
 export function saveCart(lines: CartLine[]): void {

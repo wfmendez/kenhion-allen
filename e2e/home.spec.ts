@@ -4,8 +4,9 @@ import { expectNoA11yViolations, expectNoHorizontalScroll } from './helpers';
 const pages = [
   { path: '/', heading: 'Más allá del límite' },
   { path: '/tienda', heading: 'Tienda online' },
-  { path: '/tienda/resiliencia', heading: 'Resiliencia' },
-  { path: '/producto/hoodie-resiliencia', heading: 'Hoodie Resiliencia' },
+  { path: '/tienda/ka-elite', heading: 'KA ELITE' },
+  { path: '/producto/short-de-caballero', heading: 'Short de caballero' },
+  { path: '/producto/conjunto-biker-top', heading: 'Conjunto biker + top' },
   { path: '/carrito', heading: 'Cesta de compras' },
   { path: '/servicios', heading: 'Nuestros servicios' },
   { path: '/galeria', heading: 'Galería' },
@@ -45,11 +46,30 @@ test('la guía de diseño no se publica en producción de Vercel pero sí en loc
   expect(response?.status()).toBe(200);
 });
 
+test('los enlaces del catálogo anterior redirigen a la tienda', async ({ page }) => {
+  for (const path of ['/tienda/pod', '/tienda/resiliencia', '/producto/hoodie-resiliencia']) {
+    await page.goto(path);
+    await expect(page).toHaveURL(/\/tienda$/);
+  }
+});
+
+test('ninguna página pide imágenes al sitio anterior ni a Unsplash', async ({ page }) => {
+  const external: string[] = [];
+  page.on('request', (request) => {
+    if (/cbaul-cdnwnd|unsplash/.test(request.url())) external.push(request.url());
+  });
+  for (const path of ['/', '/tienda', '/producto/franela-de-compresion-de-caballero', '/galeria']) {
+    await page.goto(path, { waitUntil: 'networkidle' });
+  }
+  expect(external).toEqual([]);
+});
+
 test('sitemap y robots están disponibles', async ({ request }) => {
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.ok()).toBe(true);
   const xml = await sitemap.text();
-  expect(xml).toContain('/producto/hoodie-resiliencia');
+  expect(xml).toContain('/producto/conjunto-biker-top');
+  expect(xml).not.toContain('resiliencia');
   expect(xml).toContain('/tienda/ka-elite');
 
   const robots = await (await request.get('/robots.txt')).text();

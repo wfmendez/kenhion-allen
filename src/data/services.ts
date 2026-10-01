@@ -25,7 +25,11 @@ export const services: Service[] = [
     title: 'P.O.D. (Print On Demand)',
     description:
       'Producimos bajo demanda cuando realizas tu pedido, garantizando piezas exclusivas de edición limitada.',
-    cta: { label: 'Ver productos P.O.D.', href: '/tienda/pod', external: false },
+    cta: {
+      label: 'Consultar P.O.D.',
+      href: buildWhatsAppUrl(`Hola ${siteConfig.name}, me interesa el servicio Print On Demand.`),
+      external: true,
+    },
   },
   {
     id: 'personalizadas',

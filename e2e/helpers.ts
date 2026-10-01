@@ -1,12 +1,12 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, type Page } from '@playwright/test';
 
-export const CART_KEY = 'ka_cart_v2';
+export const CART_KEY = 'ka_cart_v3';
 
 /** Deja un carrito listo antes de cargar la página (sin pasar por la UI). */
 export async function seedCart(
   page: Page,
-  lines: { productId: number; size: 'S' | 'M' | 'L' | 'XL'; qty: number }[],
+  lines: { productId: number; color: string; size: 'S' | 'M' | 'L'; qty: number }[],
 ) {
   await page.addInitScript(
     ([key, value]) => {
@@ -15,7 +15,7 @@ export async function seedCart(
         window.sessionStorage.setItem('__seeded', '1');
       }
     },
-    [CART_KEY, JSON.stringify({ version: 2, lines })] as const,
+    [CART_KEY, JSON.stringify({ version: 3, lines })] as const,
   );
 }
 

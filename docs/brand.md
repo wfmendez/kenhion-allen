@@ -49,4 +49,5 @@ Con el archivo `.woff2` en mano, se reemplaza `brandScript` en `src/styles/fonts
 ## Logo
 
 - `src/components/layout/brand-emblem.tsx`: el emblema usa `currentColor` (dorado sobre negro, dorado claro sobre rojo, negro sobre blanco).
-- **Pendiente:** pedir al cliente el logo en vector (.SVG/.AI/.PDF) y las imágenes de referencia, y reemplazar los trazos provisionales.
+- **Referencias recibidas (octubre 2026):** `docs/brand/referencias/logo-blanco-sobre-negro.jpg` y `logo-dorado-sobre-rojo.jpg`.
+- **Pendiente:** el logo en vector (.SVG/.AI/.PDF).

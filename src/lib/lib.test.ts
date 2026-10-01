@@ -1,5 +1,8 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { z } from 'zod';
 import { collections } from '@/data/collections';
+import { gallery, heroImage } from '@/data/gallery';
 import { products } from '@/data/products';
 import { formatUSD, percentOf } from './money';
 import { generateOrderNumber } from './order-number';
@@ -9,7 +12,12 @@ import {
   getProducts,
   getProductsByCollection,
 } from './repositories/product-repository';
-import { collectionSchema, productSchema } from './schemas/product';
+import {
+  collectionSchema,
+  getPrimaryImage,
+  getProductColor,
+  productSchema,
+} from './schemas/product';
 import { readStorage, writeStorage } from './storage';
 
 describe('datos del catálogo', () => {
@@ -25,6 +33,48 @@ describe('datos del catálogo', () => {
     expect(products.every((p) => slugs.has(p.collection))).toBe(true);
   });
 
+  it('precios, tallas y colores coinciden con lo indicado por el cliente', () => {
+    const summary = products.map((p) => [p.name, p.priceCents, p.colors.map((c) => c.slug)]);
+    expect(summary).toEqual([
+      ['Short de caballero', 2437, ['verde', 'negro', 'blanco']],
+      ['Franela de compresión de caballero', 3312, ['verde', 'negro', 'blanco']],
+      ['Conjunto biker + top', 4467, ['verde', 'negro']],
+    ]);
+    expect(products.every((p) => p.sizes.join() === 'S,M,L')).toBe(true);
+  });
+
+  it('todas las imágenes del catálogo y la galería existen en /public', () => {
+    const sources = [
+      ...products.flatMap((p) => [
+        ...p.colors.flatMap((c) => c.images.map((i) => i.src)),
+        ...p.lifestyleImages.map((i) => i.src),
+      ]),
+      ...gallery.map((i) => i.src),
+      heroImage.src,
+    ];
+    const missing = sources.filter((src) => !existsSync(join(process.cwd(), 'public', src)));
+    expect(missing).toEqual([]);
+    expect(sources.some((src) => /^https?:/.test(src))).toBe(false);
+  });
+
+  it('getPrimaryImage usa el color pedido o el primero', () => {
+    const short = products[0]!;
+    expect(getPrimaryImage(short).src).toContain('/short/verde-frente.jpg');
+    expect(getPrimaryImage(short, 'blanco').src).toContain('/short/blanco-frente.jpg');
+    expect(getProductColor(short, 'no-existe').slug).toBe('verde');
+  });
+
+  it('el esquema rechaza colores repetidos e imágenes remotas', () => {
+    const short = products[0]!;
+    const repeated = { ...short, colors: [short.colors[0], short.colors[0]] };
+    expect(productSchema.safeParse(repeated).success).toBe(false);
+    const remote = {
+      ...short,
+      lifestyleImages: [{ src: 'https://ejemplo.com/foto.jpg', alt: 'x' }],
+    };
+    expect(productSchema.safeParse(remote).success).toBe(false);
+  });
+
   it('el esquema rechaza un precio anterior menor que el actual', () => {
     const bad = { ...products[0], priceCents: 2000, compareAtPriceCents: 1000 };
     expect(productSchema.safeParse(bad).success).toBe(false);
@@ -33,11 +83,12 @@ describe('datos del catálogo', () => {
 
 describe('product-repository', () => {
   it('consulta productos y colecciones', async () => {
-    expect(await getProducts()).toHaveLength(10);
-    expect((await getProductBySlug('hoodie-resiliencia'))?.id).toBe(10);
+    expect(await getProducts()).toHaveLength(3);
+    expect((await getProductBySlug('conjunto-biker-top'))?.id).toBe(13);
     expect(await getProductBySlug('no-existe')).toBeUndefined();
-    expect(await getProductsByCollection('ka-elite')).toHaveLength(5);
-    expect((await getCollectionBySlug('pod'))?.name).toBe('P.O.D.');
+    expect(await getProductsByCollection('ka-elite')).toHaveLength(3);
+    expect((await getCollectionBySlug('ka-elite'))?.name).toBe('KA ELITE');
+    expect(await getCollectionBySlug('pod')).toBeUndefined();
   });
 });
 

@@ -12,7 +12,7 @@ export function TopBar() {
         ◆
       </span>
       <span>
-        {pct}% al mayor comprando {WHOLESALE.minQty} prendas
+        {pct}% al mayor desde {WHOLESALE.minQty} piezas
       </span>
       <span aria-hidden className="mx-3 hidden text-gold-light sm:inline">
         ◆

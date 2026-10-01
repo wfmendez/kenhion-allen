@@ -32,6 +32,7 @@ export function createOrder({
       productId: line.product.id,
       name: line.product.name,
       collectionName: collectionName.get(line.product.collection) ?? line.product.collection,
+      colorName: line.colorOption.name,
       size: line.size,
       qty: line.qty,
       unitPriceCents: line.product.priceCents,

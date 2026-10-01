@@ -1,10 +1,10 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { Icon } from '@/components/ui/icon';
 import { Price } from '@/components/ui/price';
 import { SIZES, type Size } from '@/config/business';
-import { ProductImage } from '@/features/product/product-image';
 import { QuantityPicker } from '@/features/product/quantity-picker';
 import { productPath } from '@/lib/routes';
 import { useCart } from './cart-context';
@@ -30,14 +30,7 @@ export function CartLineItem({
         tabIndex={-1}
         aria-hidden
       >
-        <ProductImage
-          src={product.image}
-          fallbackSrc={product.fallbackImage}
-          alt=""
-          fill
-          sizes="96px"
-          className="object-cover"
-        />
+        <Image src={line.image.src} alt="" fill sizes="96px" className="object-cover" />
       </Link>
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
@@ -49,14 +42,20 @@ export function CartLineItem({
             >
               {product.name}
             </Link>
-            <p className="text-xs text-fg-subtle">{collection?.name}</p>
+            <p className="text-xs text-fg-subtle">
+              {collection?.name} · Color {line.colorOption.name}
+            </p>
           </div>
           <button
             type="button"
             onClick={() => removeItem(line.lineId)}
             className="grid size-8 shrink-0 place-items-center rounded-full text-fg-subtle hover:bg-surface hover:text-red-light"
           >
-            <Icon name="close" size={16} label={`Eliminar ${product.name}`} />
+            <Icon
+              name="close"
+              size={16}
+              label={`Eliminar ${product.name} ${line.colorOption.name} talla ${line.size}`}
+            />
           </button>
         </div>
 
@@ -80,7 +79,7 @@ export function CartLineItem({
             value={line.qty}
             min={0}
             onChange={(qty) => setQty(line.lineId, qty)}
-            label={`${product.name} talla ${line.size}`}
+            label={`${product.name} ${line.colorOption.name} talla ${line.size}`}
           />
         </div>
         <Price cents={line.lineTotalCents} size="sm" />

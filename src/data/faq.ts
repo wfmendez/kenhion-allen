@@ -15,8 +15,8 @@ export const faq: FaqItem[] = [
       'Sí, realizamos envíos nacionales seguros a través de las agencias de encomienda MRW, Zoom y Tealca hacia cualquier estado de Venezuela. En la ciudad de Maracay contamos con entregas personales y servicio de delivery.',
   },
   {
-    question: `¿Cómo funciona el Descuento Al Mayor por docena (${wholesalePercent}% OFF)?`,
-    answer: `Al acumular ${WHOLESALE.minQty} o más prendas en tu cesta de compras (pueden ser de la misma referencia o combinadas entre colecciones), el sistema calcula automáticamente un ${wholesalePercent}% de descuento al mayor en el subtotal de tu pedido.`,
+    question: `¿Cómo funciona el descuento al mayor (${wholesalePercent}% OFF)?`,
+    answer: `Al acumular ${WHOLESALE.minQty} o más prendas en tu cesta de compras (pueden ser de la misma referencia o combinadas), el sistema calcula automáticamente un ${wholesalePercent}% de descuento al mayor en el subtotal de tu pedido.`,
   },
   {
     question: '¿Cuáles son los métodos de pago aceptados?',

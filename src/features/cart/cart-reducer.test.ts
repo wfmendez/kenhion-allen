@@ -4,79 +4,92 @@ const withLines = (...lines: CartState['lines']): CartState => ({ lines });
 
 describe('cartReducer', () => {
   it('agrega un producto nuevo', () => {
-    const state = cartReducer(initialCartState, { type: 'add', productId: 1, size: 'M', qty: 1 });
-    expect(state.lines).toEqual([{ productId: 1, size: 'M', qty: 1 }]);
-  });
-
-  it('suma cantidades al agregar el mismo producto y talla', () => {
-    const state = cartReducer(withLines({ productId: 1, size: 'M', qty: 2 }), {
+    const state = cartReducer(initialCartState, {
       type: 'add',
-      productId: 1,
+      productId: 11,
+      color: 'verde',
       size: 'M',
-      qty: 12,
-    });
-    expect(state.lines).toEqual([{ productId: 1, size: 'M', qty: 14 }]);
-  });
-
-  it('mantiene líneas separadas para tallas distintas', () => {
-    const state = cartReducer(withLines({ productId: 1, size: 'M', qty: 1 }), {
-      type: 'add',
-      productId: 1,
-      size: 'L',
       qty: 1,
     });
-    expect(state.lines).toHaveLength(2);
+    expect(state.lines).toEqual([{ productId: 11, color: 'verde', size: 'M', qty: 1 }]);
+  });
+
+  it('suma cantidades al agregar el mismo producto, color y talla', () => {
+    const state = cartReducer(withLines({ productId: 11, color: 'verde', size: 'M', qty: 2 }), {
+      type: 'add',
+      productId: 11,
+      color: 'verde',
+      size: 'M',
+      qty: 6,
+    });
+    expect(state.lines).toEqual([{ productId: 11, color: 'verde', size: 'M', qty: 8 }]);
+  });
+
+  it('mantiene líneas separadas para tallas o colores distintos', () => {
+    let state = withLines({ productId: 11, color: 'verde', size: 'M', qty: 1 });
+    state = cartReducer(state, { type: 'add', productId: 11, color: 'verde', size: 'L', qty: 1 });
+    state = cartReducer(state, { type: 'add', productId: 11, color: 'negro', size: 'M', qty: 1 });
+    expect(state.lines).toHaveLength(3);
   });
 
   it('ignora cantidades no positivas al agregar', () => {
-    const before = withLines({ productId: 1, size: 'M', qty: 1 });
-    expect(cartReducer(before, { type: 'add', productId: 2, size: 'S', qty: 0 })).toBe(before);
+    const before = withLines({ productId: 11, color: 'verde', size: 'M', qty: 1 });
+    expect(
+      cartReducer(before, { type: 'add', productId: 12, color: 'negro', size: 'S', qty: 0 }),
+    ).toBe(before);
   });
 
   it('elimina la línea cuando la cantidad llega a 0', () => {
-    const state = cartReducer(withLines({ productId: 1, size: 'M', qty: 1 }), {
+    const state = cartReducer(withLines({ productId: 11, color: 'verde', size: 'M', qty: 1 }), {
       type: 'setQty',
-      lineId: '1-M',
+      lineId: '11-verde-M',
       qty: 0,
     });
     expect(state.lines).toEqual([]);
   });
 
-  it('fusiona líneas al cambiar a una talla que ya está en el carrito', () => {
+  it('fusiona líneas al cambiar a una talla que ya está en el carrito (mismo color)', () => {
     const state = cartReducer(
-      withLines({ productId: 1, size: 'M', qty: 2 }, { productId: 1, size: 'L', qty: 3 }),
-      { type: 'changeSize', lineId: '1-M', size: 'L' },
+      withLines(
+        { productId: 11, color: 'verde', size: 'M', qty: 2 },
+        { productId: 11, color: 'verde', size: 'L', qty: 3 },
+        { productId: 11, color: 'negro', size: 'L', qty: 1 },
+      ),
+      { type: 'changeSize', lineId: '11-verde-M', size: 'L' },
     );
-    expect(state.lines).toEqual([{ productId: 1, size: 'L', qty: 5 }]);
+    expect(state.lines).toEqual([
+      { productId: 11, color: 'verde', size: 'L', qty: 5 },
+      { productId: 11, color: 'negro', size: 'L', qty: 1 },
+    ]);
   });
 
   it('no muta el estado anterior', () => {
-    const before = withLines({ productId: 1, size: 'M', qty: 1 });
+    const before = withLines({ productId: 11, color: 'verde', size: 'M', qty: 1 });
     const snapshot = structuredClone(before);
-    cartReducer(before, { type: 'add', productId: 1, size: 'M', qty: 5 });
-    cartReducer(before, { type: 'setQty', lineId: '1-M', qty: 9 });
-    cartReducer(before, { type: 'changeSize', lineId: '1-M', size: 'XL' });
+    cartReducer(before, { type: 'add', productId: 11, color: 'verde', size: 'M', qty: 5 });
+    cartReducer(before, { type: 'setQty', lineId: '11-verde-M', qty: 9 });
+    cartReducer(before, { type: 'changeSize', lineId: '11-verde-M', size: 'L' });
     expect(before).toEqual(snapshot);
   });
 
   it('elimina, vacía e hidrata', () => {
     const base = withLines(
-      { productId: 1, size: 'M', qty: 1 },
-      { productId: 2, size: 'S', qty: 1 },
+      { productId: 11, color: 'verde', size: 'M', qty: 1 },
+      { productId: 12, color: 'negro', size: 'S', qty: 1 },
     );
-    expect(cartReducer(base, { type: 'remove', lineId: '2-S' }).lines).toHaveLength(1);
+    expect(cartReducer(base, { type: 'remove', lineId: '12-negro-S' }).lines).toHaveLength(1);
     expect(cartReducer(base, { type: 'clear' }).lines).toEqual([]);
     const hydrated = cartReducer(initialCartState, {
       type: 'hydrate',
       lines: [
-        { productId: 3, size: 'S', qty: 1 },
-        { productId: 3, size: 'S', qty: 2 },
+        { productId: 13, color: 'verde', size: 'S', qty: 1 },
+        { productId: 13, color: 'verde', size: 'S', qty: 2 },
       ],
     });
-    expect(hydrated.lines).toEqual([{ productId: 3, size: 'S', qty: 3 }]);
+    expect(hydrated.lines).toEqual([{ productId: 13, color: 'verde', size: 'S', qty: 3 }]);
   });
 
-  it('genera ids de línea por producto y talla', () => {
-    expect(getLineId({ productId: 7, size: 'XL' })).toBe('7-XL');
+  it('genera ids de línea por producto, color y talla', () => {
+    expect(getLineId({ productId: 13, color: 'negro', size: 'L' })).toBe('13-negro-L');
   });
 });

@@ -35,12 +35,4 @@ export const sizeGuide: SizeGuideRow[] = [
     hipCm: '105 - 112',
     lengthCm: '74',
   },
-  {
-    size: 'XL',
-    label: 'Extra Large',
-    chestCm: '109 - 116',
-    waistCm: '93 - 100',
-    hipCm: '113 - 120',
-    lengthCm: '77',
-  },
 ];

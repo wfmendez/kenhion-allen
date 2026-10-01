@@ -21,7 +21,7 @@ const values: { icon: IconName; title: string; text: string }[] = [
   {
     icon: 'check',
     title: 'Calidad garantizada',
-    text: 'Algodón 100% de alto gramaje y fibras técnicas para las prendas de compresión.',
+    text: 'Telas técnicas de compresión, pensadas para entrenar con comodidad y soporte.',
   },
   {
     icon: 'mapPin',

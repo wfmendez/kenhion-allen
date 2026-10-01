@@ -15,7 +15,7 @@ export function QuantityPicker({
   onChange: (qty: number) => void;
   min?: number;
   max?: number;
-  /** Nombre del producto, para que el lector de pantalla diga "Cantidad de Hoodie…". */
+  /** Nombre del producto, para que el lector de pantalla diga "Cantidad de Short de caballero". */
   label: string;
   size?: 'sm' | 'md';
 }) {
