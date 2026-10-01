@@ -85,6 +85,15 @@
   );
   background-clip: text;
   color: transparent;
+  /*
+   * Con background-clip: text solo se pinta lo que cae dentro de la caja del elemento.
+   * Las letras script sobresalen (la cola de la "e", el trazo inicial de la "M"), así que
+   * la caja se agranda con padding y el margen negativo deja el texto en el mismo lugar.
+   */
+  padding: 0.12em 0.25em;
+  margin: -0.12em -0.25em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 @layer base {
