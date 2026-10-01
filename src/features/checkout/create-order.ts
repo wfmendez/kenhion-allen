@@ -40,6 +40,7 @@ export function createOrder({
     })),
     totals: {
       itemCount: totals.itemCount,
+      wholesalePieces: totals.wholesalePieces,
       subtotalCents: totals.subtotalCents,
       discountCents: totals.discountCents,
       totalCents: totals.totalCents,

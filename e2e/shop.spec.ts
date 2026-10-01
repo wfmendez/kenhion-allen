@@ -70,16 +70,36 @@ test('pedir al mayor aplica 15% desde 6 piezas y el carrito persiste al recargar
 
   await page.reload();
   expect(await readCart(page)).toEqual([{ productId: 12, color: 'negro', size: 'L', qty: 6 }]);
-  await expect(page.getByRole('button', { name: 'Abrir cesta (6 prendas)' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Abrir cesta (6 artículos)' })).toBeVisible();
 });
 
 test('con 5 piezas todavía no hay descuento', async ({ page }) => {
-  await seedCart(page, [{ productId: 13, color: 'verde', size: 'M', qty: 5 }]);
+  // 2 conjuntos (2 piezas c/u) + 1 short = 5 piezas
+  await seedCart(page, [
+    { productId: 13, color: 'verde', size: 'M', qty: 2 },
+    { productId: 11, color: 'negro', size: 'M', qty: 1 },
+  ]);
   await page.goto('/carrito');
   const summary = page.getByRole('complementary');
-  await expect(summary).toContainText('$223.35');
+  await expect(summary).toContainText('3 artículos · 5 piezas');
+  await expect(summary).toContainText('$113.71');
   await expect(summary).not.toContainText('Descuento al mayor');
   await expect(page.getByRole('main').getByText(/Añade 1 pieza más/)).toBeVisible();
+});
+
+test('el conjunto cuenta como 2 piezas: 3 conjuntos activan el 15%', async ({ page }) => {
+  await page.goto('/producto/conjunto-biker-top');
+  await expect(page.getByText('Este producto cuenta como 2 piezas.')).toBeVisible();
+  await page.getByRole('button', { name: /Pedir al mayor \(3 uds\)/ }).click();
+
+  const drawer = page.getByRole('dialog', { name: 'Cesta de compras' });
+  await expect(drawer).toContainText('¡Precio al mayor activado!');
+  await expect(drawer).toContainText('Cuenta como 2 piezas al mayor');
+  await expect(drawer).toContainText('3 artículos · 6 piezas');
+  // 3 × $44.67 = $134.01; −15% ($20.10) = $113.91
+  await expect(drawer).toContainText('$134.01');
+  await expect(drawer).toContainText('−$20.10');
+  await expect(drawer).toContainText('$113.91');
 });
 
 test('en la cesta, cambiar a una talla repetida fusiona las líneas', async ({ page }) => {

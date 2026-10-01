@@ -1,7 +1,7 @@
 import { WHOLESALE } from '@/config/business';
 import { cn } from '@/lib/cn';
 import { formatUSD } from '@/lib/money';
-import type { CartTotals } from './pricing';
+import { describeQuantity, type CartTotals } from './pricing';
 
 /** Barra de progreso hacia el descuento al mayor. */
 export function WholesaleProgress({ totals }: { totals: CartTotals }) {
@@ -52,9 +52,7 @@ export function CartTotalsList({ totals }: { totals: CartTotals }) {
   return (
     <dl className="flex flex-col gap-2 text-sm">
       <div className="flex justify-between text-fg-muted">
-        <dt>
-          Subtotal ({totals.itemCount} {totals.itemCount === 1 ? 'prenda' : 'prendas'})
-        </dt>
+        <dt>Subtotal ({describeQuantity(totals)})</dt>
         <dd>{formatUSD(totals.subtotalCents)}</dd>
       </div>
       {totals.isWholesale ? (

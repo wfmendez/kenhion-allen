@@ -52,6 +52,16 @@ export function resolveCartLines(lines: CartLine[], products: Product[]): Resolv
   });
 }
 
+/**
+ * "3 artículos" o, cuando algún artículo suma más de una pieza al mayor, "3 artículos · 6 piezas".
+ * Así el cliente entiende por qué el descuento aplica con menos artículos.
+ */
+export function describeQuantity(q: { itemCount: number; wholesalePieces: number }): string {
+  const items = `${q.itemCount} ${q.itemCount === 1 ? 'artículo' : 'artículos'}`;
+  if (q.wholesalePieces === q.itemCount) return items;
+  return `${items} · ${q.wholesalePieces} ${q.wholesalePieces === 1 ? 'pieza' : 'piezas'}`;
+}
+
 export function calculateTotals(
   lines: Pick<ResolvedCartLine, 'qty' | 'lineTotalCents' | 'wholesalePieces'>[],
   rules: { minQty: number; rate: number } = WHOLESALE,

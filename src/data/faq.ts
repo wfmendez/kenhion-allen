@@ -1,5 +1,6 @@
 import { WHOLESALE } from '@/config/business';
 import { siteConfig } from '@/config/site';
+import { products } from './products';
 
 export interface FaqItem {
   question: string;
@@ -7,6 +8,12 @@ export interface FaqItem {
 }
 
 const wholesalePercent = Math.round(WHOLESALE.rate * 100);
+
+// Productos que suman más de una pieza al mayor (hoy, el conjunto biker + top).
+const multiPieceNote = products
+  .filter((p) => p.wholesaleUnits > 1)
+  .map((p) => ` Cada ${p.name.toLowerCase()} cuenta como ${p.wholesaleUnits} piezas.`)
+  .join('');
 
 export const faq: FaqItem[] = [
   {
@@ -16,7 +23,7 @@ export const faq: FaqItem[] = [
   },
   {
     question: `¿Cómo funciona el descuento al mayor (${wholesalePercent}% OFF)?`,
-    answer: `Al acumular ${WHOLESALE.minQty} o más prendas en tu cesta de compras (pueden ser de la misma referencia o combinadas), el sistema calcula automáticamente un ${wholesalePercent}% de descuento al mayor en el subtotal de tu pedido.`,
+    answer: `Al acumular ${WHOLESALE.minQty} o más piezas en tu cesta de compras (pueden ser de la misma referencia o combinadas), el sistema calcula automáticamente un ${wholesalePercent}% de descuento al mayor en el subtotal de tu pedido.${multiPieceNote}`,
   },
   {
     question: '¿Cuáles son los métodos de pago aceptados?',

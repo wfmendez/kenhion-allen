@@ -8,6 +8,7 @@ import { cartPath, checkoutPath, shopPath } from '@/lib/routes';
 import { useCart } from './cart-context';
 import { CartLineItem } from './cart-line-item';
 import { CartTotalsList, WholesaleProgress } from './cart-summary';
+import { describeQuantity } from './pricing';
 
 export function CartDrawer() {
   const { lines, totals, isDrawerOpen, closeDrawer } = useCart();
@@ -55,7 +56,7 @@ export function CartButton() {
       onClick={openDrawer}
       className="relative grid size-11 place-items-center rounded-full text-fg transition-colors hover:bg-surface-raised hover:text-gold"
     >
-      <Icon name="bag" label={`Abrir cesta (${totals.itemCount} prendas)`} />
+      <Icon name="bag" label={`Abrir cesta (${describeQuantity(totals)})`} />
       {totals.itemCount > 0 ? (
         <span
           aria-hidden

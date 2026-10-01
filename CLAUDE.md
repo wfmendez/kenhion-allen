@@ -33,4 +33,4 @@ Para cambiar dependencias usa `npx npm@11.19 install …`: el npm local (11.6) g
 
 ## Pendientes del cliente (no inventar estos datos)
 
-Logo en vector, licencia de Sloop Script Pro, RIF y dirección fiscal de la tienda, datos de pago, validación de la guía de tallas, colores disponibles por prenda y si el conjunto cuenta como 1 o 2 piezas al mayor (`wholesaleUnits`). Ver `docs/brand.md`.
+Logo en vector, licencia de Sloop Script Pro, RIF y dirección fiscal de la tienda, datos de pago, validación de la guía de tallas y colores disponibles por prenda. (El conjunto biker + top cuenta como 2 piezas al mayor: confirmado, `wholesaleUnits: 2`.) Ver `docs/brand.md`.

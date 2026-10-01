@@ -41,6 +41,8 @@ describe('datos del catálogo', () => {
       ['Conjunto biker + top', 4467, ['verde', 'negro']],
     ]);
     expect(products.every((p) => p.sizes.join() === 'S,M,L')).toBe(true);
+    // El conjunto trae dos prendas y cuenta como 2 piezas al mayor; el resto, 1.
+    expect(products.map((p) => p.wholesaleUnits)).toEqual([1, 1, 2]);
   });
 
   it('todas las imágenes del catálogo y la galería existen en /public', () => {

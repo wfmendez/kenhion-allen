@@ -85,6 +85,9 @@ export default async function ProductPage({ params }: { params: Params }) {
             <li className="flex gap-3">
               <Icon name="check" size={18} className="shrink-0 text-gold" />
               {pct}% de descuento al mayor comprando {WHOLESALE.minQty} piezas o más (combinables).
+              {product.wholesaleUnits > 1
+                ? ` Este producto cuenta como ${product.wholesaleUnits} piezas.`
+                : null}
             </li>
             <li className="flex gap-3">
               <Icon name="truck" size={18} className="shrink-0 text-gold" />

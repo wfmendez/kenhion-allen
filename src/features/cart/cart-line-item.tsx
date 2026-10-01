@@ -45,6 +45,11 @@ export function CartLineItem({
             <p className="text-xs text-fg-subtle">
               {collection?.name} · Color {line.colorOption.name}
             </p>
+            {product.wholesaleUnits > 1 ? (
+              <p className="text-xs text-gold">
+                Cuenta como {product.wholesaleUnits} piezas al mayor
+              </p>
+            ) : null}
           </div>
           <button
             type="button"
