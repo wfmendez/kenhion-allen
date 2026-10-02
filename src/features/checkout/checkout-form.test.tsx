@@ -59,13 +59,18 @@ describe('CheckoutForm', () => {
     await user.selectOptions(screen.getByLabelText('Estado'), 'Aragua');
     await user.type(screen.getByLabelText('Ciudad'), 'Maracay');
     await user.type(screen.getByLabelText('Dirección'), 'Calle Páez, casa 10, sector centro');
-    await user.selectOptions(screen.getByLabelText('¿Cómo lo recibes?'), 'MRW');
-    await user.selectOptions(screen.getByLabelText('Método de pago'), 'Zelle');
+    await user.selectOptions(screen.getByLabelText('¿Cómo lo recibes?'), 'Delivery en Maracay');
+    await user.selectOptions(screen.getByLabelText('Método de pago'), 'Binance');
     await user.click(screen.getByRole('button', { name: 'Confirmar pedido' }));
 
     await vi.waitFor(() => expect(push).toHaveBeenCalledWith('/checkout/confirmacion'));
     const order = loadLastOrder();
-    expect(order?.customer).toMatchObject({ idNumber: 'V-12345678', phone: '0412-1234567' });
+    expect(order?.customer).toMatchObject({
+      idNumber: 'V-12345678',
+      phone: '0412-1234567',
+      shippingAgency: 'Delivery en Maracay',
+      paymentMethod: 'Binance',
+    });
     expect(order?.items).toEqual([
       expect.objectContaining({
         name: 'Franela de compresión de caballero',

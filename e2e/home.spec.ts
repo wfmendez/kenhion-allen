@@ -32,6 +32,26 @@ for (const { path, heading } of pages) {
   });
 }
 
+test('el inicio y Nosotros muestran los textos del cliente', async ({ page }) => {
+  await page.goto('/');
+  const main = page.getByRole('main');
+  await expect(main.getByText('Colección KA ELITE', { exact: true })).toBeVisible();
+  await expect(
+    main.getByText(/Prendas deportivas de compresión de alta resistencia/),
+  ).toBeVisible();
+
+  await page.goto('/nosotros');
+  await expect(
+    main.getByText(/Somos una firma de diseño definida por la elegancia atemporal/),
+  ).toBeVisible();
+  await expect(main.getByRole('heading', { level: 2 })).toHaveText([
+    'Diseño elegante',
+    'Calidad garantizada',
+    'Manufactura local',
+  ]);
+  await expect(main.getByText(/Cada pieza nace en Maracay/)).toBeVisible();
+});
+
 test('rutas inexistentes muestran el 404 de la marca', async ({ page }) => {
   const response = await page.goto('/no-existe');
   expect(response?.status()).toBe(404);

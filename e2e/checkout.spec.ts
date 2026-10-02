@@ -17,6 +17,26 @@ test.describe('checkout con comprobante PDF', () => {
     ]);
   });
 
+  test('ofrece las formas de envío y pago vigentes', async ({ page }) => {
+    await page.goto('/checkout');
+    await expect(page.getByLabel('¿Cómo lo recibes?').getByRole('option')).toHaveText([
+      'Selecciona una opción',
+      'MRW',
+      'Zoom',
+      'Tealca',
+      'T-envíos',
+      'Delivery en Maracay',
+      'Entrega personal en Maracay',
+    ]);
+    await expect(page.getByLabel('Método de pago').getByRole('option')).toHaveText([
+      'Selecciona un método',
+      'Pago Móvil',
+      'Transferencia en Bolívares',
+      'Binance',
+      'Efectivo (USD)',
+    ]);
+  });
+
   test('valida los campos obligatorios', async ({ page }) => {
     await page.goto('/checkout');
     await page.getByRole('button', { name: 'Confirmar pedido' }).click();
@@ -35,8 +55,8 @@ test.describe('checkout con comprobante PDF', () => {
     await page.getByLabel('Estado').selectOption('Mérida');
     await page.getByLabel('Ciudad').fill('Mérida');
     await page.getByLabel('Dirección').fill('Av. Las Américas, residencias Añil, apto 4-B');
-    await page.getByLabel('¿Cómo lo recibes?').selectOption('Tealca');
-    await page.getByLabel('Método de pago').selectOption('Zelle');
+    await page.getByLabel('¿Cómo lo recibes?').selectOption('T-envíos');
+    await page.getByLabel('Método de pago').selectOption('Binance');
     await page.getByRole('button', { name: 'Confirmar pedido' }).click();
 
     await expect(page).toHaveURL(/\/checkout\/confirmacion$/);
@@ -66,6 +86,8 @@ test.describe('checkout con comprobante PDF', () => {
     expect(message).toContain('Cédula/RIF: V-15123456');
     expect(message).toContain('Teléfono: 0424-1234567');
     expect(message).toContain('Color: Verde');
+    expect(message).toContain('Envío: T-envíos');
+    expect(message).toContain('Pago: Binance');
     expect(message).toContain('*TOTAL A PAGAR: $193.31 USD*');
     await expect(page.getByRole('status').filter({ hasText: 'Abrimos WhatsApp' })).toBeVisible();
 

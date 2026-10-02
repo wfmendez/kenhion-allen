@@ -13,11 +13,21 @@ export const WHOLESALE = {
 
 export const CURRENCY = 'USD';
 
-export const SHIPPING_AGENCIES = ['MRW', 'Zoom', 'Tealca', 'Entrega personal en Maracay'] as const;
+/** Agencias de encomienda para envíos nacionales. */
+export const SHIPPING_CARRIERS = ['MRW', 'Zoom', 'Tealca', 'T-envíos'] as const;
+
+/** Opciones de entrega dentro de Maracay. */
+export const LOCAL_DELIVERY_OPTIONS = [
+  'Delivery en Maracay',
+  'Entrega personal en Maracay',
+] as const;
+
+/** Todas las formas de recibir un pedido, en el orden en que se ofrecen en el checkout. */
+export const SHIPPING_AGENCIES = [...SHIPPING_CARRIERS, ...LOCAL_DELIVERY_OPTIONS] as const;
 
 export const PAYMENT_METHODS = [
   'Pago Móvil',
   'Transferencia en Bolívares',
-  'Zelle',
+  'Binance',
   'Efectivo (USD)',
 ] as const;

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { PAYMENT_METHODS, SHIPPING_AGENCIES } from '@/config/business';
+import { PAYMENT_METHODS, SHIPPING_CARRIERS } from '@/config/business';
 import { mainNav, shopNav } from '@/config/navigation';
 import { siteConfig } from '@/config/site';
 import { Icon } from '@/components/ui/icon';
@@ -79,7 +79,7 @@ export function Footer() {
             </li>
           </ul>
           <p className="text-xs text-fg-subtle">
-            Envíos: {SHIPPING_AGENCIES.slice(0, 3).join(' · ')}
+            Envíos: {SHIPPING_CARRIERS.join(' · ')}
             <br />
             Pagos: {PAYMENT_METHODS.join(' · ')}
           </p>

@@ -3,6 +3,7 @@ import { ButtonLink } from '@/components/ui/button';
 import { BrandEmblem } from '@/components/layout/brand-emblem';
 import { WHOLESALE } from '@/config/business';
 import { siteConfig } from '@/config/site';
+import { homeCopy } from '@/data/copy';
 import { heroImage } from '@/data/gallery';
 import { PHOTO_QUALITY } from '@/lib/images';
 import { shopPath } from '@/lib/routes';
@@ -24,10 +25,12 @@ export function Hero() {
           <h1 className="text-gold-gradient font-script text-6xl leading-[1.1] sm:text-7xl lg:text-8xl">
             {siteConfig.slogan}
           </h1>
-          <p className="max-w-lg text-lg text-fg-muted">
-            Colección KA ELITE: prendas deportivas de compresión para caballero y dama, hechas para
-            entrenar y verse bien.
-          </p>
+          <div className="flex max-w-lg flex-col gap-2">
+            <p className="font-display text-sm font-bold tracking-[0.2em] text-fg uppercase">
+              {homeCopy.collectionTitle}
+            </p>
+            <p className="text-lg text-fg-muted">{homeCopy.collectionText}</p>
+          </div>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href={shopPath} size="lg">
               Ver la tienda

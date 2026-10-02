@@ -22,8 +22,8 @@ const customer = customerSchema.parse({
   state: 'Carabobo',
   city: 'Valencia',
   address: 'Av. Bolívar, edificio Sol, piso 3',
-  shippingAgency: 'MRW',
-  paymentMethod: 'Zelle',
+  shippingAgency: 'T-envíos',
+  paymentMethod: 'Binance',
   notes: '',
 });
 
@@ -69,8 +69,8 @@ describe('buildOrderWhatsAppMessage (pedido confirmado)', () => {
     expect(msg).toContain('Cédula/RIF: V-12345678');
     expect(msg).toContain('Teléfono: 0412-1234567');
     expect(msg).toContain('Dirección: Av. Bolívar, edificio Sol, piso 3, Valencia, Carabobo');
-    expect(msg).toContain('Envío: MRW');
-    expect(msg).toContain('Pago: Zelle');
+    expect(msg).toContain('Envío: T-envíos');
+    expect(msg).toContain('Pago: Binance');
     // 6 × $24.37 = $146.22; 15% = $21.93
     expect(msg).toContain('*Descuento al mayor (15%): -$21.93 USD*');
     expect(msg).toContain('Adjunto el comprobante de pedido en PDF.');

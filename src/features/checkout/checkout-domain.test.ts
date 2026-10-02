@@ -52,6 +52,22 @@ describe('customerSchema', () => {
     expect(c.phone).toBe('0414-5551234');
   });
 
+  it('acepta las formas de envío y pago vigentes', () => {
+    for (const shippingAgency of [
+      'T-envíos',
+      'Delivery en Maracay',
+      'Entrega personal en Maracay',
+    ]) {
+      expect(customerSchema.safeParse({ ...valid, shippingAgency }).success).toBe(true);
+    }
+    expect(customerSchema.safeParse({ ...valid, paymentMethod: 'Binance' }).success).toBe(true);
+  });
+
+  it('ya no acepta Zelle como método de pago', () => {
+    const result = customerSchema.safeParse({ ...valid, paymentMethod: 'Zelle' });
+    expect(result.success).toBe(false);
+  });
+
   it('el correo y las notas son opcionales', () => {
     expect(customerSchema.safeParse({ ...valid, email: '', notes: '' }).success).toBe(true);
   });
