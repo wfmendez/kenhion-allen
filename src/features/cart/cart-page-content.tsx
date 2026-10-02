@@ -2,6 +2,7 @@
 
 import { Button, ButtonLink } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
+import { shippingSummary } from '@/data/shipping';
 import { WhatsAppCheckoutButton } from '@/features/checkout/whatsapp-checkout-button';
 import { checkoutPath, shopPath } from '@/lib/routes';
 import { useCart } from './cart-context';
@@ -52,7 +53,7 @@ export function CartPageContent() {
         <WhatsAppCheckoutButton variant="quick" />
         <p className="flex items-start gap-2 text-xs text-fg-subtle">
           <Icon name="truck" size={16} className="shrink-0 text-gold" />
-          Envíos a toda Venezuela por MRW, Zoom y Tealca. Entrega personal en Maracay.
+          {shippingSummary}
         </p>
       </aside>
     </div>

@@ -3,6 +3,7 @@ import { BrandEmblem } from '@/components/layout/brand-emblem';
 import { ButtonLink } from '@/components/ui/button';
 import { Icon, type IconName } from '@/components/ui/icon';
 import { siteConfig } from '@/config/site';
+import { aboutCopy, type AboutValue } from '@/data/copy';
 import { shopPath } from '@/lib/routes';
 import { PageHeader } from '@/sections/page-header';
 
@@ -12,23 +13,11 @@ export const metadata: Metadata = {
   alternates: { canonical: '/nosotros' },
 };
 
-const values: { icon: IconName; title: string; text: string }[] = [
-  {
-    icon: 'check',
-    title: 'Diseño elegante',
-    text: 'Cortes pulidos y acabados limpios que resaltan en cualquier ocasión.',
-  },
-  {
-    icon: 'check',
-    title: 'Calidad garantizada',
-    text: 'Telas técnicas de compresión, pensadas para entrenar con comodidad y soporte.',
-  },
-  {
-    icon: 'mapPin',
-    title: `Hecho en ${siteConfig.location.city}`,
-    text: 'Atención cercana y envíos seguros a toda Venezuela.',
-  },
-];
+const valueIcons: Record<AboutValue['id'], IconName> = {
+  diseno: 'check',
+  calidad: 'check',
+  manufactura: 'mapPin',
+};
 
 export default function AboutPage() {
   return (
@@ -38,35 +27,36 @@ export default function AboutPage() {
         title={`Moda elegante en ${siteConfig.location.city}`}
         crumbs={[{ name: 'Nosotros', path: '/nosotros' }]}
       />
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[2fr_3fr]">
-        <div className="relative grid aspect-square place-items-center overflow-hidden rounded-card border border-gold/30 bg-surface">
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(circle,rgb(212_175_55/0.15),transparent_65%)]"
-          />
-          <BrandEmblem weight="official" className="relative h-48 w-40 text-gold" />
+      <div className="mx-auto flex max-w-7xl flex-col gap-12 px-4 py-16 sm:px-6">
+        <div className="grid items-center gap-12 lg:grid-cols-[2fr_3fr]">
+          <div className="relative mx-auto grid aspect-square w-full max-w-sm place-items-center overflow-hidden rounded-card border border-gold/30 bg-surface lg:max-w-none">
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-[radial-gradient(circle,rgb(212_175_55/0.15),transparent_65%)]"
+            />
+            <BrandEmblem weight="official" className="relative h-48 w-40 text-gold" />
+          </div>
+          <div className="flex flex-col gap-6">
+            <p className="text-lg leading-relaxed text-fg-muted">{aboutCopy.description}</p>
+            <p className="text-gold-gradient font-script text-5xl">{siteConfig.slogan}</p>
+            <ButtonLink href={shopPath} className="self-start">
+              Conocer la colección
+            </ButtonLink>
+          </div>
         </div>
-        <div className="flex flex-col gap-6">
-          <p className="text-lg leading-relaxed text-fg-muted">
-            Somos una tienda de ropa especializada en prendas elegantes para hombres y mujeres. Nos
-            destacamos por la calidad de nuestros productos y ofrecemos ropa de diseñador con un
-            estilo elegante y conservador. Estamos ubicados en {siteConfig.location.city},{' '}
-            {siteConfig.location.country}.
-          </p>
-          <p className="text-gold-gradient font-script text-5xl">{siteConfig.slogan}</p>
-          <ul className="grid gap-4 sm:grid-cols-3">
-            {values.map((v) => (
-              <li key={v.title} className="rounded-card border border-line bg-surface p-5">
-                <Icon name={v.icon} className="text-gold" />
-                <h2 className="mt-3 font-display text-sm font-bold">{v.title}</h2>
-                <p className="mt-1 text-sm text-fg-muted">{v.text}</p>
-              </li>
-            ))}
-          </ul>
-          <ButtonLink href={shopPath} className="self-start">
-            Conocer las colecciones
-          </ButtonLink>
-        </div>
+
+        <ul className="grid gap-5 md:grid-cols-3">
+          {aboutCopy.values.map((value) => (
+            <li
+              key={value.id}
+              className="flex flex-col gap-3 rounded-card border border-line bg-surface p-6"
+            >
+              <Icon name={valueIcons[value.id]} className="text-gold" />
+              <h2 className="font-display text-base font-bold">{value.title}</h2>
+              <p className="text-sm leading-relaxed text-fg-muted">{value.text}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

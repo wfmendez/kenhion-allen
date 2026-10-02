@@ -9,6 +9,7 @@ import { Icon } from '@/components/ui/icon';
 import { Price } from '@/components/ui/price';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { siteConfig } from '@/config/site';
+import { aboutCopy } from '@/data/copy';
 import { ProductGrid } from '@/features/product/product-card';
 import { getCollections, getProducts } from '@/lib/repositories/product-repository';
 import { colorDescriptions, colors, contrastRatio, type ColorToken } from '@/styles/tokens';
@@ -97,11 +98,7 @@ export default async function DesignSystemPage() {
             </p>
           </Specimen>
           <Specimen label="Inter: textos y descripciones">
-            <p className="max-w-prose text-fg-muted">
-              Somos una tienda de ropa especializada en prendas elegantes para hombres y mujeres.
-              Nos destacamos por la calidad de nuestros productos y un estilo elegante y
-              conservador.
-            </p>
+            <p className="max-w-prose text-fg-muted">{aboutCopy.description}</p>
           </Specimen>
         </div>
       </Block>

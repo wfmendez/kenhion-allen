@@ -5,6 +5,7 @@ import { Icon } from '@/components/ui/icon';
 import { Price } from '@/components/ui/price';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { WHOLESALE } from '@/config/business';
+import { shippingSummary } from '@/data/shipping';
 import { ProductGrid } from '@/features/product/product-card';
 import { ProductPurchase } from '@/features/product/product-purchase';
 import { SizeGuideButton } from '@/features/size-guide/size-guide-button';
@@ -91,7 +92,7 @@ export default async function ProductPage({ params }: { params: Params }) {
             </li>
             <li className="flex gap-3">
               <Icon name="truck" size={18} className="shrink-0 text-gold" />
-              Envíos a toda Venezuela por MRW, Zoom y Tealca. Entrega personal en Maracay.
+              {shippingSummary}
             </li>
           </ul>
         }
