@@ -6,7 +6,8 @@
       "url": [
         "http://localhost:3107/",
         "http://localhost:3107/tienda",
-        "http://localhost:3107/producto/hoodie-resiliencia",
+        "http://localhost:3107/producto/short-de-caballero",
+        "http://localhost:3107/nosotros",
         "http://localhost:3107/preguntas-frecuentes"
       ],
       "numberOfRuns": 1,
