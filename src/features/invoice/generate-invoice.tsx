@@ -16,8 +16,25 @@ export async function generateInvoicePdf(order: Order): Promise<Blob> {
   return pdf(<InvoiceDocument order={order} />).toBlob();
 }
 
+const prepared = new Map<string, Promise<Blob>>();
+
+/**
+ * Genera el PDF una sola vez por pedido. La confirmación lo pide en segundo plano al
+ * abrirse, así el botón de descarga responde al instante.
+ */
+export function prepareInvoice(order: Order): Promise<Blob> {
+  let blob = prepared.get(order.number);
+  if (!blob) {
+    blob = generateInvoicePdf(order);
+    prepared.set(order.number, blob);
+    // Si falla, se olvida para que el siguiente intento lo vuelva a generar.
+    blob.catch(() => prepared.delete(order.number));
+  }
+  return blob;
+}
+
 export async function downloadInvoice(order: Order): Promise<void> {
-  const blob = await generateInvoicePdf(order);
+  const blob = await prepareInvoice(order);
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
