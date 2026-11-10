@@ -84,6 +84,18 @@ test('ninguna página pide imágenes al sitio anterior ni a Unsplash', async ({ 
   expect(external).toEqual([]);
 });
 
+test('las respuestas llevan cabeceras de seguridad', async ({ request }) => {
+  for (const path of ['/', '/producto/short-de-caballero', '/checkout']) {
+    const headers = (await request.get(path)).headers();
+    expect(headers['content-security-policy']).toContain("frame-ancestors 'none'");
+    expect(headers['x-frame-options']).toBe('DENY');
+    expect(headers['x-content-type-options']).toBe('nosniff');
+    expect(headers['referrer-policy']).toBe('strict-origin-when-cross-origin');
+    expect(headers['permissions-policy']).toContain('camera=()');
+    expect(headers['x-powered-by']).toBeUndefined();
+  }
+});
+
 test('sitemap y robots están disponibles', async ({ request }) => {
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.ok()).toBe(true);
