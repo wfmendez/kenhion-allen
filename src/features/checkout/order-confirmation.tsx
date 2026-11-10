@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useSyncExternalStore } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { BrandEmblem } from '@/components/layout/brand-emblem';
 import { Button, ButtonLink } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { useToast } from '@/components/ui/toast';
 import { siteConfig } from '@/config/site';
 import { useCart } from '@/features/cart/cart-context';
-import { downloadInvoice } from '@/features/invoice/generate-invoice';
+import { downloadInvoice, prepareInvoice } from '@/features/invoice/generate-invoice';
 import { formatUSD } from '@/lib/money';
 import { shopPath } from '@/lib/routes';
 import type { Order } from '@/lib/schemas/order';
@@ -53,6 +53,17 @@ function ConfirmedOrder({ order }: { order: Order }) {
   const [downloading, setDownloading] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
   const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    // El PDF se prepara cuando el navegador queda libre, antes de que el cliente lo pida.
+    const prepare = () => void prepareInvoice(order).catch(() => {});
+    if (typeof window.requestIdleCallback === 'function') {
+      const id = window.requestIdleCallback(prepare, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(prepare, 1000);
+    return () => clearTimeout(id);
+  }, [order]);
 
   const handleDownload = async () => {
     setDownloading(true);
