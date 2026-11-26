@@ -35,7 +35,7 @@ export function matchesQuery(product: Product, query: string): boolean {
 
 /**
  * Filtra y ordena sin modificar el arreglo original.
- * Las prendas Unisex aparecen también al filtrar por Mujer u Hombre.
+ * Las prendas Unisex aparecen también al filtrar por Dama o Caballero.
  */
 export function filterProducts(products: Product[], filters: Partial<CatalogFilters>): Product[] {
   const { collection, gender, query, sort } = { ...defaultFilters, ...filters };
@@ -54,6 +54,7 @@ export function filterProducts(products: Product[], filters: Partial<CatalogFilt
     case 'name':
       return result.sort((a, b) => a.name.localeCompare(b.name, 'es'));
     case 'featured':
+    default:
       return result;
   }
 }

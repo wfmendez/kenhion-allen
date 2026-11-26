@@ -1,7 +1,12 @@
 import { products } from '@/data/products';
 import type { Product } from '@/lib/schemas/product';
 import { genderOptionsFor } from './catalog-params';
-import { countByCollection, filterProducts, normalizeText } from './filter-products';
+import {
+  countByCollection,
+  filterProducts,
+  normalizeText,
+  type SortOption,
+} from './filter-products';
 
 const names = (list: { name: string }[]) => list.map((p) => p.name);
 
@@ -46,6 +51,11 @@ describe('filterProducts', () => {
     const byName = names(filterProducts(products, { sort: 'name' }));
     expect(byName).toEqual([...byName].sort((a, b) => a.localeCompare(b, 'es')));
     expect(products).toEqual(original);
+  });
+
+  it('devuelve los resultados sin ordenar si el orden es desconocido', () => {
+    const sort = 'otro' as unknown as SortOption;
+    expect(filterProducts(products, { sort })).toHaveLength(products.length);
   });
 });
 

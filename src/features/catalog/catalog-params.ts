@@ -40,14 +40,19 @@ export function genderOptionsFor(
   ];
 }
 
+/** Busca solo claves propias: "constructor" o "__proto__" no deben pasar por valores válidos. */
+function lookup<T>(map: Record<string, T>, key: string): T | undefined {
+  return Object.hasOwn(map, key) ? map[key] : undefined;
+}
+
 const first = (value: string | string[] | undefined) =>
   (Array.isArray(value) ? value[0] : value)?.trim() ?? '';
 
 export function parseCatalogParams(params: SearchParams): Omit<CatalogFilters, 'collection'> {
   return {
-    gender: genderParam[first(params.genero).toLowerCase()] ?? 'all',
+    gender: lookup(genderParam, first(params.genero).toLowerCase()) ?? 'all',
     query: first(params.q).slice(0, 80),
-    sort: sortParam[first(params.orden).toLowerCase()] ?? 'featured',
+    sort: lookup(sortParam, first(params.orden).toLowerCase()) ?? 'featured',
   };
 }
 
