@@ -3,7 +3,7 @@
 Sitio y tienda online de **Kenhion Allen**, marca de ropa elegante de Maracay, Venezuela.
 Eslogan: **"Más allá del límite"**.
 
-Producción: https://kenhion-allen.vercel.app
+Producción: https://kenhionallen.com
 
 ## Qué hace
 
@@ -35,7 +35,7 @@ npm install
 npm run dev          # http://localhost:3006
 ```
 
-Copia `.env.example` a `.env.local` si necesitas fijar `NEXT_PUBLIC_SITE_URL`. En Vercel se usa el dominio de producción automáticamente.
+No hace falta ninguna variable de entorno. La URL pública sale de `src/config/site.ts`: `NEXT_PUBLIC_SITE_URL` si se define, si no `https://kenhionallen.com` en cualquier `next build` (Vercel, previews, CI y build local) y `http://localhost:3006` en `npm run dev` y en los tests. En Vercel ya no depende de variables (ver [ADR 0008](docs/adr/0008-dominio-canonico-y-seo.md)). `.env.example` lista las variables opcionales; si defines `NEXT_PUBLIC_SITE_URL` en `.env.local`, los E2E de dominio fallan.
 
 ## Scripts
 
@@ -49,6 +49,8 @@ Copia `.env.example` a `.env.local` si necesitas fijar `NEXT_PUBLIC_SITE_URL`. E
 | `npm run test:e2e`            | Tests de punta a punta en escritorio y móvil, con auditoría de accesibilidad (requiere build previo) |
 
 La primera vez que corras los E2E: `npx playwright install chromium`.
+
+Si cambia el emblema o los colores de marca, regenera el favicon y los PNG del emblema con `node scripts/generate-favicon.mjs` y versiona los archivos que produce (`src/app/favicon.ico` y `public/images/marca/emblema-*.png`).
 
 ## Estructura
 
@@ -83,6 +85,15 @@ Cada PR corre en GitHub Actions (`.github/workflows/ci.yml`):
 3. Lighthouse: accesibilidad ≥ 95 y SEO ≥ 90 son obligatorios; rendimiento y buenas prácticas generan aviso.
 
 Dependabot abre PRs semanales de dependencias.
+
+## SEO y vista previa al compartir
+
+- **Dominio canónico:** `https://kenhionallen.com` (sin www), fijo en `src/config/site.ts`. En Vercel → Domains, `www.kenhionallen.com` y `kenhion-allen.vercel.app` deben redirigir con 308 al dominio canónico. Las previsualizaciones llevan `noindex`.
+- **Qué publica el sitio:** `/sitemap.xml` (con las fotos de cada producto), `/robots.txt`, canonical y Open Graph completo en cada página, imágenes para compartir de 1200x630 en `/og/*`, favicon ICO/PNG, `/manifest.webmanifest` y datos estructurados (WebSite + OnlineStore en la home, Product en cada ficha).
+- **Registrar el dominio en buscadores:** en [Google Search Console](https://search.google.com/search-console) crea una propiedad de **dominio** para `kenhionallen.com`, verifícala con el registro TXT que te da Google en el DNS y envía `https://kenhionallen.com/sitemap.xml` en «Sitemaps». En [Bing Webmaster Tools](https://www.bing.com/webmasters) puedes importar la propiedad desde Search Console. Si prefieres verificar con etiqueta HTML, define `GOOGLE_SITE_VERIFICATION` y/o `BING_SITE_VERIFICATION` en Vercel (solo el valor de `content`) y vuelve a desplegar.
+- **Imágenes para compartir:** se generan en el build (`src/features/seo/`). Su URL lleva `?v=` con una huella de lo que dibujan, así que al cambiar un precio o una foto la URL cambia sola. Si cambias el diseño, sube `OG_DESIGN_VERSION` en `og-image.ts`.
+- **Refrescar la vista previa en WhatsApp y Facebook:** ambas guardan en caché la vista previa de cada enlace. En Facebook (e Instagram), tras desplegar, pega la URL en el [Sharing Debugger](https://developers.facebook.com/tools/debug/) y pulsa «Volver a extraer». WhatsApp arma la vista previa al pegar el enlace y la recuerda un tiempo: los mensajes ya enviados no cambian, pero al compartir el enlace de nuevo sale la imagen actual (su URL cambió con `?v=`). Si aun así muestra la vieja, comparte el enlace con un parámetro cualquiera, por ejemplo `https://kenhionallen.com/tienda?ref=wa`: la canónica no cambia. En X basta con publicar el enlace otra vez.
+- **Comprobar tras desplegar:** `curl -s https://kenhionallen.com/sitemap.xml | grep -c vercel.app` debe dar 0, y conviene pasar la home y una ficha por la [prueba de resultados enriquecidos](https://search.google.com/test/rich-results).
 
 ## Documentación
 
