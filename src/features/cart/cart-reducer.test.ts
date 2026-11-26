@@ -1,3 +1,4 @@
+import { MAX_LINE_QTY } from '@/lib/schemas/cart';
 import { cartReducer, getLineId, initialCartState, type CartState } from './cart-reducer';
 
 const withLines = (...lines: CartState['lines']): CartState => ({ lines });
@@ -87,6 +88,36 @@ describe('cartReducer', () => {
       ],
     });
     expect(hydrated.lines).toEqual([{ productId: 13, color: 'verde', size: 'S', qty: 3 }]);
+  });
+
+  it('nunca pasa del máximo por línea que acepta el almacenamiento', () => {
+    const full = withLines(
+      { productId: 11, color: 'verde', size: 'M', qty: 999 },
+      { productId: 11, color: 'verde', size: 'L', qty: 500 },
+    );
+    const added = cartReducer(full, {
+      type: 'add',
+      productId: 11,
+      color: 'verde',
+      size: 'M',
+      qty: 6,
+    });
+    expect(added.lines[0]?.qty).toBe(MAX_LINE_QTY);
+
+    const merged = cartReducer(full, { type: 'changeSize', lineId: '11-verde-L', size: 'M' });
+    expect(merged.lines).toEqual([{ productId: 11, color: 'verde', size: 'M', qty: MAX_LINE_QTY }]);
+
+    const set = cartReducer(full, { type: 'setQty', lineId: '11-verde-L', qty: 5000 });
+    expect(set.lines[1]?.qty).toBe(MAX_LINE_QTY);
+
+    const fresh = cartReducer(initialCartState, {
+      type: 'add',
+      productId: 12,
+      color: 'negro',
+      size: 'S',
+      qty: 1200,
+    });
+    expect(fresh.lines[0]?.qty).toBe(MAX_LINE_QTY);
   });
 
   it('genera ids de línea por producto, color y talla', () => {

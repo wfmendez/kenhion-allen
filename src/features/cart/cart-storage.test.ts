@@ -38,4 +38,33 @@ describe('cart-storage', () => {
     expect(loadCart()).toEqual([]);
     OBSOLETE_CART_KEYS.forEach((key) => expect(localStorage.getItem(key)).toBeNull());
   });
+
+  it('descarta solo las líneas inválidas y conserva el resto', () => {
+    localStorage.setItem(
+      CART_STORAGE_KEY,
+      JSON.stringify({
+        version: 3,
+        lines: [
+          { productId: 11, color: 'verde', size: 'M', qty: 2 },
+          { productId: 11, color: 'verde', size: 'L', qty: 1005 },
+          { productId: 12, color: 'negro', size: 'XL', qty: 1 },
+        ],
+      }),
+    );
+    expect(loadCart()).toEqual([{ productId: 11, color: 'verde', size: 'M', qty: 2 }]);
+  });
+
+  it('une las líneas repetidas al cargar', () => {
+    localStorage.setItem(
+      CART_STORAGE_KEY,
+      JSON.stringify({
+        version: 3,
+        lines: [
+          { productId: 11, color: 'verde', size: 'M', qty: 2 },
+          { productId: 11, color: 'verde', size: 'M', qty: 3 },
+        ],
+      }),
+    );
+    expect(loadCart()).toEqual([{ productId: 11, color: 'verde', size: 'M', qty: 5 }]);
+  });
 });
