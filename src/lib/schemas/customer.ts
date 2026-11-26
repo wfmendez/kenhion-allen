@@ -9,10 +9,14 @@ export function normalizeIdNumber(raw: string): string {
   return match ? `${match[1]}-${match[2]}` : raw.trim();
 }
 
-/** "+58 412-530.5464" o "0412 5305464" → "0412-5305464". */
+/** "+58 412-530.5464", "+58 0412-5305464" o "0412 5305464" → "0412-5305464". */
 export function normalizePhone(raw: string): string {
   let digits = raw.replace(/\D/g, '');
-  if (digits.startsWith('58')) digits = `0${digits.slice(2)}`;
+  // Código de país 58 (ningún código de área venezolano empieza por 5), con o sin el 0 de troncal.
+  if (digits.startsWith('58') && digits.length >= 12) {
+    digits = digits.slice(2);
+    if (!digits.startsWith('0')) digits = `0${digits}`;
+  }
   if (digits.length === 10 && !digits.startsWith('0')) digits = `0${digits}`;
   return /^0\d{10}$/.test(digits) ? `${digits.slice(0, 4)}-${digits.slice(4)}` : raw.trim();
 }

@@ -18,6 +18,16 @@ describe('parseCatalogParams', () => {
     });
   });
 
+  it('ignora las claves heredadas de Object.prototype', () => {
+    for (const key of ['constructor', '__proto__', 'toString', 'hasOwnProperty', 'valueOf']) {
+      expect(parseCatalogParams({ genero: key, orden: key })).toEqual({
+        gender: 'all',
+        query: '',
+        sort: 'featured',
+      });
+    }
+  });
+
   it('toma el primer valor si el parámetro se repite y limita la búsqueda', () => {
     expect(parseCatalogParams({ genero: ['caballero', 'dama'] }).gender).toBe('Caballero');
     expect(parseCatalogParams({ q: 'x'.repeat(200) }).query).toHaveLength(80);

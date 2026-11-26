@@ -1,5 +1,5 @@
 import type { Size } from '@/config/business';
-import type { CartLine } from '@/lib/schemas/cart';
+import { MAX_LINE_QTY, type CartLine } from '@/lib/schemas/cart';
 
 export type CartState = { lines: CartLine[] };
 
@@ -18,13 +18,17 @@ export function getLineId(line: Pick<CartLine, 'productId' | 'color' | 'size'>):
   return `${line.productId}-${line.color}-${line.size}`;
 }
 
+/** Una línea por encima del máximo invalidaría el carrito guardado: se recorta al tope. */
+const clampQty = (qty: number) => Math.min(MAX_LINE_QTY, qty);
+
 /** Une líneas repetidas (mismo producto, color y talla) sumando cantidades, sin alterar el orden. */
 function mergeLines(lines: CartLine[]): CartLine[] {
   const merged = new Map<string, CartLine>();
   for (const line of lines) {
     const id = getLineId(line);
     const existing = merged.get(id);
-    merged.set(id, existing ? { ...existing, qty: existing.qty + line.qty } : { ...line });
+    const qty = clampQty((existing?.qty ?? 0) + line.qty);
+    merged.set(id, { ...(existing ?? line), qty });
   }
   return [...merged.values()];
 }
@@ -48,7 +52,7 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
       }
       return {
         lines: state.lines.map((l) =>
-          getLineId(l) === action.lineId ? { ...l, qty: action.qty } : l,
+          getLineId(l) === action.lineId ? { ...l, qty: clampQty(action.qty) } : l,
         ),
       };
     }

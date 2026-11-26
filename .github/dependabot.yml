@@ -16,6 +16,10 @@ updates:
         update-types: ['version-update:semver-major']
       - dependency-name: eslint
         update-types: ['version-update:semver-major']
+      # El runtime es Node 24 (.nvmrc, engines): no proponer saltos mayores de los tipos de Node.
+      # Pendiente: bajar @types/node a ^24 (requiere regenerar package-lock.json con npm 11.19).
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       # Las dependencias de desarrollo se agrupan en un solo PR semanal.
       desarrollo:

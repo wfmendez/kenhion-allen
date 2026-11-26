@@ -56,7 +56,9 @@ describe('buildOrderWhatsAppMessage (pedido confirmado)', () => {
   const order = createOrder({
     ...cartFor([{ productId: 11, color: 'blanco', size: 'S', qty: 6 }]),
     customer,
-    now: new Date(2026, 8, 25),
+    // Instante explícito en UTC (15:00 UTC = 11:00 en Caracas): el número de orden no
+    // depende de la zona horaria de la máquina que corre los tests.
+    now: new Date('2026-09-25T15:00:00Z'),
     random: () => 0,
   });
 

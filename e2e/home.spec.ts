@@ -56,6 +56,7 @@ test('rutas inexistentes muestran el 404 de la marca', async ({ page }) => {
   const response = await page.goto('/no-existe');
   expect(response?.status()).toBe(404);
   await expect(page.getByRole('heading', { name: 'Esta página no existe' })).toBeVisible();
+  await expect(page).toHaveTitle('Página no encontrada | Kenhion Allen');
 });
 
 test('la guía de diseño no se publica en producción de Vercel pero sí en local', async ({

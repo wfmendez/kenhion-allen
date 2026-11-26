@@ -18,7 +18,7 @@ describe('utilidades', () => {
   it('isActivePath distingue inicio y subrutas', () => {
     expect(isActivePath('/', '/')).toBe(true);
     expect(isActivePath('/tienda', '/')).toBe(false);
-    expect(isActivePath('/tienda/pod', '/tienda')).toBe(true);
+    expect(isActivePath('/tienda/ka-elite', '/tienda')).toBe(true);
     expect(isActivePath('/tiendas', '/tienda')).toBe(false);
   });
 });

@@ -18,6 +18,8 @@ export const siteConfig = {
     'Tienda de ropa especializada en prendas elegantes para hombres y mujeres en Maracay, Venezuela.',
   url: resolveSiteUrl(),
   locale: 'es-VE',
+  /** Zona horaria de la tienda: fecha del número de orden y del comprobante. */
+  timeZone: 'America/Caracas',
   contact: {
     whatsappNumber: '584125305464',
     whatsappDisplay: '+58 412-530-5464',

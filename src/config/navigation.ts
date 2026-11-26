@@ -3,7 +3,7 @@ export interface NavItem {
   href: string;
 }
 
-/** Navegación principal. Las rutas se crean en la Fase 3. */
+/** Navegación principal del header y del menú móvil. */
 export const mainNav: NavItem[] = [
   { label: 'Inicio', href: '/' },
   { label: 'Tienda', href: '/tienda' },
@@ -21,7 +21,7 @@ export const shopNav: NavItem[] = [
   { label: 'Dama', href: '/tienda?genero=dama' },
 ];
 
-/** Marca como activo el enlace exacto o cualquier subruta ("/tienda" en "/tienda/pod"). */
+/** Marca como activo el enlace exacto o cualquier subruta ("/tienda" en "/tienda/ka-elite"). */
 export function isActivePath(pathname: string, href: string): boolean {
   if (href === '/') return pathname === '/';
   return pathname === href || pathname.startsWith(`${href}/`);

@@ -16,3 +16,7 @@ Son 10 productos que cambian poco y no hay presupuesto ni necesidad inmediata de
 - Un dato inválido (slug repetido, precio negativo) rompe los tests y el build, no la tienda en producción.
 - Migrar a Supabase o a un CMS implica reescribir el repositorio, no los componentes.
 - Mientras tanto, editar el catálogo requiere un commit (ver CONTRIBUTING.md).
+
+## Nota posterior (noviembre 2026)
+
+El catálogo se redujo a la colección KA ELITE (3 productos hoy). La regla del repositorio aplica al catálogo (productos y colecciones); el contenido editorial de `src/data` (FAQ, galería, servicios, tallas, envíos) se importa directamente.

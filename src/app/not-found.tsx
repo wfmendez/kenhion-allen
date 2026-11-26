@@ -1,6 +1,10 @@
+import type { Metadata } from 'next';
 import { BrandEmblem } from '@/components/layout/brand-emblem';
 import { ButtonLink } from '@/components/ui/button';
 import { shopPath } from '@/lib/routes';
+
+/** Título propio (WCAG 2.4.2): con la plantilla queda "Página no encontrada | Kenhion Allen". */
+export const metadata: Metadata = { title: 'Página no encontrada' };
 
 export default function NotFound() {
   return (

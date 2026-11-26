@@ -21,3 +21,7 @@
 - El número de orden **no es correlativo** (sufijo aleatorio). Será correlativo cuando haya base de datos.
 - La tienda no guarda un registro de los pedidos: el registro es el chat de WhatsApp.
 - Evoluciones posibles sin tocar la UI: guardar pedidos en Supabase, enviar el PDF por correo o integrar un proveedor de facturación electrónica autorizado.
+
+## Nota posterior (noviembre 2026)
+
+Zelle se retiró de los métodos de pago a pedido del cliente. La lista vigente está en `PAYMENT_METHODS` (`src/config/business.ts`). La decisión de este ADR no cambia.
