@@ -14,6 +14,8 @@
 - **Contenido editorial:** `copy`, `faq`, `gallery`, `services`, `shipping`, `size-guide` y `venezuela-states` se importan directamente de `src/data`. Son textos y listas estáticas y tipadas, sin planes de moverlos a una base de datos.
 - Dentro de `src/data` los módulos pueden usarse entre sí (por ejemplo, la FAQ deriva del catálogo la nota de piezas al mayor). Los tests pueden importar los datos en crudo para validarlos.
 - `tests/architecture.test.ts` falla si un archivo de la app fuera de `src/lib/repositories/` o `src/data/` importa `@/data/products` o `@/data/collections` (con alias o ruta relativa).
+- **Excepciones:** se listan una a una en `ALLOWED_FILES` del test, con su motivo. Hoy hay una:
+  - `src/features/seo/og-image.ts` (llega con el PR de SEO): la imagen para compartir del sitio se calcula de forma síncrona porque la usa `pageMetadata()` para la metadata estática de las páginas, y lee el nombre de la primera colección. Cuando esa metadata pueda ser asíncrona, debe pasar a `getCollections()` y salir de la lista.
 
 ## Consecuencias
 

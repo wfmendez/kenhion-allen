@@ -14,6 +14,16 @@ const src = join(root, 'src');
 const CATALOG_MODULES = ['src/data/products', 'src/data/collections'];
 /** Únicos lugares de código de la app que pueden importar el catálogo en crudo. */
 const ALLOWED_DIRS = ['src/lib/repositories/', 'src/data/'];
+/**
+ * Excepciones documentadas en la ADR 0009, cada una con su motivo. Pueden no existir todavía en
+ * esta rama (llegan con otro PR); la lista solo evita que el test falle al fusionarlo.
+ */
+const ALLOWED_FILES: Record<string, string> = {
+  // PR de SEO: `siteOgImage()` es síncrona porque la usa `pageMetadata()` (src/lib/seo), que arma
+  // la metadata estática de las páginas, y lee el nombre de la primera colección. Pasará a
+  // getCollections() cuando esa metadata sea asíncrona.
+  'src/features/seo/og-image.ts': 'imagen para compartir del sitio, síncrona en el build',
+};
 
 function sourceFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -54,6 +64,7 @@ describe('arquitectura', () => {
     const offenders = appFiles
       .map((file) => toPosix(relative(root, file)))
       .filter((path) => !ALLOWED_DIRS.some((dir) => path.startsWith(dir)))
+      .filter((path) => !(path in ALLOWED_FILES))
       .filter((path) =>
         importedModules(join(root, path)).some((module) => CATALOG_MODULES.includes(module)),
       );
