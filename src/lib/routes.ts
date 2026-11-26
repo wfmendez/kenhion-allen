@@ -7,3 +7,9 @@ export const shopPath = '/tienda';
 export const cartPath = '/carrito';
 export const checkoutPath = '/checkout';
 export const confirmationPath = '/checkout/confirmacion';
+
+/** Imágenes para compartir (Open Graph), generadas en el build por Route Handlers. */
+export const ogSitePath = '/og/sitio';
+export const ogShopPath = '/og/tienda';
+export const ogCollectionPath = (slug: CollectionSlug) => `/og/coleccion/${slug}`;
+export const ogProductPath = (slug: string) => `/og/producto/${slug}`;

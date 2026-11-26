@@ -3,30 +3,21 @@ import type { ReactNode } from 'react';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { TopBar } from '@/components/layout/top-bar';
-import { JsonLd } from '@/components/seo/json-ld';
 import { ToastProvider } from '@/components/ui/toast';
-import { siteConfig } from '@/config/site';
 import { CartProvider } from '@/features/cart/cart-context';
 import { CartButton, CartDrawer } from '@/features/cart/cart-drawer';
 import { SearchButton } from '@/features/search/search-button';
 import { getCollections, getProducts } from '@/lib/repositories/product-repository';
-import { storeJsonLd } from '@/lib/structured-data';
+import { rootMetadata } from '@/lib/seo/metadata';
 import { fontVariables } from '@/styles/fonts';
 import '@/styles/globals.css';
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: `${siteConfig.name} | ${siteConfig.slogan}`,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: `${siteConfig.description} ${siteConfig.slogan}.`,
-  openGraph: {
-    type: 'website',
-    locale: 'es_VE',
-    siteName: siteConfig.name,
-  },
-};
+// VERCEL_ENV y las verificaciones solo existen en el servidor: acceso literal a process.env.
+export const metadata: Metadata = rootMetadata({
+  VERCEL_ENV: process.env.VERCEL_ENV,
+  GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
+  BING_SITE_VERIFICATION: process.env.BING_SITE_VERIFICATION,
+});
 
 export const viewport: Viewport = {
   themeColor: '#0a0a0b',
@@ -39,7 +30,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang="es" className={fontVariables}>
       <body className="flex min-h-dvh flex-col">
-        <JsonLd data={storeJsonLd()} />
         <ToastProvider>
           <CartProvider products={products} collections={collections}>
             <a

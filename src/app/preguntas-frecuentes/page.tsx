@@ -3,14 +3,15 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { ButtonLink } from '@/components/ui/button';
 import { faq } from '@/data/faq';
 import { FaqList } from '@/features/faq/faq-list';
+import { pageMetadata } from '@/lib/seo/metadata';
 import { faqJsonLd } from '@/lib/structured-data';
 import { PageHeader } from '@/sections/page-header';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/preguntas-frecuentes',
   title: 'Preguntas frecuentes',
   description: 'Envíos en Venezuela, compras al mayor, métodos de pago y atención personalizada.',
-  alternates: { canonical: '/preguntas-frecuentes' },
-};
+});
 
 export default function FaqPage() {
   return (

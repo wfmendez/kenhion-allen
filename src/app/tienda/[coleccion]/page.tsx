@@ -2,12 +2,14 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { SearchParams } from '@/features/catalog/catalog-params';
 import { CatalogView } from '@/features/catalog/catalog-view';
+import { collectionOgImage } from '@/features/seo/og-image';
 import {
   getCollectionBySlug,
   getCollections,
   getProducts,
 } from '@/lib/repositories/product-repository';
 import { collectionPath, shopPath } from '@/lib/routes';
+import { pageMetadata } from '@/lib/seo/metadata';
 import { PageHeader } from '@/sections/page-header';
 
 type Params = Promise<{ coleccion: string }>;
@@ -22,11 +24,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const collection = await getCollectionBySlug((await params).coleccion);
   if (!collection) return {};
-  return {
+  return pageMetadata({
+    path: collectionPath(collection.slug),
     title: `${collection.name}: ${collection.tagline}`,
     description: collection.description,
-    alternates: { canonical: collectionPath(collection.slug) },
-  };
+    image: collectionOgImage(collection, await getProducts()),
+  });
 }
 
 export default async function CollectionPage({

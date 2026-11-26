@@ -1,15 +1,30 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
+import { JsonLd } from '@/components/seo/json-ld';
 import { ButtonLink } from '@/components/ui/button';
 import { SectionHeading } from '@/components/ui/section-heading';
+import { siteConfig } from '@/config/site';
 import { homeGallery } from '@/data/gallery';
 import { services } from '@/data/services';
 import { ProductGrid } from '@/features/product/product-card';
 import { PHOTO_QUALITY } from '@/lib/images';
 import { getCollections, getProducts } from '@/lib/repositories/product-repository';
 import { shopPath } from '@/lib/routes';
+import { homeDescription, pageMetadata } from '@/lib/seo/metadata';
+import { homeJsonLd } from '@/lib/structured-data';
 import { Hero } from '@/sections/hero';
 import { ServicesGrid } from '@/sections/services-grid';
 import { WholesaleBanner } from '@/sections/wholesale-banner';
+
+const homeTitle = `${siteConfig.name} | ${siteConfig.slogan}`;
+
+// La home no tenía canonical. Se declara aquí y no en el layout (lo heredarían la 404 y el carrito).
+export const metadata: Metadata = pageMetadata({
+  path: '/',
+  title: { absolute: homeTitle },
+  ogTitle: homeTitle,
+  description: homeDescription,
+});
 
 export default async function HomePage() {
   const [products, collections] = await Promise.all([getProducts(), getCollections()]);
@@ -17,6 +32,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd data={homeJsonLd()} />
       <Hero />
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">

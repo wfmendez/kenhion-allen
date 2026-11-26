@@ -17,7 +17,8 @@ export default defineConfig({
       reporter: ['text-summary', 'html'],
       // La lógica de negocio (TypeScript sin JSX) debe estar bien cubierta; la UI se cubre con E2E.
       include: ['src/lib/**/*.ts', 'src/features/**/*.ts', 'src/config/**/*.ts'],
-      exclude: ['**/*.test.ts'],
+      // render-og.ts dibuja con next/og y sharp: lo cubren los E2E (e2e/seo.spec.ts).
+      exclude: ['**/*.test.ts', 'src/features/seo/render-og.ts'],
       thresholds: { lines: 80, functions: 80, statements: 80, branches: 75 },
     },
   },
