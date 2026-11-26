@@ -88,3 +88,31 @@ export function contrastRatio(a: string, b: string): number {
   ];
   return (hi + 0.05) / (lo + 0.05);
 }
+
+/**
+ * Paleta de impresión del comprobante PDF: fondo blanco para que se pueda imprimir.
+ * La marca entra con los acentos `gold` y `red` de `colors`; el dorado de marca no es legible
+ * como texto sobre blanco, por eso los títulos usan `gold-text`, un dorado oscurecido.
+ */
+export const printColors = {
+  paper: '#ffffff',
+  ink: '#111113',
+  muted: '#5c5c66',
+  line: '#e4e4e7',
+  note: '#f7f7f8',
+  'gold-text': '#8a6d12',
+  success: '#15803d',
+} as const;
+
+/** Pares texto/fondo del comprobante PDF. Cada uno debe cumplir el mínimo indicado. */
+export const printContrastPairs: { fg: string; bg: string; min: number; use: string }[] = [
+  { fg: printColors.ink, bg: printColors.paper, min: 4.5, use: 'Texto del comprobante' },
+  { fg: printColors.muted, bg: printColors.paper, min: 4.5, use: 'Etiquetas y pie de página' },
+  { fg: printColors['gold-text'], bg: printColors.paper, min: 4.5, use: 'Número y títulos' },
+  { fg: printColors['gold-text'], bg: printColors.note, min: 4.5, use: 'Título de las notas' },
+  { fg: printColors.ink, bg: printColors.note, min: 4.5, use: 'Notas del cliente' },
+  { fg: printColors.success, bg: printColors.paper, min: 4.5, use: 'Descuento al mayor' },
+  { fg: colors['red-deep'], bg: printColors.paper, min: 4.5, use: 'Aviso legal' },
+  { fg: printColors.paper, bg: printColors.ink, min: 4.5, use: 'Cabecera de la tabla' },
+  { fg: printColors.ink, bg: colors.gold, min: 4.5, use: 'Total a pagar' },
+];

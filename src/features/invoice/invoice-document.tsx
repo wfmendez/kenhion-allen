@@ -8,17 +8,18 @@ import { siteConfig } from '@/config/site';
 import { describeQuantity } from '@/features/cart/pricing';
 import { formatUSD } from '@/lib/money';
 import type { Order } from '@/lib/schemas/order';
-import { colors } from '@/styles/tokens';
+import { colors, printColors } from '@/styles/tokens';
 
 /**
  * Comprobante de pedido (NO fiscal) en PDF.
  * Fondo blanco para que se pueda imprimir; la marca aparece en los acentos dorado y rojo.
+ * Los colores salen de `printColors` (tokens.ts), con su contraste verificado en tokens.test.ts.
  * Usa Helvetica (fuente estándar del PDF): cubre acentos y ñ sin incrustar fuentes.
  */
-const INK = '#111113';
-const MUTED = '#5c5c66';
-const LINE = '#e4e4e7';
-const GOLD_TEXT = '#8a6d12'; // dorado oscurecido: legible sobre blanco (el #D4AF37 no lo es)
+const INK = printColors.ink;
+const MUTED = printColors.muted;
+const LINE = printColors.line;
+const GOLD_TEXT = printColors['gold-text'];
 
 const s = StyleSheet.create({
   page: {
@@ -61,7 +62,7 @@ const s = StyleSheet.create({
   th: {
     flexDirection: 'row',
     backgroundColor: INK,
-    color: '#ffffff',
+    color: printColors.paper,
     fontFamily: 'Helvetica-Bold',
     fontSize: 8,
     letterSpacing: 1,
@@ -85,7 +86,7 @@ const s = StyleSheet.create({
   itemMeta: { fontSize: 8, color: MUTED, marginTop: 1 },
   totals: { marginTop: 14, marginLeft: 'auto', width: 230 },
   totalRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 3 },
-  discount: { color: '#15803d' },
+  discount: { color: printColors.success },
   grandTotal: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -96,7 +97,7 @@ const s = StyleSheet.create({
     fontFamily: 'Helvetica-Bold',
     fontSize: 12,
   },
-  notes: { marginTop: 18, padding: 10, backgroundColor: '#f7f7f8', borderRadius: 4 },
+  notes: { marginTop: 18, padding: 10, backgroundColor: printColors.note, borderRadius: 4 },
   footer: {
     position: 'absolute',
     bottom: 22,
@@ -153,7 +154,7 @@ export function formatOrderDate(iso: string): string {
   return new Intl.DateTimeFormat('es-VE', {
     dateStyle: 'long',
     timeStyle: 'short',
-    timeZone: 'America/Caracas',
+    timeZone: siteConfig.timeZone,
   }).format(new Date(iso));
 }
 

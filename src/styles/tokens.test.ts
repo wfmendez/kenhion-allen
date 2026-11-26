@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { colors, contrastPairs, contrastRatio } from './tokens';
+import { colors, contrastPairs, contrastRatio, printContrastPairs } from './tokens';
 
 describe('tokens de diseño', () => {
   it('globals.css declara exactamente los colores de tokens.ts', () => {
@@ -22,6 +22,13 @@ describe('tokens de diseño', () => {
   it.each(contrastPairs)('$use: $fg sobre $bg ≥ $min:1', ({ fg, bg, min }) => {
     expect(contrastRatio(colors[fg], colors[bg])).toBeGreaterThanOrEqual(min);
   });
+
+  it.each(printContrastPairs)(
+    'Comprobante PDF, $use: $fg sobre $bg ≥ $min:1',
+    ({ fg, bg, min }) => {
+      expect(contrastRatio(fg, bg)).toBeGreaterThanOrEqual(min);
+    },
+  );
 
   it('calcula el contraste WCAG correctamente', () => {
     expect(contrastRatio('#000000', '#ffffff')).toBeCloseTo(21, 5);
