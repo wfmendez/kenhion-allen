@@ -37,7 +37,7 @@ Los hooks de git (husky + lint-staged) formatean y revisan los archivos en cada 
 2. Corre `npm test`: el esquema Zod valida todo el catálogo y los tests fallan si algo está mal (slug repetido, precio inválido, etc.).
 3. La página del producto, el sitemap y los datos estructurados se generan solos.
 
-### Agregar un color o cambiar fotos
+### Agregar un color de prenda o cambiar fotos
 
 1. Copia las fotos a `public/images/<coleccion>/<producto>/` con nombres en kebab-case y extensión `.jpg` (por ejemplo `negro-frente.jpg`). Ideal: formato vertical 2:3.
 2. Agrega o edita el color en `colors` del producto en `src/data/products.ts`, con un `alt` que describa la foto.
@@ -59,7 +59,7 @@ Todo está en `src/config/business.ts`: tallas, mínimo y porcentaje del descuen
 
 `src/config/site.ts`: nombre, **eslogan**, WhatsApp, correo y ubicación.
 
-### Agregar un color
+### Agregar un color al sistema de diseño
 
 1. Agrégalo en `src/styles/tokens.ts` (con descripción) y en `@theme` de `src/styles/globals.css`.
 2. Si se usará como texto sobre un fondo, agrega el par a `contrastPairs`. El test exige contraste WCAG AA.

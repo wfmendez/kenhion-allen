@@ -4,7 +4,8 @@ const PORT = Number(process.env.E2E_PORT ?? 3107);
 
 /**
  * Los E2E corren contra el build de producción (`next start`), igual que en Vercel.
- * Antes hay que compilar: `npm run build` (o `npm run test:e2e:ci`, que compila y prueba).
+ * Antes hay que compilar: `npm run build && npm run test:e2e` (en la máquina Windows con SWC
+ * bloqueado, `npm run build:webpack`).
  */
 export default defineConfig({
   testDir: './e2e',

@@ -71,7 +71,7 @@ Reglas principales (detalle en [CONTRIBUTING.md](CONTRIBUTING.md)):
 
 - **Server Components por defecto**; `'use client'` solo donde hay interacción.
 - **La lógica de negocio es pura** (`*.ts` sin React) y tiene tests.
-- **La UI nunca lee `src/data` directamente**: pasa por `src/lib/repositories/product-repository.ts`.
+- **El catálogo (productos y colecciones) solo se lee vía `src/lib/repositories/product-repository.ts`** (ADR 0002). El contenido editorial (FAQ, galería, servicios, textos, tallas, envíos) se importa de `src/data`.
 - **El dinero va en centavos** (`priceCents`).
 
 ## Calidad y CI
