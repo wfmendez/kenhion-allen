@@ -8,6 +8,7 @@ import { formatUSD, percentOf } from './money';
 import { generateOrderNumber } from './order-number';
 import {
   getCollectionBySlug,
+  getCollections,
   getProductBySlug,
   getProducts,
   getProductsByCollection,
@@ -18,7 +19,7 @@ import {
   getProductColor,
   productSchema,
 } from './schemas/product';
-import { readStorage, writeStorage } from './storage';
+import { readStorage, removeStorage, writeStorage } from './storage';
 
 describe('datos del catálogo', () => {
   it('todos los productos y colecciones cumplen el esquema', () => {
@@ -91,6 +92,7 @@ describe('product-repository', () => {
     expect(await getProductsByCollection('ka-elite')).toHaveLength(3);
     expect((await getCollectionBySlug('ka-elite'))?.name).toBe('KA ELITE');
     expect(await getCollectionBySlug('pod')).toBeUndefined();
+    expect((await getCollections()).map((c) => c.slug)).toEqual(['ka-elite']);
   });
 });
 
@@ -137,5 +139,46 @@ describe('storage', () => {
     expect(readStorage('x', z.number())).toBeNull();
     writeStorage('x', 5);
     expect(readStorage('x', z.number())).toBe(5);
+    removeStorage('x');
+    expect(readStorage('x', z.number())).toBeNull();
+  });
+
+  it('descarta un valor que no es JSON válido', () => {
+    localStorage.setItem('x', '{roto');
+    expect(readStorage('x', z.number())).toBeNull();
+  });
+
+  describe('sin almacenamiento disponible', () => {
+    afterEach(() => vi.restoreAllMocks());
+
+    it('nunca lanza si el navegador bloquea localStorage', () => {
+      vi.spyOn(window, 'localStorage', 'get').mockImplementation(() => {
+        throw new DOMException('Bloqueado', 'SecurityError');
+      });
+      expect(readStorage('x', z.number())).toBeNull();
+      expect(() => writeStorage('x', 5)).not.toThrow();
+      expect(() => removeStorage('x')).not.toThrow();
+    });
+
+    it('en el servidor (sin window) no lee ni escribe', () => {
+      localStorage.setItem('x', '5');
+      vi.stubGlobal('window', undefined);
+      try {
+        expect(readStorage('x', z.number())).toBeNull();
+        writeStorage('x', 6);
+        removeStorage('x');
+      } finally {
+        vi.unstubAllGlobals();
+      }
+      expect(localStorage.getItem('x')).toBe('5');
+    });
+
+    it('nunca lanza si la cuota está llena', () => {
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+        throw new DOMException('Lleno', 'QuotaExceededError');
+      });
+      expect(() => writeStorage('x', 5)).not.toThrow();
+      expect(readStorage('x', z.number())).toBeNull();
+    });
   });
 });

@@ -66,6 +66,16 @@ describe('order-storage', () => {
     expect(getLastOrderSnapshot()).toBe(first);
   });
 
+  it('ignora un pedido guardado corrupto o que no cumple el esquema', async () => {
+    sessionStorage.setItem('ka_last_order', '{roto');
+    const { getLastOrderSnapshot, loadLastOrder } = await freshStorage();
+    expect(loadLastOrder()).toBeNull();
+    expect(getLastOrderSnapshot()).toBeNull();
+
+    sessionStorage.setItem('ka_last_order', JSON.stringify({ ...order, items: [] }));
+    expect(loadLastOrder()).toBeNull();
+  });
+
   it('conserva el pedido en memoria si sessionStorage está bloqueado', async () => {
     blockSessionStorage();
     const { clearLastOrder, getLastOrderSnapshot, saveLastOrder } = await freshStorage();
