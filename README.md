@@ -64,14 +64,15 @@ src/
   styles/       Tokens de color, fuentes y CSS global (Tailwind)
 public/images/  Fotos de producto y de la marca (ver ADR 0007)
 e2e/            Tests de Playwright
-docs/           Marca (brand.md) y decisiones de arquitectura (adr/)
+tests/          Configuración de Vitest (setup.ts) y test de arquitectura
+docs/           Marca (brand.md), fotos de referencia (brand/referencias) y decisiones de arquitectura (adr/)
 ```
 
 Reglas principales (detalle en [CONTRIBUTING.md](CONTRIBUTING.md)):
 
 - **Server Components por defecto**; `'use client'` solo donde hay interacción.
 - **La lógica de negocio es pura** (`*.ts` sin React) y tiene tests.
-- **El catálogo (productos y colecciones) solo se lee vía `src/lib/repositories/product-repository.ts`** (ADR 0002). El contenido editorial (FAQ, galería, servicios, textos, tallas, envíos) se importa de `src/data`.
+- **El catálogo (productos y colecciones) solo se lee vía `src/lib/repositories/product-repository.ts`** (ADR 0002 y 0009). El contenido editorial (FAQ, galería, servicios, textos, tallas, envíos, estados) se importa de `src/data`; `tests/architecture.test.ts` lo comprueba.
 - **El dinero va en centavos** (`priceCents`).
 
 ## Calidad y CI

@@ -68,7 +68,7 @@ Todo está en `src/config/business.ts`: tallas, mínimo y porcentaje del descuen
 
 - **Server Components por defecto.** Usa `'use client'` solo para estado, eventos o APIs del navegador.
 - **Lógica pura aparte de la UI:** reducers, precios, filtros, mensajes y creación de pedidos son funciones `.ts` con tests.
-- **Datos solo a través del repositorio** (`src/lib/repositories`). Así, migrar a una base de datos no toca componentes.
+- **El catálogo solo a través del repositorio** (`src/lib/repositories`): productos y colecciones nunca se importan de `src/data` fuera de él. Así, migrar a una base de datos no toca componentes. El contenido editorial (textos, FAQ, galería, servicios, envíos, tallas, estados) sí se importa directo de `src/data` (ADR 0009). `tests/architecture.test.ts` lo comprueba.
 - **URLs con `src/lib/routes.ts`**, nunca escritas a mano.
 - **Accesibilidad:** controles nativos (`<button>`, `<dialog>`, `<details>`, radios), etiquetas asociadas y contraste AA. Los E2E corren axe en cada página.
 - **Privacidad:** los datos del cliente no se guardan en `localStorage` ni se envían a servidores (ver ADR 0004).

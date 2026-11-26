@@ -11,7 +11,7 @@ Tienda online de Kenhion Allen (Next.js 16 App Router, React 19, TypeScript estr
 ## Dónde va cada cosa
 
 - Marca, contacto y eslogan → `src/config/site.ts`. Reglas (tallas S/M/L, mayoreo desde 6 piezas / 15%, envíos, pagos) → `src/config/business.ts`. Nunca hardcodear estos valores en componentes.
-- Contenido → `src/data/`. La UI lo lee **solo** vía `src/lib/repositories/product-repository.ts`.
+- Contenido → `src/data/`. El catálogo (productos y colecciones) se lee **solo** vía `src/lib/repositories/product-repository.ts`; el contenido editorial (textos, FAQ, galería, servicios, envíos, tallas, estados) se importa directo (ADR 0009, lo comprueba `tests/architecture.test.ts`).
 - URLs → `src/lib/routes.ts`.
 - Imágenes → siempre locales en `public/images/` (ADR 0007). Cada producto tiene `colors` con sus fotos; la línea del carrito es producto + color + talla.
 - Lógica de negocio → funciones puras `.ts` en `src/features/<feature>/` con test al lado (`*.test.ts`).

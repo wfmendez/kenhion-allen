@@ -11,3 +11,4 @@ Cada archivo registra una decisión: el contexto, la decisión tomada y sus cons
 | [0005](0005-tailwind-y-tokens-de-marca.md)                | Tailwind v4 con tokens de marca y contraste verificado                   | Aceptada |
 | [0006](0006-fuente-script-provisional.md)                 | Fuente script provisional hasta tener la licencia de Sloop Script Pro    | Aceptada |
 | [0007](0007-imagenes-locales-y-variantes-de-color.md)     | Imágenes locales y productos con variantes de color                      | Aceptada |
+| [0009](0009-contenido-editorial-sin-repositorio.md)       | Repositorio solo para el catálogo; contenido editorial importado directo | Aceptada |
