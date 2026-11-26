@@ -9,7 +9,7 @@ import { CartProvider } from '@/features/cart/cart-context';
 import { CartButton, CartDrawer } from '@/features/cart/cart-drawer';
 import { SearchButton } from '@/features/search/search-button';
 import { getCollections, getProducts } from '@/lib/repositories/product-repository';
-import { baseOpenGraph } from '@/lib/seo/metadata';
+import { baseOpenGraph, siteVerification } from '@/lib/seo/metadata';
 import { fontVariables } from '@/styles/fonts';
 import '@/styles/globals.css';
 
@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   openGraph: baseOpenGraph,
   // Las previsualizaciones no se indexan (ADR 0008). VERCEL_ENV solo existe en el servidor.
   robots: isIndexable(process.env.VERCEL_ENV) ? undefined : { index: false, follow: false },
+  // Opcional: verificación por etiqueta de Search Console y Bing (mejor por DNS, ver README).
+  verification: siteVerification({
+    GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
+    BING_SITE_VERIFICATION: process.env.BING_SITE_VERIFICATION,
+  }),
 };
 
 export const viewport: Viewport = {

@@ -1,5 +1,5 @@
 import { siteOgImage, type OgImage } from '@/features/seo/og-image';
-import { baseOpenGraph, homeDescription, pageMetadata } from './metadata';
+import { baseOpenGraph, homeDescription, pageMetadata, siteVerification } from './metadata';
 
 const image: OgImage = {
   url: '/og/producto/x?v=00000000',
@@ -51,5 +51,21 @@ describe('homeDescription', () => {
     expect(homeDescription.length).toBeLessThanOrEqual(160);
     expect(homeDescription).toContain('compresión');
     expect(homeDescription).toContain('15% de descuento al mayor desde 6 piezas');
+  });
+});
+
+describe('siteVerification', () => {
+  it('sin variables no declara nada', () => {
+    expect(siteVerification({})).toBeUndefined();
+    expect(siteVerification({ GOOGLE_SITE_VERIFICATION: '  ' })).toBeUndefined();
+  });
+
+  it('declara Google y Bing (msvalidate.01) cuando hay valores', () => {
+    expect(
+      siteVerification({ GOOGLE_SITE_VERIFICATION: 'abc ', BING_SITE_VERIFICATION: 'XYZ' }),
+    ).toEqual({ google: 'abc', other: { 'msvalidate.01': 'XYZ' } });
+    expect(siteVerification({ BING_SITE_VERIFICATION: 'XYZ' })).toEqual({
+      other: { 'msvalidate.01': 'XYZ' },
+    });
   });
 });

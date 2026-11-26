@@ -58,3 +58,20 @@ const wholesalePercent = Math.round(WHOLESALE.rate * 100);
 export const homeDescription =
   `Ropa deportiva de compresión KA ELITE en ${siteConfig.location.city}, ${siteConfig.location.country}. ` +
   `Envíos a toda Venezuela y ${wholesalePercent}% de descuento al mayor desde ${WHOLESALE.minQty} piezas.`;
+
+/**
+ * Etiquetas de verificación de Google Search Console y Bing Webmaster Tools, opcionales.
+ * Lo recomendado es verificar por DNS (registro TXT) y dejarlas vacías. Se leen en el build.
+ */
+export function siteVerification(env: {
+  GOOGLE_SITE_VERIFICATION?: string;
+  BING_SITE_VERIFICATION?: string;
+}): Metadata['verification'] {
+  const google = env.GOOGLE_SITE_VERIFICATION?.trim();
+  const bing = env.BING_SITE_VERIFICATION?.trim();
+  if (!google && !bing) return undefined;
+  return {
+    ...(google ? { google } : {}),
+    ...(bing ? { other: { 'msvalidate.01': bing } } : {}),
+  };
+}
