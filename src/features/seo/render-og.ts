@@ -2,7 +2,6 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 import type { ReactElement } from 'react';
-// sharp llega con Next (dependencia opcional de `next`, la misma que optimiza las fotos).
 import sharp from 'sharp';
 import { colors } from '@/styles/tokens';
 import { OG_SIZE } from './og-image';
