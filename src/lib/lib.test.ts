@@ -106,9 +106,26 @@ describe('money', () => {
 
 describe('generateOrderNumber', () => {
   it('usa el formato KA-AAAAMMDD-XXXX', () => {
-    const n = generateOrderNumber(new Date(2026, 8, 5), () => 0);
+    const n = generateOrderNumber(new Date('2026-09-05T15:00:00Z'), () => 0);
     expect(n).toBe('KA-20260905-2222');
     expect(generateOrderNumber()).toMatch(/^KA-\d{8}-[2-9A-Z]{4}$/);
+  });
+
+  it('toma la fecha en hora de Caracas aunque el dispositivo esté en otra zona', () => {
+    // stubEnv/unstubAllEnvs restauran TZ tal como estaba (incluso si no existía), sin dejar
+    // el texto "undefined" en process.env para los tests que corren después.
+    vi.stubEnv('TZ', 'UTC');
+    try {
+      // 02:00 UTC del 11 de noviembre son las 22:00 del 10 de noviembre en Caracas (UTC-4).
+      expect(generateOrderNumber(new Date('2026-11-11T02:00:00Z'), () => 0)).toBe(
+        'KA-20261110-2222',
+      );
+      expect(generateOrderNumber(new Date('2026-11-11T04:00:00Z'), () => 0)).toBe(
+        'KA-20261111-2222',
+      );
+    } finally {
+      vi.unstubAllEnvs();
+    }
   });
 });
 
