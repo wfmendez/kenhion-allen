@@ -4,33 +4,20 @@ import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { TopBar } from '@/components/layout/top-bar';
 import { ToastProvider } from '@/components/ui/toast';
-import { isIndexable, siteConfig } from '@/config/site';
 import { CartProvider } from '@/features/cart/cart-context';
 import { CartButton, CartDrawer } from '@/features/cart/cart-drawer';
 import { SearchButton } from '@/features/search/search-button';
 import { getCollections, getProducts } from '@/lib/repositories/product-repository';
-import { baseOpenGraph, siteVerification } from '@/lib/seo/metadata';
+import { rootMetadata } from '@/lib/seo/metadata';
 import { fontVariables } from '@/styles/fonts';
 import '@/styles/globals.css';
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: `${siteConfig.name} | ${siteConfig.slogan}`,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: `${siteConfig.description} ${siteConfig.slogan}.`,
-  // Sin canonical aquí: lo heredarían la 404 y el carrito. Cada página indexable declara el suyo.
-  // Las páginas sin openGraph propio (carrito, checkout, 404) heredan este, con la imagen genérica.
-  openGraph: baseOpenGraph,
-  // Las previsualizaciones no se indexan (ADR 0008). VERCEL_ENV solo existe en el servidor.
-  robots: isIndexable(process.env.VERCEL_ENV) ? undefined : { index: false, follow: false },
-  // Opcional: verificación por etiqueta de Search Console y Bing (mejor por DNS, ver README).
-  verification: siteVerification({
-    GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
-    BING_SITE_VERIFICATION: process.env.BING_SITE_VERIFICATION,
-  }),
-};
+// VERCEL_ENV y las verificaciones solo existen en el servidor: acceso literal a process.env.
+export const metadata: Metadata = rootMetadata({
+  VERCEL_ENV: process.env.VERCEL_ENV,
+  GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
+  BING_SITE_VERIFICATION: process.env.BING_SITE_VERIFICATION,
+});
 
 export const viewport: Viewport = {
   themeColor: '#0a0a0b',

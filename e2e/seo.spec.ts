@@ -13,6 +13,10 @@ const indexable = [
   '/producto/conjunto-biker-top',
   '/producto/short-de-caballero',
   '/nosotros',
+  '/galeria',
+  '/servicios',
+  '/contacto',
+  '/preguntas-frecuentes',
 ];
 
 const meta = (page: Page, key: string) =>

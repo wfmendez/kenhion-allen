@@ -1,6 +1,7 @@
 import { siteConfig } from '@/config/site';
 import { faq } from '@/data/faq';
 import { products } from '@/data/products';
+import { homeDescription } from './seo/metadata';
 import { breadcrumbJsonLd, faqJsonLd, homeJsonLd, productJsonLd } from './structured-data';
 
 const bySlug = (slug: string) => products.find((p) => p.slug === slug)!;
@@ -24,16 +25,39 @@ describe('homeJsonLd', () => {
     expect(logo.width).toBe(512);
   });
 
-  it('no inventa datos pendientes del cliente', () => {
-    const json = JSON.stringify(homeJsonLd());
-    for (const key of [
-      'streetAddress',
-      'openingHours',
-      'sameAs',
-      'SearchAction',
-      'ClothingStore',
-    ]) {
-      expect(json).not.toContain(key);
+  it('describe la tienda igual que la home', () => {
+    expect(store.description).toBe(homeDescription);
+  });
+});
+
+/**
+ * Datos que dependen del cliente (docs/brand.md): no se publican hasta que los confirme. Las
+ * reseñas, los envíos y las devoluciones inventados son justo lo que Google penaliza.
+ */
+const PENDING_KEYS = [
+  'streetAddress',
+  'openingHours',
+  'sameAs',
+  'SearchAction',
+  'ClothingStore',
+  'review',
+  'aggregateRating',
+  'shippingDetails',
+  'hasMerchantReturnPolicy',
+  'priceValidUntil',
+];
+
+describe('no inventa datos pendientes del cliente', () => {
+  const all = [
+    { name: 'home', json: homeJsonLd() },
+    ...products.map((p) => ({ name: p.slug, json: productJsonLd(p) })),
+  ];
+
+  it.each(all)('$name', ({ json }) => {
+    const text = JSON.stringify(json);
+    // Entre comillas: cubre tanto las propiedades como los valores de @type.
+    for (const key of PENDING_KEYS) {
+      expect(text, key).not.toContain(`"${key}"`);
     }
   });
 });

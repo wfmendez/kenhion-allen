@@ -1,3 +1,4 @@
+import { EMBLEM_PATHS, EMBLEM_VIEWBOX } from '@/components/layout/emblem-paths';
 import { WHOLESALE } from '@/config/business';
 import { siteConfig } from '@/config/site';
 import { collections as collectionsData } from '@/data/collections';
@@ -5,13 +6,19 @@ import { gallery } from '@/data/gallery';
 import { formatUSD } from '@/lib/money';
 import { ogCollectionPath, ogProductPath, ogShopPath, ogSitePath } from '@/lib/routes';
 import { getPrimaryImage, type Collection, type Product } from '@/lib/schemas/product';
+import { colors } from '@/styles/tokens';
+import { photoDigest } from './photo-digest';
 
 /**
  * Imágenes para compartir (WhatsApp, Facebook, X, iMessage…): JPEG 1200x630 generados en el build.
  *
- * La URL lleva `?v=<huella>` calculada con todo lo que se dibuja. Si cambia un precio, una foto o
- * el mayoreo, cambia la URL y las redes descargan la imagen nueva en vez de mostrar la que tienen
- * en caché. Al cambiar el DISEÑO (og-cards.tsx) hay que subir OG_DESIGN_VERSION a mano.
+ * La URL lleva `?v=<huella>` calculada con todo lo que se dibuja: los datos (precio, mayoreo,
+ * nombre…), el CONTENIDO de cada foto (también si se reemplaza con el mismo nombre), los colores
+ * de la marca y el emblema. Si algo de eso cambia, cambia la URL y las redes descargan la imagen
+ * nueva en vez de mostrar la que tienen en caché (se sirve como immutable por un año).
+ *
+ * Hay que subir OG_DESIGN_VERSION a mano solo al cambiar el diseño (og-cards.tsx) o las fuentes
+ * de src/assets/og/.
  */
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 export const OG_DESIGN_VERSION = 1;
@@ -109,9 +116,24 @@ export type ProductOgData = ReturnType<typeof productOgData>;
 
 // ---- Descriptores para la metadata (og:image, og:image:width/height/type/alt) ----
 
-function image(path: string, data: unknown, alt: string): OgImage {
+/** Lo que el diseño toma de fuera de los datos: si cambia, cambian todas las tarjetas. */
+const DESIGN_INPUTS = { colors, emblem: [EMBLEM_VIEWBOX, ...EMBLEM_PATHS] };
+
+/**
+ * Versión de una tarjeta: datos dibujados + contenido de sus fotos + colores y emblema.
+ * `digest` se inyecta en los tests; en el sitio lee el archivo de public/.
+ */
+export function ogVersion(
+  data: { photo?: string; photos?: readonly string[] },
+  digest: (src: string) => string = photoDigest,
+): string {
+  const photos = [...(data.photo ? [data.photo] : []), ...(data.photos ?? [])];
+  return ogFingerprint({ data, photos: photos.map(digest), design: DESIGN_INPUTS });
+}
+
+function image(path: string, data: Parameters<typeof ogVersion>[0], alt: string): OgImage {
   return {
-    url: `${path}?v=${ogFingerprint(data)}`,
+    url: `${path}?v=${ogVersion(data)}`,
     width: OG_SIZE.width,
     height: OG_SIZE.height,
     type: 'image/jpeg',

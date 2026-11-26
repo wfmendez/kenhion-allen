@@ -5,6 +5,7 @@ import {
   collectionOgImage,
   OG_DESIGN_VERSION,
   ogFingerprint,
+  ogVersion,
   productOgData,
   productOgImage,
   shopOgImage,
@@ -77,6 +78,21 @@ describe('ogFingerprint', () => {
     expect(shopOgImage(products, { minQty: 12, rate: 0.15 }).url).not.toBe(
       shopOgImage(products).url,
     );
+  });
+
+  it('cambia si se reemplaza una foto aunque conserve el nombre', () => {
+    const data = productOgData(biker, collection);
+    const before = ogVersion(data, (src) => `${src}:contenido-viejo`);
+    const after = ogVersion(data, (src) => `${src}:contenido-nuevo`);
+    expect(after).not.toBe(before);
+    expect(ogVersion(data, (src) => `${src}:contenido-viejo`)).toBe(before);
+  });
+
+  it('lee el contenido real de las fotos de public/', () => {
+    const data = productOgData(biker, collection);
+    const byPath = ogVersion(data, (src) => src);
+    expect(ogVersion(data)).not.toBe(byPath);
+    expect(version(productOgImage(biker, collection).url)).toBe(ogVersion(data));
   });
 
   it('cambia al subir OG_DESIGN_VERSION', () => {

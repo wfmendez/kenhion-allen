@@ -1,5 +1,12 @@
 import { siteOgImage, type OgImage } from '@/features/seo/og-image';
-import { baseOpenGraph, homeDescription, pageMetadata, siteVerification } from './metadata';
+import { siteConfig } from '@/config/site';
+import {
+  baseOpenGraph,
+  homeDescription,
+  pageMetadata,
+  rootMetadata,
+  siteVerification,
+} from './metadata';
 
 const image: OgImage = {
   url: '/og/producto/x?v=00000000',
@@ -39,9 +46,37 @@ describe('pageMetadata', () => {
     });
     expect(home.title).toEqual({ absolute: 'Kenhion Allen | Más allá del límite' });
   });
+});
 
-  it('el layout comparte el mismo Open Graph base', () => {
-    expect(baseOpenGraph.images).toHaveLength(1);
+describe('rootMetadata (layout)', () => {
+  it('usa el Open Graph base con la imagen genérica y la descripción de la tienda', () => {
+    const meta = rootMetadata({});
+    expect(meta.openGraph).toBe(baseOpenGraph);
+    expect(baseOpenGraph.images).toEqual([siteOgImage()]);
+    expect(meta.description).toBe(homeDescription);
+    expect(String(meta.metadataBase)).toBe(new URL(siteConfig.url).href);
+    expect(meta).not.toHaveProperty('alternates');
+  });
+
+  it('las previsualizaciones de Vercel llevan noindex', () => {
+    expect(rootMetadata({ VERCEL_ENV: 'preview' }).robots).toEqual({
+      index: false,
+      follow: false,
+    });
+    expect(rootMetadata({ VERCEL_ENV: 'development' }).robots).toEqual({
+      index: false,
+      follow: false,
+    });
+  });
+
+  it('producción y los builds fuera de Vercel se indexan', () => {
+    expect(rootMetadata({ VERCEL_ENV: 'production' }).robots).toBeUndefined();
+    expect(rootMetadata({}).robots).toBeUndefined();
+  });
+
+  it('pasa las verificaciones de Search Console y Bing', () => {
+    expect(rootMetadata({ GOOGLE_SITE_VERIFICATION: 'g' }).verification).toEqual({ google: 'g' });
+    expect(rootMetadata({}).verification).toBeUndefined();
   });
 });
 

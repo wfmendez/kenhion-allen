@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { WHOLESALE } from '@/config/business';
-import { siteConfig } from '@/config/site';
+import { isIndexable, siteConfig } from '@/config/site';
 import { siteOgImage, type OgImage } from '@/features/seo/og-image';
 
 /**
@@ -19,8 +19,8 @@ type Title = string | { absolute: string };
 
 /**
  * Metadata de una página indexable: canonical y og:url iguales, Open Graph completo.
- * El og:title va sin el sufijo «| Kenhion Allen» (así lo recomiendan WhatsApp y Apple);
- * el <title> sí usa la plantilla del layout.
+ * El og:title va sin el sufijo «| Kenhion Allen»: og:site_name ya muestra la marca y así no se
+ * repite en la vista previa. El <title> sí usa la plantilla del layout.
  */
 export function pageMetadata({
   path,
@@ -58,6 +58,31 @@ const wholesalePercent = Math.round(WHOLESALE.rate * 100);
 export const homeDescription =
   `Ropa deportiva de compresión KA ELITE en ${siteConfig.location.city}, ${siteConfig.location.country}. ` +
   `Envíos a toda Venezuela y ${wholesalePercent}% de descuento al mayor desde ${WHOLESALE.minQty} piezas.`;
+
+/**
+ * Metadata del layout raíz (se extrae aquí para poder probarla con cada entorno).
+ * Sin canonical: lo heredarían la 404 y el carrito; cada página indexable declara el suyo.
+ * Las páginas sin openGraph propio (carrito, checkout, 404) heredan este, con la imagen genérica.
+ */
+export function rootMetadata(env: {
+  VERCEL_ENV?: string;
+  GOOGLE_SITE_VERIFICATION?: string;
+  BING_SITE_VERIFICATION?: string;
+}): Metadata {
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: `${siteConfig.name} | ${siteConfig.slogan}`,
+      template: `%s | ${siteConfig.name}`,
+    },
+    description: homeDescription,
+    openGraph: baseOpenGraph,
+    // Las previsualizaciones no se indexan (ADR 0008).
+    robots: isIndexable(env.VERCEL_ENV) ? undefined : { index: false, follow: false },
+    // Opcional: verificación por etiqueta de Search Console y Bing (mejor por DNS, ver README).
+    verification: siteVerification(env),
+  };
+}
 
 /**
  * Etiquetas de verificación de Google Search Console y Bing Webmaster Tools, opcionales.

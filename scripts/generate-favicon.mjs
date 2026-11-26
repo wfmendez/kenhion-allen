@@ -4,6 +4,8 @@
 //   - public/images/marca/emblema-192.png y emblema-512.png (manifest y logo del JSON-LD).
 // Se versionan los archivos resultantes: correr de nuevo solo si cambia el emblema o los colores.
 // Uso (desde la raíz del repo, Node 24): node scripts/generate-favicon.mjs
+// Ojo: importa una ruta interna de Next (next/dist/compiled/@vercel/og). Al subir de versión
+// mayor de Next, revisar que exista antes de correrlo; el sitio no depende de este script.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';

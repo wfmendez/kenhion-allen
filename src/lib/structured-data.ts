@@ -2,6 +2,7 @@ import { CURRENCY } from '@/config/business';
 import { siteConfig } from '@/config/site';
 import type { FaqItem } from '@/data/faq';
 import { productPath } from '@/lib/routes';
+import { homeDescription } from '@/lib/seo/metadata';
 import type { Product } from '@/lib/schemas/product';
 
 const absolute = (path: string) => new URL(path, siteConfig.url).toString();
@@ -43,7 +44,8 @@ export function homeJsonLd() {
         name: siteConfig.name,
         url: `${url}/`,
         slogan: siteConfig.slogan,
-        description: siteConfig.description,
+        // La misma descripción que la home (siteConfig.description está pendiente del cliente).
+        description: homeDescription,
         telephone: siteConfig.contact.whatsappDisplay,
         email: siteConfig.contact.email,
         logo,
