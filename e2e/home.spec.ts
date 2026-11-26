@@ -93,7 +93,9 @@ test('sitemap y robots están disponibles', async ({ request }) => {
   expect(xml).toContain('/tienda/ka-elite');
 
   const robots = await (await request.get('/robots.txt')).text();
-  expect(robots).toContain('Disallow: /checkout');
+  expect(robots).toContain('Disallow: /dev/');
+  // Carrito y checkout llevan noindex: si robots.txt los bloqueara, Google no podría leerlo.
+  expect(robots).not.toContain('Disallow: /checkout');
 });
 
 test('la navegación principal funciona (menú móvil o de escritorio)', async ({

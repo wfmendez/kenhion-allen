@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
 import { services } from '@/data/services';
+import { pageMetadata } from '@/lib/seo/metadata';
 import { PageHeader } from '@/sections/page-header';
 import { ServicesGrid } from '@/sections/services-grid';
 import { WholesaleBanner } from '@/sections/wholesale-banner';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/servicios',
   title: 'Servicios',
   description: 'Asesoría de moda, Print On Demand y prendas personalizadas a tu medida.',
-  alternates: { canonical: '/servicios' },
-};
+});
 
 export default function ServicesPage() {
   return (

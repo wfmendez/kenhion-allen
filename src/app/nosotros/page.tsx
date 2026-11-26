@@ -5,13 +5,14 @@ import { Icon, type IconName } from '@/components/ui/icon';
 import { siteConfig } from '@/config/site';
 import { aboutCopy, type AboutValue } from '@/data/copy';
 import { shopPath } from '@/lib/routes';
+import { pageMetadata } from '@/lib/seo/metadata';
 import { PageHeader } from '@/sections/page-header';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/nosotros',
   title: 'Sobre nosotros',
-  description: `${siteConfig.name}: moda elegante en ${siteConfig.location.city}, ${siteConfig.location.country}.`,
-  alternates: { canonical: '/nosotros' },
-};
+  description: `${siteConfig.name}: moda elegante y ropa deportiva de compresión KA ELITE hecha en ${siteConfig.location.city}, ${siteConfig.location.country}. Envíos a toda Venezuela.`,
+});
 
 const valueIcons: Record<AboutValue['id'], IconName> = {
   diseno: 'check',

@@ -3,14 +3,13 @@ import type { ReactNode } from 'react';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { TopBar } from '@/components/layout/top-bar';
-import { JsonLd } from '@/components/seo/json-ld';
 import { ToastProvider } from '@/components/ui/toast';
-import { siteConfig } from '@/config/site';
+import { isIndexable, siteConfig } from '@/config/site';
 import { CartProvider } from '@/features/cart/cart-context';
 import { CartButton, CartDrawer } from '@/features/cart/cart-drawer';
 import { SearchButton } from '@/features/search/search-button';
 import { getCollections, getProducts } from '@/lib/repositories/product-repository';
-import { storeJsonLd } from '@/lib/structured-data';
+import { baseOpenGraph } from '@/lib/seo/metadata';
 import { fontVariables } from '@/styles/fonts';
 import '@/styles/globals.css';
 
@@ -21,11 +20,11 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: `${siteConfig.description} ${siteConfig.slogan}.`,
-  openGraph: {
-    type: 'website',
-    locale: 'es_VE',
-    siteName: siteConfig.name,
-  },
+  // Sin canonical aquí: lo heredarían la 404 y el carrito. Cada página indexable declara el suyo.
+  // Las páginas sin openGraph propio (carrito, checkout, 404) heredan este, con la imagen genérica.
+  openGraph: baseOpenGraph,
+  // Las previsualizaciones no se indexan (ADR 0008). VERCEL_ENV solo existe en el servidor.
+  robots: isIndexable(process.env.VERCEL_ENV) ? undefined : { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
@@ -39,7 +38,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang="es" className={fontVariables}>
       <body className="flex min-h-dvh flex-col">
-        <JsonLd data={storeJsonLd()} />
         <ToastProvider>
           <CartProvider products={products} collections={collections}>
             <a

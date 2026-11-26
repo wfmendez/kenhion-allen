@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
 import { gallery } from '@/data/gallery';
+import { siteConfig } from '@/config/site';
 import { GalleryGrid } from '@/features/gallery/gallery-grid';
+import { pageMetadata } from '@/lib/seo/metadata';
 import { PageHeader } from '@/sections/page-header';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/galeria',
   title: 'Galería',
-  description: 'Fotogalería oficial de las colecciones Kenhion Allen.',
-  alternates: { canonical: '/galeria' },
-};
+  description: `Fotogalería oficial de ${siteConfig.name}: la colección KA ELITE de ropa deportiva de compresión, puesta a prueba por atletas.`,
+});
 
 export default function GalleryPage() {
   return (

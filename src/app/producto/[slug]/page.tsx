@@ -8,6 +8,7 @@ import { WHOLESALE } from '@/config/business';
 import { shippingSummary } from '@/data/shipping';
 import { ProductGrid } from '@/features/product/product-card';
 import { ProductPurchase } from '@/features/product/product-purchase';
+import { productOgImage } from '@/features/seo/og-image';
 import { SizeGuideButton } from '@/features/size-guide/size-guide-button';
 import {
   getCollectionBySlug,
@@ -17,7 +18,7 @@ import {
   getProductsByCollection,
 } from '@/lib/repositories/product-repository';
 import { collectionPath, productPath, shopPath } from '@/lib/routes';
-import { getPrimaryImage } from '@/lib/schemas/product';
+import { pageMetadata } from '@/lib/seo/metadata';
 import { productJsonLd } from '@/lib/structured-data';
 import { PageHeader } from '@/sections/page-header';
 
@@ -33,12 +34,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const product = await getProductBySlug((await params).slug);
   if (!product) return {};
-  return {
+  // Imagen 1200x630 de la ficha (la foto vertical pesaba hasta 564 KB y se recortaba).
+  return pageMetadata({
+    path: productPath(product.slug),
     title: product.name,
     description: product.description,
-    alternates: { canonical: productPath(product.slug) },
-    openGraph: { images: [{ url: getPrimaryImage(product).src, alt: product.name }] },
-  };
+    image: productOgImage(product, await getCollectionBySlug(product.collection)),
+  });
 }
 
 export default async function ProductPage({ params }: { params: Params }) {
@@ -55,7 +57,7 @@ export default async function ProductPage({ params }: { params: Params }) {
 
   return (
     <>
-      <JsonLd data={productJsonLd(product, collection)} />
+      <JsonLd data={productJsonLd(product)} />
       <PageHeader
         title={product.name}
         crumbs={[
